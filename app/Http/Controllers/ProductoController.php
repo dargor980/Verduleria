@@ -48,13 +48,17 @@ class ProductoController extends Controller
         $request->validate([                  //Validación de los campos del formulario
             'nombre' => 'required',
             'precio' => 'required',
-            'medidaId' => 'required'
+            'medidaId' => 'required',
+            'categoriaId' => 'required',
+            'stockId' => 'required'
         ]);
 
         $producto= new Producto();
         $producto->nombre= $request->nombre;
         $producto->precio= $request->precio;
         $producto->medidaId= $request->medidaId;
+        $producto->categoriaId= $request->categoriaId;
+        $producto->stockId= $request->stockId;
 
         $producto->save();
         return back()->with('mensaje','Producto agregado.');
