@@ -1,6 +1,6 @@
 @extends('plantilla')
 
-@section('titulo', 'Formulario')
+@section('titulo', 'Nuevo Producto')
 
 @section('contenido')
 <br><br>
@@ -25,16 +25,22 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-edit"></i></span>
                     </div>
-                    <input name='name' type="text" placeholder="Nombre del producto" class="form-control">
+                     @error('nombre')
+                         <div class="alert alert-danger"> El Nombre es obligatorio </div>
+                     @enderror
+                    <input name='nombre' type="text" placeholder="Nombre del producto" class="form-control">
                 </div>
                 <div class="input-group form-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-money-bill-wave"></i></span>
                     </div>
+                    @error('precio')
+                         <div class="alert alert-danger"> El Precio es obligatorio </div>
+                     @enderror
                     <input name='precio' type="number" placeholder="Precio" class="form-control"> 
                 </div>
 
-                <select name='categoria_id' class="custom-select">
+                <select name='medidaId' class="custom-select">
                     <option selected>Seleccione Unidad de Medida:</option>
                     <option value="1">Kg</option>
                     <option value="2">Unidad</option>
