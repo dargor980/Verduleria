@@ -12,7 +12,7 @@
         </a>
         <nav id="sidebar" class="sidebar-wrapper">
           <div class="sidebar-content">
-            <div class="sidebar-brand sidebartitulo">
+            <div class="sidebar-brand sidebartitulo shadow-sm">
               <a href="#" >
                       <img src="/img/comida.png" class="icono" alt="">
                       &nbsp;
@@ -27,14 +27,27 @@
         
             <div class="sidebar-menu">
               <ul>
-                <li class="header-menu">
-                  <span>Administración</span>
-                </li>
-                <li class="header-menu">
-                  <a href="inventario" target="blank">
-                    <i class="fa fa-shopping-cart"></i>
-                    <span>Prueba</span></a>
-                </li>
+                @guest
+                @else
+                  <li class="sidebar-dropdown mt-2">
+                    <a href="#">
+                      <i class="fas fa-user"></i>
+                      <span>{{ Auth::user()->name }}</span>
+                    </a>
+                      <div class="sidebar-submenu">
+                          <a href="{{ route('logout') }}"
+                              onclick="event.preventDefault();
+                                            document.getElementById('logout-form').submit();">
+                              {{ __('Logout') }}
+                          </a>
+
+                          <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                              @csrf
+                          </form>
+                      </div>
+                    </li>
+                @endguest
+                
                 <li class="sidebar-dropdown">
                   <a href="#">
                     <i class="fa fa-tachometer-alt"></i>
@@ -43,14 +56,16 @@
                   <div class="sidebar-submenu">
                     <ul>
                       <li>
-                        <a href="#" >Nuevo Pedido
-                        </a>
+                        <a href="#" >Nuevo Pedido</a>
                       </li>
                       <li>
-                        <a href="#">Administrar Pedidos</a>
+                        <a href="#">Ver Pedidos</a>
                       </li>
                       <li>
-                        <a href="#">Pedidos Pendientes</a>
+                        <a href="#">Administrar Pagos</a>
+                      </li>
+                      <li>
+                        <a href="#">Eliminar Pedido</a>
                       </li>
                     </ul>
                   </div>
@@ -59,29 +74,21 @@
                  
                 <li class="sidebar-dropdown">
                   <a href="#">
-                    <i class="fa fa-truck"></i>
-                    <span>Proveedores</span>
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>Productos</span>
                   </a>
                   <div class="sidebar-submenu">
                     <ul>
                       <li>
-                        <a href="#">General</a>
+                        <a href="{{route('newprod')}}">Nuevo Producto</a>
                       </li>
                       <li>
-                        <a href="#">Panels</a>
-                      </li>
-                      <li>
-                        <a href="#">Tables</a>
-                      </li>
-                      <li>
-                        <a href="#">Icons</a>
-                      </li>
-                      <li>
-                        <a href="#">Forms</a>
+                      <a href="">Ver Productos</a>
                       </li>
                     </ul>
                   </div>
                 </li>
+                
                 <li class="sidebar-dropdown">
                   <a href="#">
                     <i class="fa fa-chart-line"></i>
@@ -90,38 +97,63 @@
                   <div class="sidebar-submenu">
                     <ul>
                       <li>
-                        <a href="#">Pie chart</a>
+                        <a href="#">Historial de Ventas</a>
                       </li>
                       <li>
-                        <a href="#">Line chart</a>
+                        <a href="#">Clientes Frecuentes</a>
                       </li>
                       <li>
-                        <a href="#">Bar chart</a>
-                      </li>
-                      <li>
-                        <a href="#">Histogram</a>
+                        <a href="#">Mas Vendidos</a>
                       </li>
                     </ul>
                   </div>
                 </li>
                 <li class="sidebar-dropdown">
                   <a href="#">
-                    <i class="fa fa-envelope"></i>
-                    <span>Mensajes</span>
+                    <i class="fa fa-truck"></i>
+                    <span>Proveedores</span>
                   </a>
                   <div class="sidebar-submenu">
                     <ul>
                       <li>
-                        <a href="#">Bandeja de entrada</a>
+                        <a href="#">Lista de Proveedores</a>
                       </li>
                       <li>
-                        <a href="#">Enviados</a>
+                        <a href="#">Nuevo Proveedor</a>
+                      </li>
+                      <li>
+                        <a href="#">Modificar Proveedor</a>
+                      </li>
+                      <li>
+                        <a href="#">Eliminar Proveedor</a>
                       </li>
                     </ul>
                   </div>
                 </li>
-                
-                
+                <li class="sidebar-dropdown">
+                  <a href="#">
+                    <i class="fas fa-user"></i>
+                    <span>Clientes</span>
+                  </a>
+                  <div class="sidebar-submenu">
+                    <ul>
+                      <li>
+                        <a href="#">Ver Clientes</a>
+                      </li>
+                      <li>
+                        <a href="#">Nuevo Cliente</a>
+                      </li>
+                      <li>
+                        <a href="#">Modificar Cliente</a>
+                      </li>
+                      <li>
+                        <a href="#">Eliminar Cliente</a>
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+
+
               </ul>
             </div>
             <!-- sidebar-menu  -->
@@ -133,10 +165,7 @@
       
       
         <main class="page-content">
-          <div class="container-fluid">
-           
-           
-          </div>
+          @yield('contenido')
           
         </main>
         <!-- page-content" -->
