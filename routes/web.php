@@ -35,6 +35,8 @@ Route::get('/producto/categorianew', 'CategoriaController@create')->name('newcat
 
 Route::get('/proveedores/new', 'ProveedorController@create')->name('newprov');
 
+Route::get('/proveedores/lista', 'ProveedorController@index')->name('listaprov');
+
 Route::get('/cliente/new', 'ClienteController@create')->name('newcliente');
 
 

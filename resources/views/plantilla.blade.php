@@ -119,16 +119,10 @@
                   <div class="sidebar-submenu">
                     <ul>
                       <li>
-                        <a href="#">Lista de Proveedores</a>
+                        <a href="{{route('listaprov')}}">Lista de Proveedores</a>
                       </li>
                       <li>
                         <a href="{{route('newprov')}}">Nuevo Proveedor</a>
-                      </li>
-                      <li>
-                        <a href="#">Modificar Proveedor</a>
-                      </li>
-                      <li>
-                        <a href="#">Eliminar Proveedor</a>
                       </li>
                     </ul>
                   </div>
