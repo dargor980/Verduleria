@@ -405,7 +405,7 @@
   /*-----------------------------chiller-theme-------------------------------------------------*/
   
   .chiller-theme .sidebar-wrapper {
-      background: #ef233c;
+    background: rgba(21, 107, 79, 0.5) ;
   }
   
 
@@ -454,7 +454,7 @@
   .chiller-theme .sidebar-wrapper .sidebar-menu .sidebar-dropdown div,
   .chiller-theme .sidebar-wrapper .sidebar-search input.search-menu,
   .chiller-theme .sidebar-wrapper .sidebar-search .input-group-text {
-      background: #3a3f48;
+    background: rgba(21, 107, 79, 0.7) ;
   }
   
   .chiller-theme .sidebar-wrapper .sidebar-menu .header-menu span {
@@ -481,5 +481,31 @@
   }
 
   .sidebartitulo{
-      background-color: #d90429;
+      background-color: #156b4f;
+  }
+  
+  body{
+    background-image: url('../img/fondofrutas.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+
+  .navbargeneral{
+    background: rgba(21, 107, 79, 0.9) ;
+  }
+
+  .card{
+    background: rgba(21, 107, 79, 0.9) !important;
+  }
+
+  .boton{
+    background-color: #156b4f;
+  }
+
+  button:hover{
+      background-color: #29794E;
+  }
+
+  .modal-content{
+    background: rgba(21, 107, 79, 0.9) !important;
   }
