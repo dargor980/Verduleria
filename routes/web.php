@@ -26,3 +26,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/panel', 'HomeController@panel')->name('panel');
+
+Route::get('/producto/new', 'ProductoController@create')->name('newprod');
+
+Route::get('/proveedores/new', 'ProveedorController@create')->name('newprov');
