@@ -29,6 +29,12 @@ Route::get('/panel', 'HomeController@panel')->name('panel');
 
 Route::get('/producto/new', 'ProductoController@create')->name('newprod');
 
+Route::get('/producto/lista', 'ProductoController@index')->name('listaprod');
+
+Route::get('/producto/categorianew', 'CategoriaController@create')->name('newcategoria');
+
 Route::get('/proveedores/new', 'ProveedorController@create')->name('newprov');
 
 Route::get('/cliente/new', 'ClienteController@create')->name('newcliente');
+
+

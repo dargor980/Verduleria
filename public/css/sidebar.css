@@ -509,3 +509,7 @@
   .modal-content{
     background: rgba(21, 107, 79, 0.9) !important;
   }
+
+  .table{
+    background: rgba(237, 242, 244, 0.95) !important;
+  }
