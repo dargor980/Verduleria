@@ -22,7 +22,7 @@ class ProductoController extends Controller
     }
     public function index()
     {
-        $productos= Producto::all();
+        $productos= Producto::paginate(10);
 
         return view('Producto.lista',compact('productos'));
     }
@@ -93,6 +93,11 @@ class ProductoController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'nombre' => 'required',
+            'precio' => 'required',
+            'medidaId' => 'required'
+        ]);
         $updateProducto= Producto::find($id);
         $updateProducto->nombre= $request->nombre;
         $updateProducto->precio= $request->precio;

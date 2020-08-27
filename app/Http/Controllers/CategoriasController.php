@@ -3,25 +3,19 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Pedido;
-use App\Contenido;
+use App\Categoria;
 
-class PedidosController extends Controller
+class CategoriasController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-
-    public function __construct()
-    {
-        $this->middleware('auth',['except' => ['index']]);
-    }
     public function index()
     {
-        $pedidos= Pedido::paginate(10);
-        return view('Pedido.lista',compact('pedidos'));
+        $categorias= Categoria::all();
+        return view('Producto.categoriaview');
     }
 
     /**
@@ -31,7 +25,7 @@ class PedidosController extends Controller
      */
     public function create()
     {
-        return view('Pedido.new');
+        return view('Producto.categorianew');
     }
 
     /**
@@ -42,30 +36,11 @@ class PedidosController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([             //Validación de los campos del formulario
-            'estado' => 'required'
+        $request->validate([
+            'tipo' => 'required'
         ]);
-
-        $pedido= new Pedido();
-        $pedido->clienteId= $request->clienteId;
-        $pedido->estado= $request->estado;
-        $pedido->total= 0;
-        $pedido->save();
-        return back()->with('mensaje','Pedido registrado');
-
-    }
-
-    public function addProductoToPedido(Request $request, $id)
-    {
-        $newProducto= new Contenido();
-        $newProducto->pedidoId= id;
-        $newProducto->productoId= $request->productoId;
-        $newProducto->cantidad= $request->cantidad;
-
-    }
-
-    public function removeProductoToPedido()
-    {
+        $categoria= new Categoria();
+        $categoria->tipo= $request->tipo;
 
     }
 
@@ -111,11 +86,7 @@ class PedidosController extends Controller
      */
     public function destroy($id)
     {
-        //
-    }
-
-    public function CreatePdfReport()
-    {
-
+        $destroyCategoria= Categoria::find($id);
+        $destroyCategoria->delete();
     }
 }

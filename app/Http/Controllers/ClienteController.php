@@ -19,7 +19,7 @@ class ClienteController extends Controller
     }
     public function index()
     {
-        $clientes= Cliente::all();
+        $clientes= Cliente::paginate(10);
         return view('Cliente.lista',compact('clientes'));
     }
 
@@ -90,6 +90,11 @@ class ClienteController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'nombre' => 'required',
+            'fono'   => 'required',
+            'domicilio' => 'required'
+        ]);
         $updateCliente= Cliente::find($id);
         $updateCliente->nombre= $request->nombre;
         $updateCliente->fono= $request->fono;

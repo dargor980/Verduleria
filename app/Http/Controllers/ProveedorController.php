@@ -19,7 +19,7 @@ class ProveedorController extends Controller
     }
     public function index()
     {
-        $proveedores= Proveedor::all();
+        $proveedores= Proveedor::paginate(10);
         return view('Proveedores.lista',compact('proveedores'));
     }
 
@@ -91,6 +91,9 @@ class ProveedorController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'fono' => 'required'
+        ]);
         $updateProveedor= Proveedor::find($id);
         $updateProveedor->fono= $request->fono;
         $updateProveedor->direccion= $request->direccion;
