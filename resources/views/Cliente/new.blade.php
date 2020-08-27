@@ -1,6 +1,6 @@
 @extends('plantilla')
 
-@section('titulo', 'Nuevo Proveedor')
+@section('titulo', 'Nuevo Cliente')
 
 @section('contenido')
 
@@ -16,7 +16,7 @@
             </div>           
         @endif
             <div>
-                <h4 class="my-2 text-white">Nuevo Proveedor</h4>
+                <h4 class="my-2 text-white">Nuevo Cliente</h4>
             </div>
             <form method="POST" class="col-12" enctype="multipart/form-data">
                 @csrf
@@ -28,21 +28,7 @@
                     @error('nombre')
                          <div class="alert alert-danger"> El Nombre es obligatorio </div>
                      @enderror
-                    <input name='nombre' type="text" placeholder="Nombre del proveedor" class="form-control">
-                </div>
-
-                <div class="input-group form-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-edit"></i></span>
-                    </div>
-                    <input name='empresa' type="text" placeholder="Empresa" class="form-control">
-                </div>
-
-                <div class="input-group form-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-edit"></i></span>
-                    </div>
-                    <input name='rut' type="text" placeholder="Rut de Empresa" class="form-control">
+                    <input name='nombre' type="text" placeholder="Nombre" class="form-control">
                 </div>
 
                 <div class="input-group form-group">
@@ -59,16 +45,19 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-edit"></i></span>
                     </div>
-                    <input name='direccion' type="text" placeholder="Direccion" class="form-control"> 
+                    @error('domicilio')
+                         <div class="alert alert-danger"> El domicilio es obligatorio </div>
+                     @enderror
+                    <input name='domicilio' type="text" placeholder="Direccion" class="form-control"> 
                 </div>
 
                 <div class="input-group form-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-edit"></i></span>
-                        
                     </div>
-                    <textarea name='descripcion' id=""  placeholder="Descripcion" class="form-control"></textarea>
+                    <input name='depto' type="text" placeholder="Depto" class="form-control"> 
                 </div>
+
                 <br>
                 <button class="btn btn-success mb-3 text-white" type="submit"><i class="fas fa-paper-plane text-white"></i> Enviar</button>
             </form>

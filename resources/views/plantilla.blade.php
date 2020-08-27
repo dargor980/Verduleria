@@ -119,7 +119,7 @@
                         <a href="#">Lista de Proveedores</a>
                       </li>
                       <li>
-                        <a href="#">Nuevo Proveedor</a>
+                        <a href="{{route('newprov')}}">Nuevo Proveedor</a>
                       </li>
                       <li>
                         <a href="#">Modificar Proveedor</a>
@@ -132,7 +132,7 @@
                 </li>
                 <li class="sidebar-dropdown">
                   <a href="#">
-                    <i class="fas fa-user"></i>
+                    <i class="fas fa-users"></i>
                     <span>Clientes</span>
                   </a>
                   <div class="sidebar-submenu">
@@ -141,7 +141,7 @@
                         <a href="#">Ver Clientes</a>
                       </li>
                       <li>
-                        <a href="#">Nuevo Cliente</a>
+                        <a href="{{route('newcliente')}}">Nuevo Cliente</a>
                       </li>
                       <li>
                         <a href="#">Modificar Cliente</a>
