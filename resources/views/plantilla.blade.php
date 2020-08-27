@@ -83,7 +83,10 @@
                         <a href="{{route('newprod')}}">Nuevo Producto</a>
                       </li>
                       <li>
-                      <a href="">Ver Productos</a>
+                      <a href="{{route('listaprod')}}">Ver Productos</a>
+                      </li>
+                      <li>
+                        <a href="{{route('newcategoria')}}">Añadir Categoria</a>
                       </li>
                     </ul>
                   </div>
@@ -130,6 +133,24 @@
                     </ul>
                   </div>
                 </li>
+
+                <li class="sidebar-dropdown">
+                  <a href="#">
+                    <i class="fas fa-boxes"></i>
+                    <span>Inventario</span>
+                  </a>
+                  <div class="sidebar-submenu">
+                    <ul>
+                      <li>
+                        <a href="#">Stock Verduleria</a>
+                      </li>
+                      <li>
+                        <a href="#">Stock Congelados</a>
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+
                 <li class="sidebar-dropdown">
                   <a href="#">
                     <i class="fas fa-users"></i>
