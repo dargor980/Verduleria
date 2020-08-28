@@ -1,6 +1,6 @@
 @extends('plantilla')
 
-@section('titulo', 'Nuevo Cliente')
+@section('titulo', 'Editar Cliente')
 
 @section('contenido')
 
@@ -63,7 +63,7 @@
                 </div>
 
                 <br>
-                <button class="btn btn-success mb-3 text-white" type="submit"><i class="fas fa-paper-plane text-white"></i> Enviar</button>
+                <button class="btn btn-success mb-3 text-white" type="submit"><i class="fas fa-paper-plane text-white"></i> Guardar</button>
             </form>
         </div>
     </div> 

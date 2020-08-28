@@ -26,7 +26,7 @@
             <td>Ester Hunneus 2045, Puente Alto</td>
             <td>mi depto</td>
             <td>
-                <span><a href="" ><i class="fas fa-edit text-success">&nbsp;</a></i></span>
+                <span><a href="{{route('editcliente',1)}}" ><i class="fas fa-edit text-success">&nbsp;</a></i></span>
                 <span><a href="" ><i class="fas fa-trash-alt text-danger"></a></i></span>
             </td>
           </tr>

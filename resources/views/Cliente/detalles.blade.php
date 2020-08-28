@@ -9,7 +9,7 @@
         <br>
         <div>
             <div class="text-right mr-5">
-                <span><a href="" ><i class="fas fa-edit text-success btn btn-light"></a></i></span>
+                <span><a href="{{route('editcliente',1)}}" ><i class="fas fa-edit text-success btn btn-light"></a></i></span>
                 <span><a href="" ><i class="fas fa-trash-alt text-danger btn btn-light"></a></i></span>
             </div>
             <h2 class="my-2 text-white text-center">Braulio Argandoña Carrasco</h2>
