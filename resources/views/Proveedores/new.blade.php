@@ -18,16 +18,16 @@
             <div>
                 <h4 class="my-2 text-white">Nuevo Proveedor</h4>
             </div>
-            <form method="POST" class="col-12" enctype="multipart/form-data">
+            <form method="POST" action="{{route('addprov')}}"class="col-12" enctype="multipart/form-data">
                 @csrf
             <br>
+                @error('nombre')
+                    <div class="badge badge-danger float-right"> *El Nombre es obligatorio </div>
+                @enderror
                 <div class="input-group form-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-edit"></i></span>
                     </div>
-                    @error('nombre')
-                         <div class="alert alert-danger"> El Nombre es obligatorio </div>
-                     @enderror
                     <input name='nombre' type="text" placeholder="Nombre del proveedor" class="form-control">
                 </div>
 
@@ -45,13 +45,13 @@
                     <input name='rut' type="text" placeholder="Rut de Empresa" class="form-control">
                 </div>
 
+                @error('fono')
+                    <div class="badge badge-danger float-right"> *El Teléfono es obligatorio </div>
+                @enderror
                 <div class="input-group form-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-edit"></i></span>
                     </div>
-                    @error('fono')
-                         <div class="alert alert-danger"> El Teléfono es obligatorio </div>
-                     @enderror
                     <input name='fono' type="number" placeholder="Teléfono" class="form-control"> 
                 </div>
 

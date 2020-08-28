@@ -39,6 +39,8 @@ Route::post('/producto/categoria/delete','CategoriasController@destroy')->name('
 
 Route::get('/proveedores/new', 'ProveedorController@create')->name('newprov');
 
+Route::post('/proveedores/new/add','ProveedorController@store')->name('addprov');
+
 Route::get('/proveedores/lista', 'ProveedorController@index')->name('listaprov');
 
 Route::get('/proveedores/detalles/{id}', 'ProveedorController@show')->name('detallep');

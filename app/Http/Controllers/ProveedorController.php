@@ -50,7 +50,7 @@ class ProveedorController extends Controller
         $proveedor->nombre= $request->nombre;
         $proveedor->empresa= $request->empresa;
         $proveedor->fono= $request->fono;
-        $proveedor->direccion= $request->descripcion;
+        $proveedor->direccion= $request->direccion;
         $proveedor->descripcion= $request->descripcion;
 
         $proveedor->save();

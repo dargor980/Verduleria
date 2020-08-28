@@ -21,17 +21,20 @@
           </tr>
         </thead>
         <tbody>
+          @foreach($proveedores as $item)
           <tr>
-            <th scope="row">1</th>
-            <td><a href="{{route('detallep',1)}}"> Proveedor 1 </a></td>
-            <td>Empresa 1</td>
-            <td>77.959.554-7</td>
-            <td>950161342</td>
+            <th scope="row">{{$item->id}}</th>
+            <td><a href="{{route('detallep',$item->id)}}"> {{$item->nombre}} </a></td>
+            <td>{{$item->empresa}}</td>
+            <td>{{$item->rut}}</td>
+            <td>{{$item->fono}}</td>
             <td>
-                <span><a href="{{route('editprov',1)}}" ><i class="fas fa-edit text-success">&nbsp;</a></i></span>
+                <span><a href="{{route('editprov',$item->id)}}" ><i class="fas fa-edit text-success">&nbsp;</a></i></span>
                 <span><a href="" ><i class="fas fa-trash-alt text-danger"></a></i></span>
             </td>
           </tr>
+
+          @endforeach
         </tbody>
       </table>
     </div>
