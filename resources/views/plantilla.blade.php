@@ -6,6 +6,23 @@
     <title>@yield('titulo')</title>
   </head>
   <body class="fondobody">
+
+    <nav id="navbar" class="navbar navbar-expand-lg navbar-light navbargeneral">
+      <!--OPCIONES NAVBAR-->
+      <div class="collapse navbar-collapse justify-content-end">
+        <ul class="navbar-nav ml-md-auto d-none d-md-flex">
+          <li class="nav-item active">
+            <i class="far fa-clock text-white"></i>&nbsp;
+            <a class="text-white">27/08/2020</a>
+            <a class="text-white">20:30 hrs</a>
+          </li>
+        </ul>
+      </div>
+      <!--/OPCIONES NAVBAR-->
+    </nav>
+
+
+
     <div class="page-wrapper chiller-theme toggled">
         <a id="show-sidebar" class="btn btn-sm btn-dark" href="#">
           <i class="fas fa-bars"></i>
@@ -86,31 +103,12 @@
                       <a href="{{route('listaprod')}}">Ver Productos</a>
                       </li>
                       <li>
-                        <a href="{{route('newcategoria')}}">Añadir Categoria</a>
+                        <a href="{{route('newcategoria')}}">Administrar Categoria</a>
                       </li>
                     </ul>
                   </div>
                 </li>
                 
-                <li class="sidebar-dropdown">
-                  <a href="#">
-                    <i class="fa fa-chart-line"></i>
-                    <span>Estadísticas de ventas</span>
-                  </a>
-                  <div class="sidebar-submenu">
-                    <ul>
-                      <li>
-                        <a href="#">Historial de Ventas</a>
-                      </li>
-                      <li>
-                        <a href="#">Clientes Frecuentes</a>
-                      </li>
-                      <li>
-                        <a href="#">Mas Vendidos</a>
-                      </li>
-                    </ul>
-                  </div>
-                </li>
                 <li class="sidebar-dropdown">
                   <a href="#">
                     <i class="fa fa-truck"></i>
@@ -136,10 +134,33 @@
                   <div class="sidebar-submenu">
                     <ul>
                       <li>
-                        <a href="#">Stock Verduleria</a>
+                        <a href="{{route('newstock')}}">Ingresar Stock</a>
                       </li>
                       <li>
-                        <a href="#">Stock Congelados</a>
+                        <a href="{{route('listav')}}">Stock Verduleria</a>
+                      </li>
+                      <li>
+                        <a href="{{route('listac')}}">Stock Congelados</a>
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+
+                <li class="sidebar-dropdown">
+                  <a href="#">
+                    <i class="fa fa-chart-line"></i>
+                    <span>Estadísticas de ventas</span>
+                  </a>
+                  <div class="sidebar-submenu">
+                    <ul>
+                      <li>
+                        <a href="#">Historial de Ventas</a>
+                      </li>
+                      <li>
+                        <a href="#">Clientes Frecuentes</a>
+                      </li>
+                      <li>
+                        <a href="#">Mas Vendidos</a>
                       </li>
                     </ul>
                   </div>

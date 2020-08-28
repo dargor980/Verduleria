@@ -31,7 +31,7 @@ Route::get('/producto/new', 'ProductoController@create')->name('newprod');
 
 Route::get('/producto/lista', 'ProductoController@index')->name('listaprod');
 
-Route::get('/producto/categorianew', 'CategoriaController@create')->name('newcategoria');
+Route::get('/producto/categorianew', 'CategoriasController@create')->name('newcategoria');
 
 Route::get('/proveedores/new', 'ProveedorController@create')->name('newprov');
 
@@ -39,4 +39,9 @@ Route::get('/proveedores/lista', 'ProveedorController@index')->name('listaprov')
 
 Route::get('/cliente/new', 'ClienteController@create')->name('newcliente');
 
+Route::get('/inventario/new', 'InventarioController@show')->name('newstock');
+
+Route::get('/inventario/listaverduleria', 'InventarioController@showverduleria')->name('listav');
+
+Route::get('/inventario/listacongelados', 'InventarioController@showcongelados')->name('listac');
 

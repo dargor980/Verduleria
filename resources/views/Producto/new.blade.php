@@ -40,7 +40,22 @@
                     <input name='precio' type="number" placeholder="Precio" class="form-control"> 
                 </div>
 
-                <select name='medidaId' class="custom-select">
+                <select name='categoriaId' class="custom-select  mb-3">
+                    <option selected>Seleccione una categoria:</option>
+                    <option value="1">Categoria 1</option>
+                </select>
+
+                <div class="input-group form-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-box-open"></i></span>
+                    </div>
+                    @error('stockId')
+                         <div class="alert alert-danger"> El Stock es obligatorio </div>
+                     @enderror
+                    <input name='stockId' type="number" placeholder="Cantidad de Stock" class="form-control"> 
+                </div>
+
+                <select name='medidaId' class="custom-select  mb-3">
                     <option selected>Seleccione Unidad de Medida:</option>
                     <option value="1">Kg</option>
                     <option value="2">Unidad</option>
@@ -49,8 +64,9 @@
                     <option value="5">Media Docena</option>
                     
                 </select>
-                <br><br><br>
-                <button class="btn btn-success mb-3 text-white" type="submit"><i class="fas fa-paper-plane text-white"></i> Enviar</button>
+
+                <br>
+                <button class="btn btn-success mb-3 text-white" type="submit"><i class="fas fa-paper-plane text-white"></i> Agregar</button>
             </form>
         </div>
     </div> 

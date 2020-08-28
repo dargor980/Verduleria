@@ -513,3 +513,19 @@
   .table{
     background: rgba(237, 242, 244, 0.95) !important;
   }
+
+  #navbar {
+    overflow: hidden;
+    transition: 0.4s;
+    position: fixed;
+    width: 15%;
+    top: 0px;
+    left: 85%;
+    border-bottom-left-radius: 10px;
+    z-index: 99;
+  }
+
+  .opcionmenu1{
+    background: #ffffff !important;
+    border-radius: 10px;
+  }
