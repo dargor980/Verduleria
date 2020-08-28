@@ -45,3 +45,5 @@ Route::get('/inventario/listaverduleria', 'InventarioController@showverduleria')
 
 Route::get('/inventario/listacongelados', 'InventarioController@showcongelados')->name('listac');
 
+Route::post('/cliente/new/add','ClienteController@store')->name('addcliente');
+

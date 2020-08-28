@@ -18,36 +18,40 @@
             <div>
                 <h4 class="my-2 text-white">Nuevo Cliente</h4>
             </div>
-            <form method="POST" class="col-12" enctype="multipart/form-data">
+        <form method="POST" action="{{route('addcliente')}}" class="col-12" enctype="multipart/form-data">
                 @csrf
             <br>
+            @error('nombre')
+                <span class="badge badge-danger float-right"> El Nombre es obligatorio </span>
+            @enderror
                 <div class="input-group form-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-edit"></i></span>
                     </div>
-                    @error('nombre')
-                         <div class="alert alert-danger"> El Nombre es obligatorio </div>
-                     @enderror
                     <input name='nombre' type="text" placeholder="Nombre" class="form-control">
+                  
                 </div>
-
+                 
+                
+                @error('fono')
+                    <div class="badge badge-danger float-right"> El Teléfono es obligatorio </div>
+                @enderror
                 <div class="input-group form-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-edit"></i></span>
                     </div>
-                    @error('fono')
-                         <div class="alert alert-danger"> El Teléfono es obligatorio </div>
-                     @enderror
+                    
                     <input name='fono' type="number" placeholder="Teléfono" class="form-control"> 
                 </div>
 
+                @error('domicilio')
+                    <div class="badge badge-danger float-right"> El domicilio es obligatorio </div>
+                @enderror
                 <div class="input-group form-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-edit"></i></span>
                     </div>
-                    @error('domicilio')
-                         <div class="alert alert-danger"> El domicilio es obligatorio </div>
-                     @enderror
+                    
                     <input name='domicilio' type="text" placeholder="Direccion" class="form-control"> 
                 </div>
 
