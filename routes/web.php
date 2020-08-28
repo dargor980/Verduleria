@@ -55,3 +55,5 @@ Route::post('/producto/categoria/add','CategoriasController@store')->name('addca
 
 Route::post('/producto/categoria/delete','CategoriasController@destroy')->name('deletecategoria');
 
+Route::post('/producto/new/add','ProductoController@store')->name('addproducto');
+

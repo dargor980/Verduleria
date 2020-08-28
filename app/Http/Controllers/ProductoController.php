@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Producto;
 use App\Stock;
+use App\Categoria;
+use App\Medida;
 
 
 
@@ -24,8 +26,9 @@ class ProductoController extends Controller
     public function index()
     {
         $productos= Producto::paginate(10);
-
-        return view('Producto.lista',compact('productos'));
+        $categorias= Categoria::all();
+        $medidas= Medida::all();
+        return view('Producto.lista',compact('productos','categorias','medidas'));
     }
 
     /**
@@ -35,7 +38,9 @@ class ProductoController extends Controller
      */
     public function create()
     {
-        return view('Producto.new');
+        $categorias= Categoria::all();
+        $unidadMedida= Medida::all();
+        return view('Producto.new',compact('categorias','unidadMedida'));
     }
 
     /**
@@ -51,7 +56,7 @@ class ProductoController extends Controller
             'precio' => 'required',
             'medidaId' => 'required',
             'categoriaId' => 'required',
-            'stockId' => 'required'
+            'cantidad' => 'required'
         ]);
         
         $stock= new Stock();

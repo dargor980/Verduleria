@@ -18,55 +18,60 @@
             <div>
                 <h4 class="my-2 text-white">Nuevo Producto</h4>
             </div>
-            <form method="POST" class="col-12" enctype="multipart/form-data">
+            <form method="POST" action="{{route('addproducto')}}" class="col-12" enctype="multipart/form-data">
                 @csrf
             <br>
+                @error('nombre')
+                    <div class="badge badge-danger float-right"> *El Nombre es obligatorio </div>
+                @enderror
                 <div class="input-group form-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-edit"></i></span>
                     </div>
-                     @error('nombre')
-                         <div class="alert alert-danger"> El Nombre es obligatorio </div>
-                     @enderror
+                     
                     <input name='nombre' type="text" placeholder="Nombre del producto" class="form-control">
                 </div>
+
+                @error('precio')
+                    <div class="badge badge-danger float-right"> *El Precio es obligatorio </div>
+                @enderror
                 <div class="input-group form-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-money-bill-wave"></i></span>
                     </div>
-                    @error('precio')
-                         <div class="alert alert-danger"> El Precio es obligatorio </div>
-                     @enderror
                     <input name='precio' type="number" placeholder="Precio" class="form-control"> 
                 </div>
 
+                @error('categoriaId')
+                    <div class="badge badge-danger float-right"> *Debe seleccionar una categoría </div>
+                @enderror
                 <select name='categoriaId' class="custom-select  mb-3">
                     <option selected>Seleccione una categoria:</option>
-                    <option value="1">Categoria 1</option>
+                    @foreach($categorias as $item)
+                    <option value="{{$item->id}}">{{$item->tipo}}</option>
+                    @endforeach
                 </select>
 
+                @error('cantidad')
+                    <div class="badge badge-danger float-right"> *El Stock es obligatorio </div>
+                @enderror
                 <div class="input-group form-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-box-open"></i></span>
                     </div>
-                    @error('stockId')
-                         <div class="alert alert-danger"> El Stock es obligatorio </div>
-                     @enderror
+                    
                     <input name='cantidad' type="number" min="0" placeholder="Cantidad de Stock" class="form-control"> 
                 </div>
 
                 <select name='medidaId' class="custom-select  mb-3">
                     <option selected>Seleccione Unidad de Medida:</option>
-                    <option value="1">Kg</option>
-                    <option value="2">Unidad</option>
-                    <option value="3">Paquete</option>
-                    <option value="4">Docena</option>
-                    <option value="5">Media Docena</option>
-                    
+                    @foreach($unidadMedida as $item)
+                    <option value="{{$item->id}}">{{$item->nombre}}</option>  
+                    @endforeach                
                 </select>
 
                 <br>
-                <button class="btn btn-success mb-3 text-white" type="submit"><i class="fas fa-paper-plane text-white"></i> Agregar</button>
+                <button class="btn btn-success mb-3 text-white" type="submit"><i class="fas fa-plus"></i> Agregar</button>
             </form>
         </div>
     </div> 
