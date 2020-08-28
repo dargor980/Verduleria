@@ -3,7 +3,7 @@
 @section('titulo', 'Proveedores')
 
 @section('contenido')
-
+<br>
 <div class="container">
 
 <div class="card table-responsive">
@@ -23,12 +23,12 @@
         <tbody>
           <tr>
             <th scope="row">1</th>
-            <td>Proveedor 1</td>
+            <td><a href="{{route('detallep',1)}}"> Proveedor 1 </a></td>
             <td>Empresa 1</td>
             <td>77.959.554-7</td>
             <td>950161342</td>
             <td>
-                <span><a href="" ><i class="fas fa-edit text-success">&nbsp;</a></i></span>
+                <span><a href="{{route('editprov',1)}}" ><i class="fas fa-edit text-success">&nbsp;</a></i></span>
                 <span><a href="" ><i class="fas fa-trash-alt text-danger"></a></i></span>
             </td>
           </tr>
