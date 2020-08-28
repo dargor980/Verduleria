@@ -3,7 +3,7 @@
 @section('titulo', 'Stock')
 
 @section('contenido')
-
+<br>
 <div class="container">
   <div class="card table-responsive">
       <h1 class="text-center text-white my-4">Stock de Productos: Congelados</h1>

@@ -1,0 +1,25 @@
+@extends('plantilla')
+
+@section('titulo', 'Cliente')
+
+@section('contenido')
+<br><br><br><br><br><br>
+<div class="container">
+    <div class="modal-content my-2">
+        <br>
+        <div>
+            <h2 class="my-2 text-white text-center">Braulio Argandoña Carrasco</h2>
+        </div>
+        <div class="row my-3">
+            <div class="col-md-2"></div>
+                <div class="col-md-8">
+                    <h4 class="text-white">Datos del cliente:</h4>
+                    <div class="card1 my-2"><h5>&nbsp; Fono: 950161342</h5></div>
+                    <div class="card1 my-2"><h5>&nbsp; Domicilio: Ester Hunneus 2045, Puente Alto</h5></div>
+                    <div class="card1 my-2"><h5>&nbsp; Depto: </h5></div>
+                </div>
+            <div class="col-md-2"></div>
+        </div>
+    </div>
+</div>
+@endsection

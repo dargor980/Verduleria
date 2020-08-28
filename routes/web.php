@@ -39,6 +39,10 @@ Route::get('/proveedores/lista', 'ProveedorController@index')->name('listaprov')
 
 Route::get('/cliente/new', 'ClienteController@create')->name('newcliente');
 
+Route::get('/clientes/lista', 'ClienteController@index')->name('listaclientes');
+
+Route::get('/clientes/detalles/{id}', 'ClienteController@show')->name('detallec');
+
 Route::get('/inventario/new', 'InventarioController@show')->name('newstock');
 
 Route::get('/inventario/listaverduleria', 'InventarioController@showverduleria')->name('listav');

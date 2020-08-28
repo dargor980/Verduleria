@@ -529,3 +529,9 @@
     background: #ffffff !important;
     border-radius: 10px;
   }
+
+  .card1{
+    background: #ffffff !important;
+    border-radius: 10px;
+    font-family: "Font Awesome 5 Free";
+  }

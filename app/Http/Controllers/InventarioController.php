@@ -16,4 +16,13 @@ class InventarioController extends Controller
         return view('Inventario.new');
     }
 
+    public function showverduleria()
+    {
+        return view('Inventario.listaverduleria');
+    }
+
+    public function showcongelados()
+    {
+        return view('Inventario.listacongelados');
+    }
 }

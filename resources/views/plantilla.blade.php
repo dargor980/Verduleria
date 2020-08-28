@@ -174,16 +174,10 @@
                   <div class="sidebar-submenu">
                     <ul>
                       <li>
-                        <a href="#">Ver Clientes</a>
+                        <a href="{{route('listaclientes')}}">Ver Clientes</a>
                       </li>
                       <li>
                         <a href="{{route('newcliente')}}">Nuevo Cliente</a>
-                      </li>
-                      <li>
-                        <a href="#">Modificar Cliente</a>
-                      </li>
-                      <li>
-                        <a href="#">Eliminar Cliente</a>
                       </li>
                     </ul>
                   </div>
