@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Categoria;
+use App\Sucursal;
 
 class CategoriasController extends Controller
 {
@@ -25,7 +26,9 @@ class CategoriasController extends Controller
      */
     public function create()
     {
-        return view('Producto.categorianew');
+        $sucursales= Sucursal::all();
+        $categorias= Categoria::all();
+        return view('Producto.categorianew',compact('sucursales','categorias'));
     }
 
     /**
@@ -37,10 +40,15 @@ class CategoriasController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'tipo' => 'required'
+            'tipo' => 'required',
+            'sucursalId' => 'required'
         ]);
         $categoria= new Categoria();
         $categoria->tipo= $request->tipo;
+        $categoria->sucursalId= $request->sucursalId;
+        $categoria->save();
+
+        return back()->with('mensaje','Categoría añadida');
 
     }
 
@@ -84,9 +92,11 @@ class CategoriasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        $destroyCategoria= Categoria::find($id);
+        $destroyCategoria= Categoria::find($request->categoriaId);
         $destroyCategoria->delete();
+
+        return back()->with('mensaje2','Categoría eliminada');
     }
 }

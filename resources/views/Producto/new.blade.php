@@ -52,7 +52,7 @@
                     @error('stockId')
                          <div class="alert alert-danger"> El Stock es obligatorio </div>
                      @enderror
-                    <input name='stockId' type="number" placeholder="Cantidad de Stock" class="form-control"> 
+                    <input name='cantidad' type="number" min="0" placeholder="Cantidad de Stock" class="form-control"> 
                 </div>
 
                 <select name='medidaId' class="custom-select  mb-3">

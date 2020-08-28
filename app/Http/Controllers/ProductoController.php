@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Producto;
+use App\Stock;
 
 
 
@@ -52,13 +53,17 @@ class ProductoController extends Controller
             'categoriaId' => 'required',
             'stockId' => 'required'
         ]);
+        
+        $stock= new Stock();
+        $stock->cantidad = $request->cantidad;
+        $stock->save();
 
         $producto= new Producto();
         $producto->nombre= $request->nombre;
         $producto->precio= $request->precio;
         $producto->medidaId= $request->medidaId;
         $producto->categoriaId= $request->categoriaId;
-        $producto->stockId= $request->stockId;
+        $producto->stockId= $stock->id;
 
         $producto->save();
         return back()->with('mensaje','Producto agregado.');

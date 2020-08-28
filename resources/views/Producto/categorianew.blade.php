@@ -18,18 +18,30 @@
             <div>
                 <h4 class="my-2 text-white">Nueva Categoria</h4>
             </div>
-            <form method="POST" class="col-12" enctype="multipart/form-data">
+        <form method="POST" action="{{route('addcategoria')}}"class="col-12" enctype="multipart/form-data">
                 @csrf
             <br>
+                @error('tipo')
+                    <div class="badge badge-danger float-right"> *El Nombre de la categoria es obligatoria </div>
+                @enderror
                 <div class="input-group form-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-edit"></i></span>
                     </div>
-                     @error('nombre')
-                         <div class="alert alert-danger"> El Nombre de la categoria es obligatoria </div>
-                     @enderror
-                    <input name='nombre' type="text" placeholder="Categoria" class="form-control">
+                     
+                    <input name='tipo' type="text" placeholder="Categoria" class="form-control">
                 </div>
+
+                @error('tipo')
+                    <div class="badge badge-danger float-right"> *Debe seleccionar una sucursal </div>
+                @enderror
+                <select name='sucursalId' class="custom-select">
+                    <option selected>Seleccione una sucursal:</option>
+                    @foreach($sucursales as $item)
+                    <option value="{{$item->id}}">{{$item->nombre}}</option>
+                    @endforeach
+                </select>
+                <br>
                 <br>
                 <button class="btn btn-success mb-3 text-white" type="submit"><i class="fas fa-plus"></i> Añadir</button>
             </form>
@@ -41,22 +53,24 @@
     <div class="col-sm-12">
         <div class="modal-content my-2">
         <br>
-        @if (session('mensaje'))
+        @if (session('mensaje2'))
             <div class="container my-3">
                 <div class="alert alert-success">
-                    {{session('mensaje')}}
+                    {{session('mensaje2')}}
                 </div>
             </div>           
         @endif
             <div>
                 <h4 class="my-2 text-white">Eliminar Categoria</h4>
             </div>
-            <form method="POST" class="col-12" enctype="multipart/form-data">
+            <form method="POST" action="{{route('deletecategoria')}}" class="col-12" enctype="multipart/form-data">
                 @csrf
             <br>
             <select name='categoriaId' class="custom-select">
                 <option selected>Seleccione una categoria:</option>
-                <option value="1">Categoria 1</option>
+                @foreach($categorias as $item)
+                <option value="{{$item->id}}">{{$item->tipo}}</option>
+                @endforeach
             </select>
             <br>
                 <br>

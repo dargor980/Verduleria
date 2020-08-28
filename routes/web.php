@@ -47,3 +47,7 @@ Route::get('/inventario/listacongelados', 'InventarioController@showcongelados')
 
 Route::post('/cliente/new/add','ClienteController@store')->name('addcliente');
 
+Route::post('/producto/categoria/add','CategoriasController@store')->name('addcategoria');
+
+Route::post('/producto/categoria/delete','CategoriasController@destroy')->name('deletecategoria');
+
