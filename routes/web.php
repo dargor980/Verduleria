@@ -47,6 +47,8 @@ Route::get('/proveedores/detalles/{id}', 'ProveedorController@show')->name('deta
 
 Route::get('/proveedores/editar/{id}', 'ProveedorController@edit')->name('editprov');
 
+Route::get('/proveedores/eliminar/{id}','ProveedorController@destroy')->name('deleteprov');
+
 Route::get('/clientes/new', 'ClienteController@create')->name('newcliente');
 
 Route::get('/clientes/lista', 'ClienteController@index')->name('listaclientes');

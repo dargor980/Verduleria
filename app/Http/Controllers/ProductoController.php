@@ -82,7 +82,9 @@ class ProductoController extends Controller
      */
     public function show($id)
     {
-        //
+        $producto= Producto::find($id);
+        $stock= Stock::where('id','=',$producto->stockId);
+        return view('Producto.detalles',compact('producto','stock'));
     }
 
     /**
