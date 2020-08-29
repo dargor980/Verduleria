@@ -5,16 +5,19 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <title>@yield('titulo')</title>
   </head>
-  <body class="fondobody">
+  <body class="fondobody" onload="startTime()">
 
     <nav id="navbar" class="navbar navbar-expand-lg navbar-light navbargeneral">
       <!--OPCIONES NAVBAR-->
       <div class="collapse navbar-collapse justify-content-end">
         <ul class="navbar-nav ml-md-auto d-none d-md-flex">
-          <li class="nav-item active">
-            <i class="far fa-clock text-white"></i>&nbsp;
-            <a class="text-white">27/08/2020</a>
-            <a class="text-white">20:30 hrs</a>
+          <li class="nav-item active"> 
+            <div id="clockdate">
+              <div class="clockdate-wrapper">  
+                <div id="clock" class="text-white"></div>
+                <div id="date" class="text-white"></div>
+              </div>
+            </div>
           </li>
         </ul>
       </div>
@@ -239,5 +242,42 @@
             });
         });
     </script>
+
+{{--Script del reloj digital--}}
+    <script>
+      function startTime() {
+        var today = new Date();
+        var hr = today.getHours();
+        var min = today.getMinutes();
+        var sec = today.getSeconds();
+        ap = (hr < 12) ? "<span>AM</span>" : "<span>PM</span>";
+        hr = (hr == 0) ? 12 : hr;
+        hr = (hr > 12) ? hr - 12 : hr;
+        //Add a zero in front of numbers<10
+        hr = checkTime(hr);
+        min = checkTime(min);
+        sec = checkTime(sec);
+        document.getElementById("clock").innerHTML = `<i class="far fa-clock text-white"></i> &nbsp;` + hr + ":" + min + ":" + sec + " " + ap;
+        
+        var months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+        var days = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+        var curWeekDay = days[today.getDay()];
+        var curDay = today.getDate();
+        var curMonth = months[today.getMonth()];
+        var curYear = today.getFullYear();
+        var date = curWeekDay+", "+curDay+" "+curMonth+" "+curYear;
+        document.getElementById("date").innerHTML = date;
+        
+        var time = setTimeout(function(){ startTime() }, 500);
+    }
+    function checkTime(i) {
+        if (i < 10) {
+            i = "0" + i;
+        }
+        return i;
+    }
+    </script>
+  {{--Script del reloj digital--}}
+  
   </body>
 </html>
