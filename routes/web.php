@@ -37,6 +37,9 @@ Route::get('/producto/categorianew', 'CategoriasController@create')->name('newca
 
 Route::post('/producto/categoria/add','CategoriasController@store')->name('addcategoria');
 
+Route::get('/producto/detalles/edit/{id}','ProductoController@edit')->name('editprod');
+
+
 Route::post('/producto/categoria/delete','CategoriasController@destroy')->name('deletecategoria');
 
 Route::get('/proveedores/new', 'ProveedorController@create')->name('newprov');

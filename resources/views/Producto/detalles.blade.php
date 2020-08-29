@@ -10,7 +10,7 @@
         <div>
             <div class="text-right mr-5">
                 <span><a href="{{route('editprod',$producto->id)}}" ><i class="fas fa-edit text-success btn btn-light"></a></i></span>
-                <span><a href="{{route('deleteprod',$producto->id)}}" ><i class="fas fa-trash-alt text-danger btn btn-light"></a></i></span>
+                <span><a href="" ><i class="fas fa-trash-alt text-danger btn btn-light"></a></i></span>
             </div>
             <h2 class="my-2 text-white text-center">{{$producto->nombre}}</h2>
         </div>
@@ -19,9 +19,9 @@
                 <div class="col-md-8">
                     <h4 class="text-white">Datos del producto:</h4>
                     <div class="card card1 my-2"><h5>&nbsp; Precio: {{$producto->precio}}</h5></div>
-                    <div class="card card1 my-2"><h5>&nbsp; Costo: {{$producto->costo}} </h5></div>
-                    <div class="card card1 my-2"><h5>&nbsp; Ganancia: {{$producto->ganancia}} </h5></div>
-                    <div class="card card1 my-2"><h5>&nbsp; Unidad de medida: {{$producto->medidaId}}</h5></div>
+                    <div class="card card1 my-2"><h5>&nbsp; Costo: ${{$producto->costo}} </h5></div>
+                    <div class="card card1 my-2"><h5>&nbsp; Ganancia: ${{$producto->ganancia}} </h5></div>
+                    <div class="card card1 my-2"><h5>&nbsp; Unidad de medida: @foreach($medida as $item){{$item->nombre}}@endforeach</h5></div>
                 </div>
             <div class="col-md-2"></div>
         </div>

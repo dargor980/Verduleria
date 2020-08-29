@@ -56,7 +56,8 @@ class ProductoController extends Controller
             'precio' => 'required',
             'medidaId' => 'required',
             'categoriaId' => 'required',
-            'cantidad' => 'required'
+            'cantidad' => 'required',
+            'costo'    =>  'required'
         ]);
         
         $stock= new Stock();
@@ -69,6 +70,8 @@ class ProductoController extends Controller
         $producto->medidaId= $request->medidaId;
         $producto->categoriaId= $request->categoriaId;
         $producto->stockId= $stock->id;
+        $producto->costo= $request->costo;
+        $producto->ganancia= $request->precio - $request->costo;
 
         $producto->save();
         return back()->with('mensaje','Producto agregado.');
@@ -84,7 +87,8 @@ class ProductoController extends Controller
     {
         $producto= Producto::find($id);
         $stock= Stock::where('id','=',$producto->stockId);
-        return view('Producto.detalles',compact('producto','stock'));
+        $medida= Medida::where('id','=',$producto->medidaId)->get();
+        return view('Producto.detalles',compact('producto','stock','medida'));
     }
 
     /**
