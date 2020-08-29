@@ -31,6 +31,8 @@ Route::get('/producto/new', 'ProductoController@create')->name('newprod');
 
 Route::get('/producto/lista', 'ProductoController@index')->name('listaprod');
 
+Route::get('/producto/detalles/{id}', 'ProductoController@show')->name('detalleprod');
+
 Route::get('/producto/categorianew', 'CategoriasController@create')->name('newcategoria');
 
 Route::post('/producto/categoria/add','CategoriasController@store')->name('addcategoria');
@@ -43,7 +45,7 @@ Route::post('/proveedores/new/add','ProveedorController@store')->name('addprov')
 
 Route::get('/proveedores/lista', 'ProveedorController@index')->name('listaprov');
 
-Route::get('/proveedores/detalles/{id}', 'ProveedorController@show')->name('detallep');
+Route::get('/proveedores/detalles/{id}', 'ProveedorController@show')->name('detalleprov');
 
 Route::get('/proveedores/editar/{id}', 'ProveedorController@edit')->name('editprov');
 

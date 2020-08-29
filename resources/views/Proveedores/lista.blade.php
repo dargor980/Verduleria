@@ -24,7 +24,7 @@
           @foreach($proveedores as $item)
           <tr>
             <th scope="row">{{$item->id}}</th>
-            <td><a href="{{route('detallep',$item->id)}}"> {{$item->nombre}} </a></td>
+            <td><a href="{{route('detalleprov',$item->id)}}"> {{$item->nombre}} </a></td>
             <td>{{$item->empresa}}</td>
             <td>{{$item->rut}}</td>
             <td>{{$item->fono}}</td>

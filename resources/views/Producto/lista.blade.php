@@ -23,7 +23,7 @@
           @foreach($productos as $item)
           <tr>
           <th scope="row">{{$item->id}}</th>
-            <td>{{$item->nombre}}</td>
+            <td><a href="{{route('detalleprod', $item->id)}}">{{$item->nombre}} </a></td>
             <td>{{$item->precio}}</td>
             <td>@foreach($medidas as $aux)@if($aux->id==$item->medidaId){{$aux->nombre}}@endif @endforeach</td>
             <td>@foreach($categorias as $aux)@if($aux->id == $item->categoriaId){{$aux->tipo}}@endif @endforeach</td>
