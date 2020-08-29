@@ -9,6 +9,13 @@
 <div class="card table-responsive">
     <h1 class="text-center text-white my-4">Lista de Clientes</h1>
     <div class="container">
+      @if (session('mensaje'))
+        <div class="container my-3">
+            <div class="alert alert-success">
+                {{session('mensaje')}}
+            </div>
+        </div>           
+      @endif
     <table class="table table-sm table-hover">
         <thead>
           <tr class="boton text-white">
@@ -20,16 +27,19 @@
           </tr>
         </thead>
         <tbody>
+          @foreach($clientes as $item)
           <tr>
-            <td><a href="{{route('detallec',1)}}"> Braulio Argandoña Carrasco </a></td>
-            <td>950161342</td>
-            <td>Ester Hunneus 2045, Puente Alto</td>
-            <td>mi depto</td>
+            <td><a href="{{route('detallec',$item->id)}}"> {{$item->nombre}} </a></td>
+            <td>{{$item->fono}}</td>
+            <td>{{$item->domicilio}}</td>
+            <td>{{$item->depto}}</td>
             <td>
-                <span><a href="{{route('editcliente',1)}}" ><i class="fas fa-edit text-success">&nbsp;</a></i></span>
-                <span><a href="" ><i class="fas fa-trash-alt text-danger"></a></i></span>
+                <span><a href="{{route('editcliente',$item->id)}}" ><i class="fas fa-edit text-success">&nbsp;</a></i></span>
+              <span><a href="{{route('deletecliente',$item->id)}}" ><i class="fas fa-trash-alt text-danger"></a></i></span>
             </td>
           </tr>
+
+          @endforeach
         </tbody>
       </table>
     </div>

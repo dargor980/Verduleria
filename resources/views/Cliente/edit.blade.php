@@ -18,8 +18,11 @@
             <div>
                 <h4 class="my-2 text-white">Editar Cliente</h4>
             </div>
-        <form method="POST" action="{{route('addcliente')}}" class="col-12" enctype="multipart/form-data">
+        <form method="POST" action="{{route('updatecliente',$cliente->id)}}" class="col-12" enctype="multipart/form-data">
+            @method('PUT')
                 @csrf
+               
+                
             <br>
             @error('nombre')
                 <span class="badge badge-danger float-right"> El Nombre es obligatorio </span>
@@ -28,7 +31,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-edit"></i></span>
                     </div>
-                    <input name='nombre' type="text" placeholder="Nombre" class="form-control">
+                    <input name='nombre' type="text" placeholder="Nombre" class="form-control" value="{{$cliente->nombre}}">
                   
                 </div>
                  
@@ -41,7 +44,7 @@
                         <span class="input-group-text"><i class="fas fa-edit"></i></span>
                     </div>
                     
-                    <input name='fono' type="number" placeholder="Teléfono" class="form-control"> 
+                    <input name='fono' type="number" placeholder="Teléfono" class="form-control" value="{{$cliente->fono}}"> 
                 </div>
 
                 @error('domicilio')
@@ -52,14 +55,14 @@
                         <span class="input-group-text"><i class="fas fa-edit"></i></span>
                     </div>
                     
-                    <input name='domicilio' type="text" placeholder="Direccion" class="form-control"> 
+                    <input name='domicilio' type="text" placeholder="Direccion" class="form-control" value="{{$cliente->domicilio}}"> 
                 </div>
 
                 <div class="input-group form-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-edit"></i></span>
                     </div>
-                    <input name='depto' type="text" placeholder="Depto" class="form-control"> 
+                    <input name='depto' type="text" placeholder="Depto" class="form-control" value="{{$cliente->depto}}"> 
                 </div>
 
                 <br>

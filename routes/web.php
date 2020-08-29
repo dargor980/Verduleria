@@ -61,6 +61,10 @@ Route::post('/clientes/new/add','ClienteController@store')->name('addcliente');
 
 Route::get('/clientes/editar/{id}', 'ClienteController@edit')->name('editcliente');
 
+Route::put('/clientes/editar/update/{id}','ClienteController@update')->name('updatecliente');
+
+Route::get('/clientes/delete/{id}','ClienteController@destroy')->name('deletecliente');
+
 Route::get('/inventario/new', 'InventarioController@show')->name('newstock');
 
 Route::get('/inventario/listaverduleria', 'InventarioController@showverduleria')->name('listav');

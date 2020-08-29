@@ -115,6 +115,6 @@ class ClienteController extends Controller
     {
         $destroyCliente= Cliente::find($id);
         $destroyCliente->delete();
-        return back()->with('mensaje','Datos de cliente eliminado');
+        return ClienteController::index()->with('mensaje','Datos de cliente eliminado');
     }
 }
