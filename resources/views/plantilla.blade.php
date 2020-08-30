@@ -33,11 +33,8 @@
         <nav id="sidebar" class="sidebar-wrapper">
           <div class="sidebar-content">
             <div class="sidebar-brand sidebartitulo shadow-sm">
-              <a href="#" >
-                      <img src="/img/comida.png" class="icono" alt="">
-                      &nbsp;
-                        Santa Gemita
-                </a>
+                <img src="/img/comida.png" class="icono" alt="">
+                <a href="{{route('home')}}" class="ml-3">Santa Gemita</a>
               <div id="close-sidebar">
                 <i class="fas fa-times"></i>
               </div>
@@ -58,7 +55,7 @@
                           <a href="{{ route('logout') }}"
                               onclick="event.preventDefault();
                                             document.getElementById('logout-form').submit();">
-                              {{ __('Logout') }}
+                              {{ __('Cerrar Sesión') }}
                           </a>
 
                           <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
