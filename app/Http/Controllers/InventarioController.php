@@ -47,6 +47,10 @@ class InventarioController extends Controller
 
     public function updateStock(Request $request)
     {
+        $request->validate([
+            'cantidad' => 'required',
+            'stockId' => 'required|not_in:0'
+        ]);
         $stock= Stock::find($request->stockId);
         $stock->cantidad= $request->cantidad;
         $stock->save();

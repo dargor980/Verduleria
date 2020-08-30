@@ -94,6 +94,9 @@ class CategoriasController extends Controller
      */
     public function destroy(Request $request)
     {
+        $request->validate([
+            'categoriaId' => 'required|not_in:0'
+        ]);
         $destroyCategoria= Categoria::find($request->categoriaId);
         $destroyCategoria->delete();
 

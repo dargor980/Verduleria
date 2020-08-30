@@ -66,8 +66,11 @@
             <form method="POST" action="{{route('deletecategoria')}}" class="col-12" enctype="multipart/form-data">
                 @csrf
             <br>
+            @error('categoriaId')
+                <div class="badge badge-danger float-right">*Debe seleccionar un producto </div>
+            @enderror
             <select name='categoriaId' class="custom-select">
-                <option selected>Seleccione una categoria:</option>
+                <option selected value="0">Seleccione una categoria:</option>
                 @foreach($categorias as $item)
                 <option value="{{$item->id}}">{{$item->tipo}}</option>
                 @endforeach

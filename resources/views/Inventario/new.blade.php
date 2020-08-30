@@ -26,8 +26,11 @@
                 <form method="POST" action="{{route('updatestock')}}" class="col-12" enctype="multipart/form-data">
                     @csrf
                     <br>
+                    @error('stockId')
+                        <div class="badge badge-danger float-right">*Debe seleccionar un producto </div>
+                    @enderror
                     <select name='stockId' class="custom-select my-3">
-                        <option selected>Seleccione producto:</option>
+                        <option selected value="0">Seleccione producto:</option>
                         @foreach($productos as $item)
                         <option value="{{$item->stockId}}">{{$item->nombre}}</option>
                         @endforeach
