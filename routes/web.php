@@ -39,6 +39,8 @@ Route::post('/producto/categoria/add','CategoriasController@store')->name('addca
 
 Route::get('/producto/detalles/edit/{id}','ProductoController@edit')->name('editprod');
 
+Route::get('/producto/delete/{id}','ProductoController@destroy')->name('deleteprod');
+
 
 Route::post('/producto/categoria/delete','CategoriasController@destroy')->name('deletecategoria');
 
@@ -69,6 +71,8 @@ Route::put('/clientes/editar/update/{id}','ClienteController@update')->name('upd
 Route::get('/clientes/delete/{id}','ClienteController@destroy')->name('deletecliente');
 
 Route::get('/inventario/new', 'InventarioController@show')->name('newstock');
+
+Route::post('/inventario/new/update','InventarioController@updateStock')->name('updatestock');
 
 Route::get('/inventario/listaverduleria', 'InventarioController@showverduleria')->name('listav');
 

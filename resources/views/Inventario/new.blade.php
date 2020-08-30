@@ -18,24 +18,29 @@
         <div>
             <h2 class="my-2 text-white">Stock de Producto</h2>
         </div>
+        
+        
         <div class="row">
             <div class="col-md-1"></div>
             <div class="col-md-10">
-                <form method="POST" class="col-12" enctype="multipart/form-data">
+                <form method="POST" action="{{route('updatestock')}}" class="col-12" enctype="multipart/form-data">
                     @csrf
                     <br>
-                    <select name='categoriaId' class="custom-select my-3">
+                    <select name='stockId' class="custom-select my-3">
                         <option selected>Seleccione producto:</option>
-                        <option value="1">Producto 1</option>
+                        @foreach($productos as $item)
+                        <option value="{{$item->stockId}}">{{$item->nombre}}</option>
+                        @endforeach
                     </select>
+                    @error('cantidad')
+                        <div class="badge badge-danger float-right">*El Stock es obligatorio </div>
+                    @enderror
                     <div class="input-group form-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-box-open"></i></span>
                         </div>
-                        @error('stockId')
-                                <div class="alert alert-danger"> El Stock es obligatorio </div>
-                            @enderror
-                        <input name='stockId' type="number" placeholder="Cantidad de Stock" class="form-control"> 
+                       
+                        <input name='cantidad' type="number" placeholder="Cantidad de Stock" class="form-control"> 
                     </div>
                     <br>
                     <button class="btn btn-success mb-3 text-white" type="submit"><i class="fas fa-cash-register"></i> Enviar</button>
@@ -59,19 +64,23 @@
                 </tr>
                 </thead>
                 <tbody>
+                @foreach($productos as $item)
                 <tr>
-                    <td>Lechugas</td>
-                    <td>600</td>
-                    <td>20</td>
-                    <td>Unidades</td>
-                    <td>Hortalizas</td>
+                    <td>{{$item->nombre}}</td>
+                    <td>{{$item->precio}}</td>
+                    <td>@foreach($stocks as $cantidad)@if($cantidad->id==$item->stockId){{$cantidad->cantidad}}@endif @endforeach</td>
+                    <td>@foreach($medidas as $medida) @if($medida->id==$item->medidaId) {{$medida->nombre}}@endif @endforeach</td>
+                    <td>@foreach($categorias as $categoria)@if($categoria->id==$item->categoriaId) {{$categoria->tipo}} @endif  @endforeach</td>
                     <td>
-                        <span><a href="" ><i class="fas fa-edit text-success">&nbsp;</a></i></span>
-                        <span><a href="" ><i class="fas fa-trash-alt text-danger"></a></i></span>
+                        <span><a href="{{route('editprod',$item->id)}}" ><i class="fas fa-edit text-success">&nbsp;</a></i></span>
+                        <span><a href="{{route('deleteprod',$item->id)}}" ><i class="fas fa-trash-alt text-danger"></a></i></span>
                     </td>
                 </tr>
+                @endforeach
                 </tbody>
             </table>
+
+            {{$productos->links()}}
         </div>
     </div>
 </div>

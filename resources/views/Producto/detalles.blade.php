@@ -18,7 +18,7 @@
             <div class="col-md-2"></div>
                 <div class="col-md-8">
                     <h4 class="text-white">Datos del producto:</h4>
-                    <div class="card card1 my-2"><h5>&nbsp; Precio: {{$producto->precio}}</h5></div>
+                    <div class="card card1 my-2"><h5>&nbsp; Precio: ${{$producto->precio}}</h5></div>
                     <div class="card card1 my-2"><h5>&nbsp; Costo: ${{$producto->costo}} </h5></div>
                     <div class="card card1 my-2"><h5>&nbsp; Ganancia: ${{$producto->ganancia}} </h5></div>
                     <div class="card card1 my-2"><h5>&nbsp; Unidad de medida: @foreach($medida as $item){{$item->nombre}}@endforeach</h5></div>

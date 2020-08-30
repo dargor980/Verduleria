@@ -139,4 +139,5 @@ class ProductoController extends Controller
         $destroyProducto->delete();
         return back()->with('mensaje','Producto eliminado.');
     }
+
 }

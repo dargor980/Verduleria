@@ -1,8 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use App\Producto;
+use App\Categoria;
+use App\Sucursal;
+use App\Stock;
+use App\Medida;
 
 class InventarioController extends Controller
 {
@@ -13,16 +18,40 @@ class InventarioController extends Controller
 
     public function show()
     {
-        return view('Inventario.new');
+        $stocks=Stock::all();
+        $productos=Producto::paginate(5);
+        $categorias=Categoria::all();
+        $medidas= Medida::all();
+        return view('Inventario.new',compact('stocks','productos','categorias','medidas'));
     }
 
     public function showverduleria()
     {
-        return view('Inventario.listaverduleria');
+        $productos= DB::table('productos')
+                    ->join('categorias','categoriaId','=','categorias.id')
+                    ->join('sucursals','sucursalId','=','sucursals.id')
+                    ->where('sucursals.nombre','=','Verduleria')
+                    ->select('productos.id','productos.nombre','productos.medidaId','productos.precio','productos.categoriaId','productos.stockId')
+                    ->get();
+        
+        $categorias= Categoria::all();
+        $stocks= Stock::all();
+        $medidas= Medida::all();
+        return view('Inventario.listaverduleria',compact('productos','categorias','stocks','medidas'));
     }
 
     public function showcongelados()
     {
         return view('Inventario.listacongelados');
+    }
+
+    public function updateStock(Request $request)
+    {
+        $stock= Stock::find($request->stockId);
+        $stock->cantidad= $request->cantidad;
+        $stock->save();
+
+        return back()->with('mensaje','Stock del producto actualizado');
+        
     }
 }
