@@ -28,8 +28,8 @@
             <td>@foreach($medidas as $aux)@if($aux->id==$item->medidaId){{$aux->nombre}}@endif @endforeach</td>
             <td>@foreach($categorias as $aux)@if($aux->id == $item->categoriaId){{$aux->tipo}}@endif @endforeach</td>
             <td>
-                <span><a href="" ><i class="fas fa-edit text-success">&nbsp;</a></i></span>
-                <span><a href="" ><i class="fas fa-trash-alt text-danger"></a></i></span>
+              <span><a href="{{route('editprod', $item->id)}}" ><i class="fas fa-edit text-success">&nbsp;</a></i></span>
+                <span><a href="{{route('deleteprod', $item->id)}}" ><i class="fas fa-trash-alt text-danger"></a></i></span>
             </td>
           </tr>
           @endforeach
