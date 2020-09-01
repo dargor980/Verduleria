@@ -91,3 +91,10 @@ Route::post('/producto/new/add','ProductoController@store')->name('addproducto')
 
 Route::get('/pedido/new', 'PedidosController@create')->name('newpedido');
 
+Route::get('/clientespedidos','PedidosController@indexClientesPedidos');
+
+Route::get('/productospedidos','PedidosController@indexProductos');
+
+Route::post('/addclientepedido','PedidosController@addCliente');
+
+Route::post('/searchcliente','PedidosController@SearchClienteById');

@@ -44,6 +44,8 @@
           @endforeach
         </tbody>
       </table>
+
+      {{$proveedores->links()}}
     </div>
     </div>
 </div>

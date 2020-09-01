@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Pedido;
 use App\Contenido;
+use App\Cliente;
+use App\Producto;
 
 class PedidosController extends Controller
 {
@@ -22,6 +24,16 @@ class PedidosController extends Controller
     {
         $pedidos= Pedido::paginate(10);
         return view('Pedido.lista',compact('pedidos'));
+    }
+
+    public function indexClientesPedidos(){
+        return Cliente::all();
+    }
+
+    public function indexProductos()
+    {
+        return Producto::all();
+
     }
 
     /**
@@ -117,5 +129,23 @@ class PedidosController extends Controller
     public function CreatePdfReport()
     {
 
+    }
+
+    public function addCliente(Request $request)
+    {
+        $cliente= new Cliente();
+        $cliente->nombre= $request->nombre;
+        $cliente->fono= $request->fono;
+        $cliente->domicilio= $request->domicilio;
+        $cliente->depto= $request->depto;
+        $cliente->save();
+        return $cliente;
+
+    }
+
+    public function SearchClienteById(Request $request)
+    {
+        $cliente= Cliente::find($request->id);
+        return $cliente;
     }
 }

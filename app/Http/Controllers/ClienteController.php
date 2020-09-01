@@ -23,6 +23,7 @@ class ClienteController extends Controller
         return view('Cliente.lista',compact('clientes'));
     }
 
+
     /**
      * Show the form for creating a new resource.
      *
