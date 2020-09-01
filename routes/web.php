@@ -89,3 +89,5 @@ Route::post('/producto/categoria/delete','CategoriasController@destroy')->name('
 
 Route::post('/producto/new/add','ProductoController@store')->name('addproducto');
 
+Route::get('/pedido/new', 'PedidosController@create')->name('newpedido');
+

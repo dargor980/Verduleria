@@ -73,7 +73,7 @@
                   <div class="sidebar-submenu">
                     <ul>
                       <li>
-                        <a href="#" >Nuevo Pedido</a>
+                        <a href="{{route('newpedido')}}" >Nuevo Pedido</a>
                       </li>
                       <li>
                         <a href="#">Ver Pedidos</a>
