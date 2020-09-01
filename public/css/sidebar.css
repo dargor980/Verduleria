@@ -493,6 +493,7 @@
     background-image: url('../img/fondofrutas.jpg');
     background-size: cover;
     background-repeat: no-repeat;
+    background-attachment: fixed
   }
 
   .navbargeneral{
