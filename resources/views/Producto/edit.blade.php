@@ -18,7 +18,8 @@
             <div>
                 <h4 class="my-2 text-white">Editar Producto</h4>
             </div>
-            <form method="POST" action="{{route('')}}"  class="col-12" enctype="multipart/form-data">
+            <form method="POST" action="{{route('updateprod',$producto->id)}}"  class="col-12" enctype="multipart/form-data">
+                @method('PUT')
                 @csrf
             <br>
                 @error('nombre')
@@ -29,17 +30,17 @@
                         <span class="input-group-text"><i class="fas fa-edit"></i></span>
                     </div>
                      
-                    <input name='nombre' type="text" placeholder="Nombre del producto" class="form-control">
+                    <input name='nombre' type="text" placeholder="Nombre del producto" class="form-control" value="{{$producto->nombre}}">
                 </div>
 
                 @error('precio')
-                    <div class="badge badge-danger float-right"> *El Precio es obligatorio </div>
+                    <div class="badge badge-danger float-right"> *El Precio de venta es obligatorio </div>
                 @enderror
                 <div class="input-group form-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-money-bill-wave"></i></span>
                     </div>
-                    <input name='precio' type="number" placeholder="Precio venta" class="form-control"> 
+                    <input name='precio' type="number" placeholder="Precio venta" class="form-control" value="{{$producto->precio}}"> 
                 </div>
 
                 @error('costo')
@@ -50,21 +51,24 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-money-bill-wave"></i></span>
                     </div>
-                    <input name='costo' type="number" placeholder="Precio costo" class="form-control"> 
+                    <input name='costo' type="number" placeholder="Precio costo" class="form-control" value="{{$producto->costo}}"> 
                 </div>
 
                 @error('categoriaId')
                     <div class="badge badge-danger float-right"> *Debe seleccionar una categoría </div>
                 @enderror
                 <select name='categoriaId' class="custom-select  mb-3">
-                    <option selected>Seleccione una categoria:</option>
+                    <option selected value="0">Seleccione una categoria:</option>
                     @foreach($categorias as $item)
                     <option value="{{$item->id}}">{{$item->tipo}}</option>
                     @endforeach
                 </select>
 
+                @error('medidaId')
+                    <div class="badge badge-danger float-right"> *Debe seleccionar una categoría </div>
+                @enderror
                 <select name='medidaId' class="custom-select  mb-3">
-                    <option selected>Seleccione Unidad de Medida:</option>
+                    <option selected value="0">Seleccione Unidad de Medida:</option>
                     @foreach($unidadMedida as $item)
                     <option value="{{$item->id}}">{{$item->nombre}}</option>  
                     @endforeach                

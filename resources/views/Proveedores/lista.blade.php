@@ -9,6 +9,13 @@
 <div class="card table-responsive">
     <h1 class="text-center text-white my-4">Lista de Proveedores</h1>
     <div class="container">
+      @if (session('mensaje'))
+        <div class="container my-3">
+            <div class="alert alert-success">
+                <span><i class="fas fa-check"></i></span>{{session('mensaje')}}
+            </div>
+        </div>           
+    @endif
     <table class="table table-sm table-hover">
         <thead>
           <tr class="boton text-white">
@@ -30,7 +37,7 @@
             <td>{{$item->fono}}</td>
             <td>
                 <span><a href="{{route('editprov',$item->id)}}" ><i class="fas fa-edit text-success">&nbsp;</a></i></span>
-                <span><a href="" ><i class="fas fa-trash-alt text-danger"></a></i></span>
+                <span><a href="{{route('deleteprov',$item->id)}}" ><i class="fas fa-trash-alt text-danger"></a></i></span>
             </td>
           </tr>
 

@@ -16,4 +16,20 @@ class EstadisticasController extends Controller
     {
         $this->middleware('auth');
     }
+
+
+    public function masVendidos()
+    {
+        
+    }
+
+    public function clientesFrecuentes()
+    {
+
+    }
+
+    public function historialVentas()
+    {
+        
+    }
 }

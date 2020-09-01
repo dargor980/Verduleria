@@ -79,7 +79,7 @@ class ProveedorController extends Controller
     public function edit($id)
     {
         $proveedor= Proveedor::findOrFail($id);
-        return view('Proveedores.edit');
+        return view('Proveedores.edit',compact('proveedor'));
     }
 
     /**
@@ -113,6 +113,6 @@ class ProveedorController extends Controller
     {
         $destroyProveedor= Proveedor::find($id);
         $destroyProveedor->delete();
-        return back()->with('mensaje','Proveedor eliminado');
+        return ProveedorController::index()->with('mensaje','Proveedor eliminado');
     }
 }

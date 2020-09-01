@@ -18,7 +18,8 @@
             <div>
                 <h4 class="my-2 text-white">Editar Proveedor</h4>
             </div>
-            <form method="POST" class="col-12" enctype="multipart/form-data">
+            <form method="POST" action="{{route('updateprov',$proveedor->id)}}" class="col-12" enctype="multipart/form-data">
+                @method('PUT')
                 @csrf
             <br>
                 <div class="input-group form-group">
@@ -28,21 +29,21 @@
                     @error('nombre')
                          <div class="alert alert-danger"> El Nombre es obligatorio </div>
                      @enderror
-                    <input name='nombre' type="text" placeholder="Nombre del proveedor" class="form-control">
+                    <input name='nombre' type="text" placeholder="Nombre del proveedor" class="form-control" value="{{$proveedor->nombre}}">
                 </div>
 
                 <div class="input-group form-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-edit"></i></span>
                     </div>
-                    <input name='empresa' type="text" placeholder="Empresa" class="form-control">
+                    <input name='empresa' type="text" placeholder="Empresa" class="form-control" value="{{$proveedor->empresa}}">
                 </div>
 
                 <div class="input-group form-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-edit"></i></span>
                     </div>
-                    <input name='rut' type="text" placeholder="Rut de Empresa" class="form-control">
+                    <input name='rut' type="text" placeholder="Rut de Empresa" class="form-control" value="{{$proveedor->rut}}">
                 </div>
 
                 <div class="input-group form-group">
@@ -52,14 +53,14 @@
                     @error('fono')
                          <div class="alert alert-danger"> El Teléfono es obligatorio </div>
                      @enderror
-                    <input name='fono' type="number" placeholder="Teléfono" class="form-control"> 
+                    <input name='fono' type="number" placeholder="Teléfono" class="form-control" value="{{$proveedor->fono}}"> 
                 </div>
 
                 <div class="input-group form-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-edit"></i></span>
                     </div>
-                    <input name='direccion' type="text" placeholder="Direccion" class="form-control"> 
+                    <input name='direccion' type="text" placeholder="Direccion" class="form-control" value="{{$proveedor->direccion}}"> 
                 </div>
 
                 <div class="input-group form-group">
@@ -67,10 +68,10 @@
                         <span class="input-group-text"><i class="fas fa-edit"></i></span>
                         
                     </div>
-                    <textarea name='descripcion' id=""  placeholder="Descripcion" class="form-control"></textarea>
+                    <textarea name='descripcion' id="" placeholder="Descripcion" class="form-control" ></textarea>
                 </div>
                 <br>
-                <button class="btn btn-success mb-3 text-white" type="submit"><i class="fas fa-paper-plane text-white"></i> Guardar</button>
+                <button class="btn btn-success mb-3 text-white" type="submit"><i class="fas fa-save"></i> Guardar</button>
             </form>
         </div>
     </div> 

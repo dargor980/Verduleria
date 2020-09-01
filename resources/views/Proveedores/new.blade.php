@@ -11,7 +11,7 @@
         @if (session('mensaje'))
             <div class="container my-3">
                 <div class="alert alert-success">
-                    {{session('mensaje')}}
+                    <span><i class="fas fa-check"></i></span>&nbsp;{{session('mensaje')}}
                 </div>
             </div>           
         @endif

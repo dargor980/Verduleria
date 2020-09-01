@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
 Auth::routes();
@@ -41,6 +41,8 @@ Route::get('/producto/detalles/edit/{id}','ProductoController@edit')->name('edit
 
 Route::get('/producto/delete/{id}','ProductoController@destroy')->name('deleteprod');
 
+Route::put('/producto/edit/{id}','ProductoController@update')->name('updateprod');
+
 
 Route::post('/producto/categoria/delete','CategoriasController@destroy')->name('deletecategoria');
 
@@ -55,6 +57,8 @@ Route::get('/proveedores/detalles/{id}', 'ProveedorController@show')->name('deta
 Route::get('/proveedores/editar/{id}', 'ProveedorController@edit')->name('editprov');
 
 Route::get('/proveedores/eliminar/{id}','ProveedorController@destroy')->name('deleteprov');
+
+Route::put('/proveedores/editar/{id}','ProveedorController@update')->name('updateprov');
 
 Route::get('/clientes/new', 'ClienteController@create')->name('newcliente');
 

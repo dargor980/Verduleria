@@ -55,7 +55,7 @@ class ProductoController extends Controller
             'nombre' => 'required',
             'precio' => 'required',
             'medidaId' => 'required',
-            'categoriaId' => 'required',
+            'categoriaId' => 'required|not_in:0',
             'cantidad' => 'required',
             'costo'    =>  'required'
         ]);
@@ -100,8 +100,10 @@ class ProductoController extends Controller
     public function edit($id)
     {
         $producto= Producto::findOrFail($id);
+        $categorias= Categoria::all();
+        $unidadMedida= Medida::all();
 
-        return view('Producto.edit',compact('producto'));
+        return view('Producto.edit',compact('producto','categorias','unidadMedida'));
     }
 
     /**
@@ -116,12 +118,18 @@ class ProductoController extends Controller
         $request->validate([
             'nombre' => 'required',
             'precio' => 'required',
-            'medidaId' => 'required'
+            'medidaId' => 'required|not_in:0',
+            'costo'    => 'required',
+            'categoriaId' => 'required|not_in:0'
+            
         ]);
         $updateProducto= Producto::find($id);
         $updateProducto->nombre= $request->nombre;
         $updateProducto->precio= $request->precio;
         $updateProducto->medidaId= $request->medidaId;
+        $updateProducto->categoriaId= $request->categoriaId;
+        $updateProducto->costo= $request->costo;
+        $updateProducto->ganancia= $request->precio- $request->costo;
         $updateProducto->save();
 
         return back()->with('mensaje','Producto actualizado. ');
@@ -137,7 +145,7 @@ class ProductoController extends Controller
     {
         $destroyProducto= Producto::find($id);
         $destroyProducto->delete();
-        return back()->with('mensaje','Producto eliminado.');
+        return ProductoController::index()->with('mensaje','Producto eliminado');
     }
 
 }
