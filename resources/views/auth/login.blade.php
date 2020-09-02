@@ -5,7 +5,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
+            <div class="card card5">
                 <div class="card-header text-white" style="background-color: #156b4f; ">{{ __('Login') }}</div>
 
                 <div class="card-body">

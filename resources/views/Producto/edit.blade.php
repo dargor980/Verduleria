@@ -73,9 +73,12 @@
                     <option value="{{$item->id}}">{{$item->nombre}}</option>  
                     @endforeach                
                 </select>
-
                 <br>
-                <button class="btn btn-success mb-3 text-white" type="submit"><i class="fas fa-plus"></i> Editar</button>
+                <div class="row justify-content-center">
+                    <button class="btn btn-success mb-3 text-white" type="submit"><i class="fas fa-save"></i> Guardar</button>
+                    <a class="btn btn-success mb-3 text-white mx-2" href="{{route('listaprod')}}"> <i class="fas fa-reply text-white"></i> Lista</a>
+                    <a class="btn btn-success mb-3 text-white" href="{{route('detalleprod',$producto->id)}}"> <i class="fas fa-reply text-white"></i> Producto</a>
+                </div>
             </form>
         </div>
     </div> 

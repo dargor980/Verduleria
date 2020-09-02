@@ -6,7 +6,7 @@
 
 <div class="container">
 
-<div class="card table-responsive">
+<div class="card card5 table-responsive">
     <h1 class="text-center text-white my-4">Lista de Clientes</h1>
     <div class="container">
       @if (session('mensaje'))

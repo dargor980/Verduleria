@@ -5,7 +5,7 @@
 @section('contenido')
 <br>
 <div class="container">
-  <div class="card table-responsive">
+  <div class="card card5 table-responsive">
       <h1 class="text-center text-white my-4">Stock de Productos: Congelados</h1>
     <div class="container">
       <table class="table table-sm table-hover">

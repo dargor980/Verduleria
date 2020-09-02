@@ -68,10 +68,14 @@
                         <span class="input-group-text"><i class="fas fa-edit"></i></span>
                         
                     </div>
-                    <textarea name='descripcion' id="" placeholder="Descripcion" class="form-control" ></textarea>
+                <textarea name='descripcion' id="" placeholder="Descripcion" class="form-control" >{{$proveedor->descripcion}}</textarea>
                 </div>
                 <br>
-                <button class="btn btn-success mb-3 text-white" type="submit"><i class="fas fa-save"></i> Guardar</button>
+                <div class="row justify-content-center">
+                    <button class="btn btn-success mb-3 text-white" type="submit"><i class="fas fa-save"></i> Guardar</button>
+                    <a class="btn btn-success mb-3 text-white mx-2" href="{{route('listaprov')}}"> <i class="fas fa-reply text-white"></i> Lista</a>
+                    <a class="btn btn-success mb-3 text-white" href="{{route('detalleprov',$proveedor->id)}}"> <i class="fas fa-reply text-white"></i> Proveedor</a>
+                </div>
             </form>
         </div>
     </div> 

@@ -6,7 +6,7 @@
 <br>
 <div class="container">
 
-<div class="card table-responsive">
+<div class="card card5 table-responsive">
     <h1 class="text-center text-white my-4">Lista de Proveedores</h1>
     <div class="container">
       @if (session('mensaje'))
@@ -19,7 +19,6 @@
     <table class="table table-sm table-hover">
         <thead>
           <tr class="boton text-white">
-            <th scope="col">N°</th>
             <th scope="col">Nombre</th>
             <th scope="col">Empresa</th>
             <th scope="col">Rut</th>
@@ -30,7 +29,6 @@
         <tbody>
           @foreach($proveedores as $item)
           <tr>
-            <th scope="row">{{$item->id}}</th>
             <td><a href="{{route('detalleprov',$item->id)}}"> {{$item->nombre}} </a></td>
             <td>{{$item->empresa}}</td>
             <td>{{$item->rut}}</td>

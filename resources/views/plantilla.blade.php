@@ -77,7 +77,7 @@
                         <a href="{{route('newpedido')}}" >Nuevo Pedido</a>
                       </li>
                       <li>
-                        <a href="#">Ver Pedidos</a>
+                        <a href="{{route('listaped')}}">Ver Pedidos</a>
                       </li>
                       <li>
                         <a href="#">Administrar Pagos</a>

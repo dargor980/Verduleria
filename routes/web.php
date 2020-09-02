@@ -98,3 +98,7 @@ Route::get('/productospedidos','PedidosController@indexProductos');
 Route::post('/addclientepedido','PedidosController@addCliente');
 
 Route::post('/searchcliente','PedidosController@SearchClienteById');
+
+Route::get('/pedido/lista', 'PedidosController@index')->name('listaped');
+
+Route::get('/pedido/detalle', 'PedidosController@show')->name('detallepedido');

@@ -66,7 +66,11 @@
                 </div>
 
                 <br>
-                <button class="btn btn-success mb-3 text-white" type="submit"><i class="fas fa-paper-plane text-white"></i> Guardar</button>
+                <div class="row justify-content-center">
+                    <button class="btn btn-success mb-3 text-white" type="submit"><i class="fas fa-save"></i> Guardar</button>
+                    <a class="btn btn-success mb-3 text-white mx-2" href="{{route('listaclientes')}}"> <i class="fas fa-reply text-white"></i> Lista</a>
+                    <a class="btn btn-success mb-3 text-white" href="{{route('detallec',$cliente->id)}}"> <i class="fas fa-reply text-white"></i> Cliente</a>
+                </div>
             </form>
         </div>
     </div> 

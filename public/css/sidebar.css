@@ -500,7 +500,11 @@
     background: rgba(21, 107, 79, 0.9) ;
   }
 
-  .card{
+  .card5{
+    background: rgba(21, 107, 79, 0.9) !important;
+  }
+
+  .card4{
     background: rgba(21, 107, 79, 0.9) !important;
   }
 
@@ -582,9 +586,7 @@
   }
 
   .card1{
-    background: #ffffff !important;
-    border-radius: 10px;
-    font-family: "Font Awesome 5 Free";
+    background: rgba(255,255,255,0.7) !important;
   }
 
   .card2{
@@ -609,6 +611,26 @@
       background: rgba(21, 107, 79, 0.9);
       margin: 0 auto;
       border-radius: 15px;
+    }
+
+    .pdf1{
+      background: #ffffff;
+      margin: 0 auto;
+    }
+
+    .imagenpdf{
+      height: auto;
+      width: 120px;
+    }
+
+    .columna3{
+      flex: 0 0 25%;
+      max-width: 25%;
+    }
+
+    .columna9{
+      flex: 0 0 75%;
+      max-width: 75%;
     }
 
     .cardproducto{
