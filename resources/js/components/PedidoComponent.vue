@@ -110,7 +110,7 @@
                             <input type="checkbox" v-model="productosSeleccionados" :checked="checked" :value="item">
                             {{item.nombre}}
                             <div class="col-xs-3 mt-2">
-                                <input type="number" class="form-control" placeholder="Cantidad(si queri le poni la medida)" v-model="cantidadSeleccionada">
+                                <input type="number" class="form-control" placeholder="Cantidad(si queri le poni la medida)" v-model="cantidadSeleccionada[index]">
                             </div>
                         </h6>
                         </div>
@@ -269,7 +269,10 @@ export default {
         addProducto(){
             this.productosadd=this.productosSeleccionados;
             this.cantidadAdd=this.cantidadSeleccionada;
-            console.log(this.cantidadAdd[0]);
+            this.productosadd.forEach(element => {
+                console.log(element.nombre);
+                
+            });
             this.pedidoFinal=true;
         },
 

@@ -2221,7 +2221,9 @@ __webpack_require__.r(__webpack_exports__);
     addProducto: function addProducto() {
       this.productosadd = this.productosSeleccionados;
       this.cantidadAdd = this.cantidadSeleccionada;
-      console.log(this.cantidadAdd[0]);
+      this.productosadd.forEach(function (element) {
+        console.log(element.nombre);
+      });
       this.pedidoFinal = true;
     },
     createPedido: function createPedido() {}
@@ -38275,8 +38277,8 @@ var render = function() {
                                   {
                                     name: "model",
                                     rawName: "v-model",
-                                    value: _vm.cantidadSeleccionada,
-                                    expression: "cantidadSeleccionada"
+                                    value: _vm.cantidadSeleccionada[index],
+                                    expression: "cantidadSeleccionada[index]"
                                   }
                                 ],
                                 staticClass: "form-control",
@@ -38285,14 +38287,19 @@ var render = function() {
                                   placeholder:
                                     "Cantidad(si queri le poni la medida)"
                                 },
-                                domProps: { value: _vm.cantidadSeleccionada },
+                                domProps: {
+                                  value: _vm.cantidadSeleccionada[index]
+                                },
                                 on: {
                                   input: function($event) {
                                     if ($event.target.composing) {
                                       return
                                     }
-                                    _vm.cantidadSeleccionada =
+                                    _vm.$set(
+                                      _vm.cantidadSeleccionada,
+                                      index,
                                       $event.target.value
+                                    )
                                   }
                                 }
                               })
