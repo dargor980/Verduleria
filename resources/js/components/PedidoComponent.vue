@@ -82,13 +82,13 @@
                     <div class="col-md-1"></div>
                     <div class="col-md-10">
                         <select  class="custom-select  mb-3"  v-model="clientePedidoId">
-                            <option selected>Seleccione un cliente:</option>
+                            <option selected :value="0">Seleccione un cliente:</option>
                             <option :value="item.id" v-for="(item,index) in clientes" :key="index">{{item.nombre}}</option>   
                         </select>
                     </div>
                     <div class="col-md-1"></div>
                     <div class="container text-center">
-                        <button class="btn btn-success mb-3 text-white" type="submit" >Seleccionar</button>
+                        <button class="btn btn-success mb-3 text-white" type="submit">Seleccionar</button>
                         <button class="btn btn-success mb-3 text-white" @click="back"><i class="fas fa-arrow-left text-white"></i> volver</button>
                     </div>
                     
@@ -102,22 +102,22 @@
         <div v-if="isClientePedidoExists">
             <hr class="bg-light">
             <h3 class="text-white pl-4">Seleccione los productos:</h3>
-            <form action="">
+            <form @submit.prevent="">
                 <ul class="list-inline ml-5 pl-5">
                     <li class="list-inline-item col-md-5 my-1 p-0" v-for="(item,index) in productos" :key="index">
                         <div class="container-fluid cardproducto">    
                         <h6 class="mt-2">
-                            <input type="checkbox">
+                            <input type="checkbox" v-model="productosSeleccionados" :checked="checked" :value="item">
                             {{item.nombre}}
                             <div class="col-xs-3 mt-2">
-                                <input type="text" class="form-control" placeholder="Cantidad(si queri le poni la medida)">
+                                <input type="number" class="form-control" placeholder="Cantidad(si queri le poni la medida)" v-model="cantidadSeleccionada">
                             </div>
                         </h6>
                         </div>
                     </li>
                 </ul>
                 <div class="text-center">
-                    <button class="btn btn-success mb-3 text-white" type="submit" ><i class="fas fa-plus text-white"></i> Añadir Producto(s)</button>
+                    <button class="btn btn-success mb-3 text-white" type="submit" @click="addProducto"><i class="fas fa-plus text-white"></i> Añadir Producto(s)</button>
                 </div>
             </form>
         </div>
@@ -143,11 +143,11 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
+                            <tr v-for="(item,index) in productosadd" :key="index">
                             <td class="pl-4"><i class="fas fa-trash-alt text-danger"></a></i></td>
-                            <td>Tomate</td>
-                            <td>1200</td>
-                            <td>1.8</td>
+                            <td>{{item.nombre}}</td>
+                            <td>{{item.precio}}</td>
+                            <td v-for="(item2, index2) in cantidadAdd" :key="index2" v-show="index2===index" >{{item2}}</td>
                             <td>kg</td>
                             <td>2000</td>
                             </tr>
@@ -185,7 +185,11 @@ export default {
             clientePedidoId:'',
             clientePedidoData:[],    //Datos del cliente que se asociará al pedido.
             productos:[],
-
+            productosSeleccionados:[],
+            productosadd:[],
+            cantidadSeleccionada:[],
+            cantidadAdd:[],
+            checked: false,
 
             /*variables de control */
             optionCliente:'',  //variable para controlar visualizacion de nuevo cliente o lista de clientes
@@ -219,6 +223,7 @@ export default {
         back(){
             this.viewSeccionCliente=true;
             this.optionCliente='';
+            this.isClientePedidoExists=false;
         },
 
         addCliente(){
@@ -240,16 +245,32 @@ export default {
 
         selectClienteLista()
         {
-            const params={id:this.clientePedidoId};
-            axios.post('/searchcliente',params).then(res =>{
+            if(this.clientePedidoId===0 || this.clientePedidoId==='')
+            {
+                alert("Debe seleccionar un cliente.");
+                return;
+            }
+            else
+            {
+                const params={id:this.clientePedidoId};
+                axios.post('/searchcliente',params).then(res =>{
                 this.clientePedidoData=res.data;
                 this.isClientePedidoExists=true;
+                
 
             });
+
+            }
+            
         },
 
-        addProducto(){
+     
 
+        addProducto(){
+            this.productosadd=this.productosSeleccionados;
+            this.cantidadAdd=this.cantidadSeleccionada;
+            console.log(this.cantidadAdd[0]);
+            this.pedidoFinal=true;
         },
 
         createPedido(){
