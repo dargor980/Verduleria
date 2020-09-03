@@ -148,8 +148,8 @@
                             <td>{{item.nombre}}</td>
                             <td>{{item.precio}}</td>
                             <td v-for="(item2, index2) in cantidadAdd" :key="index2" v-show="index2===index" >{{item2}}</td>
-                            <td v-for="(item2, index2) in medidas" :key="index2" v-show="item2.id===item.medidaId">{{item2.nombre}}</td>
-                            <td v-for="(item2, index2) in subtotal" :key="index2" v-show="index2===index">{{item2}}</td>
+                            <td v-for="(item3, index3) in medidas" :key="index3" v-show="item3.id===item.medidaId">{{item3.nombre}}</td>
+                            <td v-for="(item4, index4) in subtotal" :key="index4" v-show="index4===index">{{item4}}</td>
                             </tr>
                         </tbody>
                         <tfoot>
@@ -328,6 +328,38 @@ export default {
         },
 
         createPedido(){
+            /*creación del registro de pedido*/
+            var data= {clienteId:'', estado:0, total:parseInt(0)};
+            data.clienteId=this.clientePedidoData.id;
+            data.total=parseInt(this.total);
+            var idPedido=[];
+            axios.post('/pedido/new/create',data).then(res =>{
+                idPedido=res.data;
+                 var dataContenido= {pedidoId:'', productoId:'', cantidad:0};
+                 var productos=[];
+                /*creación de los contenidos del pedido*/
+
+               
+                for(var i=0; i<this.productosadd.length; i++)
+                {
+                    dataContenido.pedidoId=idPedido.id;
+                    dataContenido.productoId=this.productosadd[i].id;
+                    dataContenido.cantidad=parseInt(this.cantidadAdd[i]);
+                    productos.push(dataContenido);
+                }
+
+                
+
+                productos.forEach(element => {
+                    console.log(element.productoId);
+                    axios.post('/pedido/new/create/addproducto',element).then(res =>{
+                    });
+                    
+                });
+                
+            });
+
+           
 
         },
 

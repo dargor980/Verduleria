@@ -2266,7 +2266,41 @@ __webpack_require__.r(__webpack_exports__);
       this.calcularTotal();
       this.pedidoFinal = true;
     },
-    createPedido: function createPedido() {}
+    createPedido: function createPedido() {
+      var _this4 = this;
+
+      /*creación del registro de pedido*/
+      var data = {
+        clienteId: '',
+        estado: 0,
+        total: parseInt(0)
+      };
+      data.clienteId = this.clientePedidoData.id;
+      data.total = parseInt(this.total);
+      var idPedido = [];
+      axios.post('/pedido/new/create', data).then(function (res) {
+        idPedido = res.data;
+        var dataContenido = {
+          pedidoId: '',
+          productoId: '',
+          cantidad: 0
+        };
+        var productos = [];
+        /*creación de los contenidos del pedido*/
+
+        for (var i = 0; i < _this4.productosadd.length; i++) {
+          dataContenido.pedidoId = idPedido.id;
+          dataContenido.productoId = _this4.productosadd[i].id;
+          dataContenido.cantidad = parseInt(_this4.cantidadAdd[i]);
+          productos.push(dataContenido);
+        }
+
+        productos.forEach(function (element) {
+          console.log(element.productoId);
+          axios.post('/pedido/new/create/addproducto', element).then(function (res) {});
+        });
+      });
+    }
   }
 });
 
@@ -38426,7 +38460,7 @@ var render = function() {
                               )
                             }),
                             _vm._v(" "),
-                            _vm._l(_vm.medidas, function(item2, index2) {
+                            _vm._l(_vm.medidas, function(item3, index3) {
                               return _c(
                                 "td",
                                 {
@@ -38434,17 +38468,17 @@ var render = function() {
                                     {
                                       name: "show",
                                       rawName: "v-show",
-                                      value: item2.id === item.medidaId,
-                                      expression: "item2.id===item.medidaId"
+                                      value: item3.id === item.medidaId,
+                                      expression: "item3.id===item.medidaId"
                                     }
                                   ],
-                                  key: index2
+                                  key: index3
                                 },
-                                [_vm._v(_vm._s(item2.nombre))]
+                                [_vm._v(_vm._s(item3.nombre))]
                               )
                             }),
                             _vm._v(" "),
-                            _vm._l(_vm.subtotal, function(item2, index2) {
+                            _vm._l(_vm.subtotal, function(item4, index4) {
                               return _c(
                                 "td",
                                 {
@@ -38452,13 +38486,13 @@ var render = function() {
                                     {
                                       name: "show",
                                       rawName: "v-show",
-                                      value: index2 === index,
-                                      expression: "index2===index"
+                                      value: index4 === index,
+                                      expression: "index4===index"
                                     }
                                   ],
-                                  key: index2
+                                  key: index4
                                 },
-                                [_vm._v(_vm._s(item2))]
+                                [_vm._v(_vm._s(item4))]
                               )
                             })
                           ],

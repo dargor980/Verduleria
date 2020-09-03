@@ -104,3 +104,8 @@ Route::get('/pedido/lista', 'PedidosController@index')->name('listaped');
 Route::get('/pedido/detalle', 'PedidosController@show')->name('detallepedido');
 
 Route::get('/medidasproductos','PedidosController@indexMedidasProductos');
+
+Route::post('/pedido/new/create/addproducto','PedidosController@addProductoToPedido');
+
+Route::post('/pedido/new/create','PedidosController@store');
+

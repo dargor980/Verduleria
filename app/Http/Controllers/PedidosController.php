@@ -55,25 +55,24 @@ class PedidosController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([             //Validación de los campos del formulario
-            'estado' => 'required'
-        ]);
-
         $pedido= new Pedido();
         $pedido->clienteId= $request->clienteId;
         $pedido->estado= $request->estado;
-        $pedido->total= 0;
+        $pedido->total= $request->total;
         $pedido->save();
-        return back()->with('mensaje','Pedido registrado');
+        return $pedido;
 
     }
 
-    public function addProductoToPedido(Request $request, $id)
+    public function addProductoToPedido(Request $request)
     {
         $newProducto= new Contenido();
-        $newProducto->pedidoId= id;
+        $newProducto->pedidoId=$request->pedidoId;
         $newProducto->productoId= $request->productoId;
         $newProducto->cantidad= $request->cantidad;
+
+        $newProducto->save();
+        return $newProducto;
 
     }
 
