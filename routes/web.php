@@ -102,3 +102,5 @@ Route::post('/searchcliente','PedidosController@SearchClienteById');
 Route::get('/pedido/lista', 'PedidosController@index')->name('listaped');
 
 Route::get('/pedido/detalle', 'PedidosController@show')->name('detallepedido');
+
+Route::get('/medidasproductos','PedidosController@indexMedidasProductos');

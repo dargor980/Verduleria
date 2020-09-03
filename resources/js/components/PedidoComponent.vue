@@ -128,7 +128,7 @@
         <div v-if="pedidoFinal">
             <hr class="bg-light">
             <h3 class="text-white pl-4 text-center">Pedido final</h3>
-            <form action="">
+            <form @submit.prevent="">
                 <div class="card table-responsive">
                     <div class="container">
                         <table class="table table-sm">
@@ -148,8 +148,8 @@
                             <td>{{item.nombre}}</td>
                             <td>{{item.precio}}</td>
                             <td v-for="(item2, index2) in cantidadAdd" :key="index2" v-show="index2===index" >{{item2}}</td>
-                            <td>kg</td>
-                            <td>2000</td>
+                            <td v-for="(item2, index2) in medidas" :key="index2" v-show="item2.id===item.medidaId">{{item2.nombre}}</td>
+                            <td v-for="(item2, index2) in subtotal" :key="index2" v-show="index2===index">{{item2}}</td>
                             </tr>
                         </tbody>
                         <tfoot>
@@ -159,7 +159,7 @@
                                 <th class="border-top border-dark"></th>
                                 <th class="border-top border-dark"></th>
                                 <th class="border-top border-dark">Total:</th>
-                                <th class="border-top border-dark">2000</th>
+                                <th class="border-top border-dark">{{total}}</th>
                             </tr>
                         </tfoot>
                         </table>
@@ -172,7 +172,30 @@
         </div>
         <!--/Tabla de productos agregados-->
 
-       
+        <!--Confirmación pedido-->
+        <div class="modal fade" id="seguro" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title text-white" id="staticBackdropLabel">Finalizar Pedido</h5>
+              <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body text-white">
+                ¿Estas seguro que desea finalizar el pedido?
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+              <button type="button" class="btn btn-success" @click="createPedido">Finalizar</button>
+            </div>
+          </div>
+        </div>
+
+        <!--Confirmación pedido-->
+
+
+      </div>
     </div>
 </template>
 
@@ -188,10 +211,15 @@ export default {
             productosSeleccionados:[],
             productosadd:[],
             cantidadSeleccionada:[],
+            medidas:[],
             cantidadAdd:[],
-            checked: false,
+            subtotal:[],
+            total:0,
+            
+            
 
             /*variables de control */
+            checked: false,
             optionCliente:'',  //variable para controlar visualizacion de nuevo cliente o lista de clientes
             viewSeccionCliente: true,  //variable que muestra las opciones nuevo cliente o lista de clientes
             isClientePedidoExists: false,   //indica si ya se seleccionó el cliente que será asociado al pedido.
@@ -208,6 +236,12 @@ export default {
         axios.get('/productospedidos').then(res =>{
             this.productos= res.data;
         })
+
+        axios.get('/medidasproductos').then(res =>{
+            this.medidas= res.data;
+        })
+
+        
     },
 
     methods:{
@@ -264,15 +298,32 @@ export default {
             
         },
 
-     
+        calcularSubtotales()
+        {
+            for(var i=0; i<this.productosadd.length; i++)
+            {
+                this.subtotal[i]=this.productosadd[i].precio*this.cantidadAdd[i];
+            }
+           
+
+        },
+
+        calcularTotal()
+        {
+            this.total=0;
+            for(var i=0; i<this.subtotal.length;i++)
+            {
+                this.total=parseInt(this.total)+parseInt(this.subtotal[i]);
+            }
+
+        },
+
 
         addProducto(){
             this.productosadd=this.productosSeleccionados;
             this.cantidadAdd=this.cantidadSeleccionada;
-            this.productosadd.forEach(element => {
-                console.log(element.nombre);
-                
-            });
+            this.calcularSubtotales();
+            this.calcularTotal();
             this.pedidoFinal=true;
         },
 

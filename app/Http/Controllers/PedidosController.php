@@ -7,6 +7,7 @@ use App\Pedido;
 use App\Contenido;
 use App\Cliente;
 use App\Producto;
+use App\Medida;
 
 class PedidosController extends Controller
 {
@@ -147,5 +148,9 @@ class PedidosController extends Controller
     {
         $cliente= Cliente::find($request->id);
         return $cliente;
+    }
+
+    public function indexMedidasProductos(){
+        return Medida::all();
     }
 }

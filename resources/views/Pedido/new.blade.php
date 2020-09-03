@@ -65,25 +65,7 @@
         </div> --}}
         
     </div>
-    <div class="modal fade" id="seguro" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title text-white" id="staticBackdropLabel">Finalizar Pedido</h5>
-              <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body text-white">
-                ¿Estas seguro que desea finalizar el pedido?
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
-              <button type="button" class="btn btn-success">Finalizar</button>
-            </div>
-          </div>
-        </div>
-      </div>
+   
 </div>
 <br><br>
 @endsection
