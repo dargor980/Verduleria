@@ -11,10 +11,10 @@
       <!--OPCIONES NAVBAR-->
       <div class="collapse navbar-collapse justify-content-end">
         <ul class="navbar-nav ml-md-auto d-none d-md-flex">
-          <li class="nav-item active"> 
+          <li class="nav-item active container-fluid"> 
             <div id="clockdate">
-              <div class="clockdate-wrapper">  
-                <div id="clock" class="text-white"></div>
+              <div class="clockdate-wrapper row">  
+                <div id="clock" class="text-white"></div>&nbsp;&nbsp;
                 <div id="date" class="text-white"></div>
               </div>
             </div>
