@@ -615,22 +615,26 @@
 
     .pdf1{
       background: #ffffff;
+      height: 29.7cm;
       margin: 0 auto;
+    }
+
+    .contactoemp{
+      padding-top: 25px;
     }
 
     .imagenpdf{
       height: auto;
-      width: 120px;
+      width: 150px;
+      margin-top: 10px;
     }
 
-    .columna3{
-      flex: 0 0 25%;
-      max-width: 25%;
-    }
-
-    .columna9{
-      flex: 0 0 75%;
-      max-width: 75%;
+    .detallecontacto{
+      float: right;
+      height: 3cm;
+      width: 14cm;
+      border-style: solid;
+      border-color: black;
     }
 
     .cardproducto{

@@ -1,0 +1,284 @@
+@font-face {
+    font-family: SourceSansPro;
+    src: url(SourceSansPro-Regular.ttf);
+  }
+  
+  .clearfix:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+  
+  a {
+    color: #0087C3;
+    text-decoration: none;
+  }
+  
+  body {
+    position: relative;
+    width: 21cm;  
+    height: 29.7cm; 
+    margin: 0 auto; 
+    color: #555555;
+    background: #FFFFFF; 
+    font-family: Arial, sans-serif; 
+    font-size: 14px; 
+    font-family: SourceSansPro;
+  }
+  
+  header {
+    padding: 10px 0;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #777777;
+  }
+  
+  #logo {
+    float: left;
+    margin-top: 8px;
+  }
+
+  #logowsp img{
+    float: left;
+    margin-top: 4px;
+    margin-right: 6px;
+  }
+
+  #logowsp img{
+    height: 10px;
+  }
+  
+  #logo img {
+    height: 100px;
+  }
+  
+  #details2 {
+    margin-bottom: 15px;
+    margin-left: 10px;
+  }
+
+  #details3 {
+    margin-right: 15px;
+    float: right;
+  }
+
+  #client {
+    padding-left: 6px;
+    border-left: 6px solid #156b4f;  
+    float: left;
+    margin-bottom: 20px;
+  }
+  
+  #client .to {
+    color: #777777;
+    margin-left: 4px;
+  }
+  
+  h2.name {
+    font-size: 1.4em;
+    font-weight: normal;
+    margin: 0;
+  }
+
+  h2.titulo {
+    font-size: 1.6em;
+    font-weight: normal;
+    color: #156b4f;
+    margin: 0;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    margin-bottom: 20px;
+  }
+  
+  table th {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    background: #EEEEEE;
+    text-align: center;
+    border-bottom: 1px solid #FFFFFF;
+    white-space: nowrap;        
+    font-weight: normal;
+  }
+  
+  table td {
+    padding-top: 2px;
+    padding-bottom: 2px;
+    background: #EEEEEE;
+    text-align: center;
+    border-bottom: 1px solid #FFFFFF;
+    text-align: right;
+  }
+  
+  table td h3{
+    color: #156b4f;
+    font-size: 1.0em;
+    font-weight: normal;
+    margin: 0 0 0.2em 0;
+  }
+  
+  table .no {
+    padding-left: 10px;
+    padding-right: 10px;
+    color: #FFFFFF;
+    font-size: 1.0em;
+    background: #156b4f;
+  }
+  
+  table .desc {
+    padding-left: 50px;
+    padding-right: 50px;
+    text-align: left;
+  }
+  
+  table .unit {
+    padding-left: 10px;
+    padding-right: 10px;
+    background: #DDDDDD;
+  }
+
+  table .qty{
+    padding-left: 10px;
+    padding-right: 10px;
+    text-align: center;
+    font-size: 1.0em;
+  }
+
+  table .precio {
+    padding-left: 20px;
+    padding-right: 20px;
+    background: #DDDDDD;
+  }
+  
+  table .total {
+    padding-left: 20px;
+    padding-right: 20px; 
+    background: #156b4f;
+    color: #FFFFFF;
+  }
+
+  table .nodetalle {
+    padding-left: 10px;
+    padding-right: 10px;
+    color: #FFFFFF;
+    font-size: 1.0em;
+    text-align: center;
+    background: #156b4f;
+  }
+  
+  table .descdetalle {
+    padding-left: 50px;
+    padding-right: 50px;
+    font-size: 1.0em;
+    text-align: center;
+  }
+  
+  table .qtydetalle{
+    padding-left: 10px;
+    padding-right: 10px;
+    text-align: center;
+    font-size: 1.0em;
+  }
+
+  table .preciodetalle {
+    padding-left: 20px;
+    padding-right: 20px;
+    font-size: 1.0em;
+    text-align: center;
+    background: #DDDDDD;
+  }
+  
+  table .unitdetalle {
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 1.0em;
+    text-align: center;
+    background: #DDDDDD;
+  }
+
+  table .totaldetalle {
+    padding-left: 20px;
+    padding-right: 20px; 
+    font-size: 1.0em;
+    text-align: center;
+    background: #156b4f;
+    color: #FFFFFF;
+  }
+  
+  table td.unit,
+  table td.precio,
+  table td.qty,
+  table td.total {
+    font-size: 1.2em;
+  }
+  
+  table tbody tr:last-child td {
+    border: none;
+  }
+  
+  table tfoot td {
+    padding: 10px 20px;
+    background: #FFFFFF;
+    border-bottom: none;
+    font-size: 1.2em;
+    white-space: nowrap; 
+    border-top: 1px solid #AAAAAA; 
+  }
+  table tfoot tr:first-child td {
+    border-top: none; 
+  }
+  
+  table tfoot tr:last-child td {
+    color: #156b4f;
+    font-size: 1.4em;
+  }
+
+  #tablafoot1{
+    border-bottom: 1px solid #156b4f;
+    border-left: 1px solid #156b4f;
+    font-size: 1.4em;
+  }
+
+  #tablafoot2{
+    border-bottom: 1px solid #156b4f;
+    border-right: 1px solid #156b4f;
+    font-size: 1.4em;
+  }
+  
+  table tfoot tr td:first-child {
+    border: none;
+  }
+
+  #titulopedido{
+    font-size: 2em;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  
+  #notices{
+    padding-left: 6px;
+    border-left: 6px solid #156b4f;  
+  }
+  
+  #notices .notice {
+    font-size: 1.2em;
+  }
+  
+  footer {
+    color: #777777;
+    width: 100%;
+    height: 30px;
+    position: absolute;
+    bottom: 0;
+    border-top: 1px solid #AAAAAA;
+    padding: 8px 0;
+    text-align: center;
+  }
+  
+  #serviciodetalle{
+      background-color: #156b4f;
+      color: white;
+      text-align: center;
+  }

@@ -103,6 +103,8 @@ Route::get('/pedido/lista', 'PedidosController@index')->name('listaped');
 
 Route::get('/pedido/detalle', 'PedidosController@show')->name('detallepedido');
 
+Route::get('/pedido/detalle/download', 'PedidosController@reporteClientePdf')->name('export');
+
 Route::get('/medidasproductos','PedidosController@indexMedidasProductos');
 
 Route::post('/pedido/new/create/addproducto','PedidosController@addProductoToPedido');

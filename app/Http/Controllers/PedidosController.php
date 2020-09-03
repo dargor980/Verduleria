@@ -149,6 +149,13 @@ class PedidosController extends Controller
         return $cliente;
     }
 
+    public function reporteClientePdf()
+    {
+        $reporte= \PDF::loadView('Pedido.reporte');
+
+        return $reporte->download('export.pdf');
+    }
+
     public function indexMedidasProductos(){
         return Medida::all();
     }
