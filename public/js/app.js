@@ -2142,6 +2142,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2176,6 +2179,18 @@ __webpack_require__.r(__webpack_exports__);
 
     };
   },
+  computed: {
+    calcularTotal: function calcularTotal() {
+      this.total = 0;
+
+      for (var i = 0; i < this.cantidadSeleccionada.length; i++) {
+        this.total = parseInt(this.total) + parseInt(this.cantidadSeleccionada[i]) * parseInt(this.productosSeleccionados[i].precio);
+        this.cantidadAdd[i] = this.cantidadSeleccionada[i];
+      }
+
+      return this.total;
+    }
+  },
   created: function created() {
     var _this = this;
 
@@ -2202,6 +2217,8 @@ __webpack_require__.r(__webpack_exports__);
       this.viewSeccionCliente = true;
       this.optionCliente = '';
       this.isClientePedidoExists = false;
+      this.pedidoFinal = false;
+      this.productosSeleccionados = [];
     },
     addCliente: function addCliente() {
       var _this2 = this;
@@ -2252,18 +2269,12 @@ __webpack_require__.r(__webpack_exports__);
         this.subtotal[i] = this.productosadd[i].precio * this.cantidadAdd[i];
       }
     },
-    calcularTotal: function calcularTotal() {
-      this.total = 0;
-
-      for (var i = 0; i < this.subtotal.length; i++) {
-        this.total = parseInt(this.total) + parseInt(this.subtotal[i]);
-      }
-    },
     addProducto: function addProducto() {
       this.productosadd = this.productosSeleccionados;
       this.cantidadAdd = this.cantidadSeleccionada;
-      this.calcularSubtotales();
-      this.calcularTotal();
+      this.calcularSubtotales(); //this.productosSeleccionados=[];
+
+      this.cantidadSeleccionada = [];
       this.pedidoFinal = true;
     },
     createPedido: function createPedido() {
@@ -2292,12 +2303,13 @@ __webpack_require__.r(__webpack_exports__);
           dataContenido.pedidoId = idPedido.id;
           dataContenido.productoId = _this4.productosadd[i].id;
           dataContenido.cantidad = parseInt(_this4.cantidadAdd[i]);
-          productos.push(dataContenido);
+          axios.post('/pedido/new/create/addproducto', dataContenido).then(function (res) {});
+          dataContenido = {
+            pedidoId: '',
+            productoId: '',
+            cantidad: 0
+          };
         }
-
-        productos.forEach(function (element) {
-          axios.post('/pedido/new/create/addproducto', element).then(function (res) {});
-        });
       });
     }
   }
@@ -38342,41 +38354,8 @@ var render = function() {
                             _vm._v(
                               "\n                        " +
                                 _vm._s(item.nombre) +
-                                "\n                        "
-                            ),
-                            _c("div", { staticClass: "col-xs-3 mt-2" }, [
-                              _c("input", {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.cantidadSeleccionada[index],
-                                    expression: "cantidadSeleccionada[index]"
-                                  }
-                                ],
-                                staticClass: "form-control",
-                                attrs: {
-                                  type: "number",
-                                  placeholder:
-                                    "Cantidad(si queri le poni la medida)"
-                                },
-                                domProps: {
-                                  value: _vm.cantidadSeleccionada[index]
-                                },
-                                on: {
-                                  input: function($event) {
-                                    if ($event.target.composing) {
-                                      return
-                                    }
-                                    _vm.$set(
-                                      _vm.cantidadSeleccionada,
-                                      index,
-                                      $event.target.value
-                                    )
-                                  }
-                                }
-                              })
-                            ])
+                                "\n                    "
+                            )
                           ])
                         ]
                       )
@@ -38441,7 +38420,45 @@ var render = function() {
                             _vm._v(" "),
                             _c("td", [_vm._v(_vm._s(item.precio))]),
                             _vm._v(" "),
-                            _vm._l(_vm.cantidadAdd, function(item2, index2) {
+                            _c("td", [
+                              _c("div", { staticClass: "row" }, [
+                                _c("div", { staticClass: "col" }, [
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.cantidadSeleccionada[index],
+                                        expression:
+                                          "cantidadSeleccionada[index]"
+                                      }
+                                    ],
+                                    staticClass: "form-control",
+                                    attrs: {
+                                      type: "number",
+                                      placeholder: "Cantidad"
+                                    },
+                                    domProps: {
+                                      value: _vm.cantidadSeleccionada[index]
+                                    },
+                                    on: {
+                                      input: function($event) {
+                                        if ($event.target.composing) {
+                                          return
+                                        }
+                                        _vm.$set(
+                                          _vm.cantidadSeleccionada,
+                                          index,
+                                          $event.target.value
+                                        )
+                                      }
+                                    }
+                                  })
+                                ])
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _vm._l(_vm.medidas, function(med, medidas) {
                               return _c(
                                 "td",
                                 {
@@ -38449,17 +38466,17 @@ var render = function() {
                                     {
                                       name: "show",
                                       rawName: "v-show",
-                                      value: index2 === index,
-                                      expression: "index2===index"
+                                      value: med.id === item.medidaId,
+                                      expression: "med.id===item.medidaId"
                                     }
                                   ],
-                                  key: index2
+                                  key: medidas
                                 },
-                                [_vm._v(_vm._s(item2))]
+                                [_vm._v(_vm._s(med.nombre))]
                               )
                             }),
                             _vm._v(" "),
-                            _vm._l(_vm.medidas, function(item3, index3) {
+                            _vm._l(_vm.subtotal, function(sub, subt) {
                               return _c(
                                 "td",
                                 {
@@ -38467,31 +38484,21 @@ var render = function() {
                                     {
                                       name: "show",
                                       rawName: "v-show",
-                                      value: item3.id === item.medidaId,
-                                      expression: "item3.id===item.medidaId"
+                                      value: subt === index,
+                                      expression: "subt===index"
                                     }
                                   ],
-                                  key: index3
+                                  key: subt
                                 },
-                                [_vm._v(_vm._s(item3.nombre))]
-                              )
-                            }),
-                            _vm._v(" "),
-                            _vm._l(_vm.subtotal, function(item4, index4) {
-                              return _c(
-                                "td",
-                                {
-                                  directives: [
-                                    {
-                                      name: "show",
-                                      rawName: "v-show",
-                                      value: index4 === index,
-                                      expression: "index4===index"
-                                    }
-                                  ],
-                                  key: index4
-                                },
-                                [_vm._v(_vm._s(item4))]
+                                [
+                                  _vm._v(
+                                    _vm._s(
+                                      (sub =
+                                        _vm.cantidadSeleccionada[index] *
+                                        item.precio)
+                                    )
+                                  )
+                                ]
                               )
                             })
                           ],
@@ -38516,7 +38523,7 @@ var render = function() {
                         ]),
                         _vm._v(" "),
                         _c("th", { staticClass: "border-top border-dark" }, [
-                          _vm._v(_vm._s(_vm.total))
+                          _vm._v(_vm._s(_vm.calcularTotal))
                         ])
                       ])
                     ])
@@ -51110,8 +51117,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\xampp\htdocs\xampp\Proyectos\Verduleria\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\xampp\Proyectos\Verduleria\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /opt/lampp/htdocs/verduleria/verduleria/Verduleria/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /opt/lampp/htdocs/verduleria/verduleria/Verduleria/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

@@ -109,9 +109,6 @@
                         <h6 class="mt-2">
                             <input type="checkbox" v-model="productosSeleccionados" :checked="checked" :value="item">
                             {{item.nombre}}
-                            <div class="col-xs-3 mt-2">
-                                <input type="number" class="form-control" placeholder="Cantidad(si queri le poni la medida)" v-model="cantidadSeleccionada[index]">
-                            </div>
                         </h6>
                         </div>
                     </li>
@@ -147,9 +144,15 @@
                             <td class="pl-4"><i class="fas fa-trash-alt text-danger"></i></td>
                             <td>{{item.nombre}}</td>
                             <td>{{item.precio}}</td>
-                            <td v-for="(item2, index2) in cantidadAdd" :key="index2" v-show="index2===index" >{{item2}}</td>
-                            <td v-for="(item3, index3) in medidas" :key="index3" v-show="item3.id===item.medidaId">{{item3.nombre}}</td>
-                            <td v-for="(item4, index4) in subtotal" :key="index4" v-show="index4===index">{{item4}}</td>
+                            <td>
+                                <div class="row">
+                                    <div class="col">
+                                        <input type="number" class="form-control" placeholder="Cantidad" v-model="cantidadSeleccionada[index]">
+                                    </div>
+                                </div>
+                            </td>
+                            <td v-for="(med, medidas) in medidas" :key="medidas" v-show="med.id===item.medidaId">{{med.nombre}}</td>
+                            <td v-for="(sub, subt) in subtotal" :key="subt" v-show="subt===index">{{sub=cantidadSeleccionada[index]*item.precio}}</td>
                             </tr>
                         </tbody>
                         <tfoot>
@@ -159,7 +162,7 @@
                                 <th class="border-top border-dark"></th>
                                 <th class="border-top border-dark"></th>
                                 <th class="border-top border-dark">Total:</th>
-                                <th class="border-top border-dark">{{total}}</th>
+                                <th class="border-top border-dark">{{calcularTotal}}</th>
                             </tr>
                         </tfoot>
                         </table>
@@ -228,6 +231,24 @@ export default {
         }
     },
 
+    computed:{
+
+         calcularTotal()
+        {
+            this.total=0;
+            for(var i=0; i<this.cantidadSeleccionada.length;i++)
+            {
+                this.total=parseInt(this.total)+(parseInt(this.cantidadSeleccionada[i])*parseInt(this.productosSeleccionados[i].precio));
+                this.cantidadAdd[i]=this.cantidadSeleccionada[i];
+            }
+
+
+            return this.total;
+
+        },
+
+    },
+
     created(){
         axios.get('/clientespedidos').then(res =>{
             this.clientes= res.data;
@@ -258,6 +279,8 @@ export default {
             this.viewSeccionCliente=true;
             this.optionCliente='';
             this.isClientePedidoExists=false;
+            this.pedidoFinal=false;
+            this.productosSeleccionados=[];
         },
 
         addCliente(){
@@ -308,23 +331,16 @@ export default {
 
         },
 
-        calcularTotal()
-        {
-            this.total=0;
-            for(var i=0; i<this.subtotal.length;i++)
-            {
-                this.total=parseInt(this.total)+parseInt(this.subtotal[i]);
-            }
-
-        },
 
 
         addProducto(){
             this.productosadd=this.productosSeleccionados;
             this.cantidadAdd=this.cantidadSeleccionada;
             this.calcularSubtotales();
-            this.calcularTotal();
+            //this.productosSeleccionados=[];
+            this.cantidadSeleccionada=[];
             this.pedidoFinal=true;
+           
         },
 
         createPedido(){
@@ -339,20 +355,20 @@ export default {
                  var productos=[];
                 /*creación de los contenidos del pedido*/
 
+
                
                 for(var i=0; i<this.productosadd.length; i++)
                 {
                     dataContenido.pedidoId=idPedido.id;
                     dataContenido.productoId=this.productosadd[i].id;
                     dataContenido.cantidad=parseInt(this.cantidadAdd[i]);
-                    productos.push(dataContenido);
-                }
-                
-                productos.forEach(element => {
-                    axios.post('/pedido/new/create/addproducto',element).then(res =>{
+                    axios.post('/pedido/new/create/addproducto',dataContenido).then(res =>{
+                        
                     });
-                });
-                
+                    dataContenido= {pedidoId:'', productoId:'', cantidad:0};
+                    
+                   
+                }                
             });
 
            
