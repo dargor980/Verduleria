@@ -352,11 +352,10 @@ export default {
             axios.post('/pedido/new/create',data).then(res =>{
                 idPedido=res.data;
                  var dataContenido= {pedidoId:'', productoId:'', cantidad:0};
-                 var productos=[];
-                /*creación de los contenidos del pedido*/
+            
 
 
-               
+                /*creación de los contenidos del pedido*/              
                 for(var i=0; i<this.productosadd.length; i++)
                 {
                     dataContenido.pedidoId=idPedido.id;
@@ -365,10 +364,15 @@ export default {
                     axios.post('/pedido/new/create/addproducto',dataContenido).then(res =>{
                         
                     });
+                   /* axios.post('/pedido/new/stock/update',dataContenido).then(res =>{
+
+                    });
+                    */
                     dataContenido= {pedidoId:'', productoId:'', cantidad:0};
                     
-                   
-                }                
+                }
+                window.location.href ='http://127.0.0.1:8000/pedido/detalle';
+                         
             });
 
            

@@ -26,16 +26,19 @@
           </tr>
         </thead>
         <tbody>
+          @foreach($pedidos as $pedido)
           <tr>
-            <td><a href="{{route('detallepedido')}}">Nombre</a></td>
-            <td>01/09/2020</td>
-            <td>$20990</td>
+            <td><a href="{{route('detallepedido')}}">@foreach($clientes as $cliente) @if($cliente->id==$pedido->clienteId){{$cliente->nombre}} @endif @endforeach</a></td>
+            <td>{{$pedido->created_at}}</td>
+            <td>${{$pedido->total}}</td>
             <td>
-                <span><a href="#" ><i class="fas fa-trash-alt text-danger"></a></i></span>
+                <span><a href="{{route('deletepedido',$pedido->id)}}" ><i class="fas fa-trash-alt text-danger"></a></i></span>
             </td>
           </tr>
+          @endforeach
         </tbody>
       </table>
+      {{$pedidos->links()}}
     </div>
 </div>
 @endsection

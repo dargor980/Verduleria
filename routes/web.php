@@ -111,3 +111,7 @@ Route::post('/pedido/new/create/addproducto','PedidosController@addProductoToPed
 
 Route::post('/pedido/new/create','PedidosController@store');
 
+Route::post('/pedido/new/stock/update','PedidosController@updateStock');
+
+Route::get('/pedido/lista/delete/{id}','PedidosController@destroy')->name('deletepedido');
+

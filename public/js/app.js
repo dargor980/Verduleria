@@ -2296,7 +2296,6 @@ __webpack_require__.r(__webpack_exports__);
           productoId: '',
           cantidad: 0
         };
-        var productos = [];
         /*creación de los contenidos del pedido*/
 
         for (var i = 0; i < _this4.productosadd.length; i++) {
@@ -2304,12 +2303,18 @@ __webpack_require__.r(__webpack_exports__);
           dataContenido.productoId = _this4.productosadd[i].id;
           dataContenido.cantidad = parseInt(_this4.cantidadAdd[i]);
           axios.post('/pedido/new/create/addproducto', dataContenido).then(function (res) {});
+          /* axios.post('/pedido/new/stock/update',dataContenido).then(res =>{
+            });
+           */
+
           dataContenido = {
             pedidoId: '',
             productoId: '',
             cantidad: 0
           };
         }
+
+        window.location.href = 'http://127.0.0.1:8000/pedido/detalle';
       });
     }
   }

@@ -8,6 +8,8 @@ use App\Contenido;
 use App\Cliente;
 use App\Producto;
 use App\Medida;
+use App\Stock;
+use Illuminate\Support\Facades\DB;
 
 class PedidosController extends Controller
 {
@@ -23,8 +25,9 @@ class PedidosController extends Controller
     }
     public function index()
     {
+        $clientes= Cliente::all();
         $pedidos= Pedido::paginate(10);
-        return view('Pedido.lista',compact('pedidos'));
+        return view('Pedido.lista',compact('pedidos','clientes'));
     }
 
     public function indexClientesPedidos(){
@@ -66,19 +69,28 @@ class PedidosController extends Controller
 
     public function addProductoToPedido(Request $request)
     {
+        /*creación del un contenido del pedido */
         $newProducto= new Contenido();
         $newProducto->pedidoId=$request->pedidoId;
         $newProducto->productoId= $request->productoId;
         $newProducto->cantidad= $request->cantidad;
 
         $newProducto->save();
+        
         return $newProducto;
 
     }
 
-    public function removeProductoToPedido()
+    public function updateStock(Request $request)
     {
-
+        /*actualización inmediata del stock del producto de acuerdo a la cantidad seleccionada */
+        $producto= Producto::where('id','=',$request->productoId)->get();
+        $updateStock= Stock::where('id','=',$producto->stockId)->get();
+        $cantidad= Contenido::where('productoId','=',$request->productoId)->get();
+        $updateStock->cantidad= ($updateStock->cantidad) - ($cantidad->cantidad);
+        $updateStock->save();
+        
+       
     }
 
     /**
@@ -123,7 +135,14 @@ class PedidosController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $contenido= Contenido::where('pedidoId','=',$id)->get();
+        foreach($contenido as $item)
+        {
+            $item->delete();
+        }
+        $pedido= Pedido::find($id);
+        $pedido->delete();
+        return back()->with('mensaje','Pedido eliminado');
     }
 
     public function CreatePdfReport()
