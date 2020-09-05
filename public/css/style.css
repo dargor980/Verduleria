@@ -29,9 +29,9 @@
   header {
     padding: 10px 0;
     margin-bottom: 20px;
-    border-bottom: 1px solid #777777;
+    position: fixed;
   }
-  
+
   #logo {
     float: left;
     margin-top: 8px;
@@ -87,10 +87,15 @@
   }
   
   table {
-    width: 100%;
     border-collapse: collapse;
     border-spacing: 0;
     margin-bottom: 20px;
+    padding-top: 110px;
+  }
+
+  #tabla{
+    position:fixed;
+    top:150px;
   }
   
   table th {
@@ -99,17 +104,14 @@
     background: #EEEEEE;
     text-align: center;
     border-bottom: 1px solid #FFFFFF;
-    white-space: nowrap;        
     font-weight: normal;
   }
   
   table td {
     padding-top: 2px;
     padding-bottom: 2px;
-    background: #EEEEEE;
-    text-align: center;
+    background: #FFFFFF;
     border-bottom: 1px solid #FFFFFF;
-    text-align: right;
   }
   
   table td h3{
@@ -117,6 +119,7 @@
     font-size: 1.0em;
     font-weight: normal;
     margin: 0 0 0.2em 0;
+    width: 7cm;
   }
   
   table .no {
@@ -128,51 +131,61 @@
   }
   
   table .desc {
-    padding-left: 50px;
-    padding-right: 50px;
+    padding-left: 20px;
+    padding-right: 20px;
     text-align: left;
+    color: #FFFFFF;
+    font-size: 1.0em;
+    background: #156b4f;
   }
   
   table .unit {
     padding-left: 10px;
     padding-right: 10px;
-    background: #DDDDDD;
+    color: #FFFFFF;
+    font-size: 1.0em;
+    background: #156b4f;
   }
 
   table .qty{
     padding-left: 10px;
     padding-right: 10px;
     text-align: center;
+    color: #FFFFFF;
     font-size: 1.0em;
+    background: #156b4f;
   }
 
   table .precio {
     padding-left: 20px;
     padding-right: 20px;
-    background: #DDDDDD;
+    color: #FFFFFF;
+    font-size: 1.0em;
+    background: #156b4f;
   }
   
   table .total {
     padding-left: 20px;
     padding-right: 20px; 
-    background: #156b4f;
     color: #FFFFFF;
+    font-size: 1.0em;
+    background: #156b4f;
   }
 
   table .nodetalle {
     padding-left: 10px;
     padding-right: 10px;
-    color: #FFFFFF;
+    background: #FFFFFF;
     font-size: 1.0em;
     text-align: center;
-    background: #156b4f;
   }
   
   table .descdetalle {
-    padding-left: 50px;
-    padding-right: 50px;
+    padding-left: 10px;
+    padding-right: 10px;
     font-size: 1.0em;
-    text-align: center;
+    text-align: left;
+    background: #FFFFFF;
   }
   
   table .qtydetalle{
@@ -180,6 +193,7 @@
     padding-right: 10px;
     text-align: center;
     font-size: 1.0em;
+    background: #FFFFFF;
   }
 
   table .preciodetalle {
@@ -187,7 +201,7 @@
     padding-right: 20px;
     font-size: 1.0em;
     text-align: center;
-    background: #DDDDDD;
+    background: #FFFFFF;
   }
   
   table .unitdetalle {
@@ -195,7 +209,7 @@
     padding-right: 10px;
     font-size: 1.0em;
     text-align: center;
-    background: #DDDDDD;
+    background: #FFFFFF;
   }
 
   table .totaldetalle {
@@ -203,8 +217,7 @@
     padding-right: 20px; 
     font-size: 1.0em;
     text-align: center;
-    background: #156b4f;
-    color: #FFFFFF;
+    background: #FFFFFF;
   }
   
   table td.unit,
@@ -213,13 +226,10 @@
   table td.total {
     font-size: 1.2em;
   }
-  
-  table tbody tr:last-child td {
-    border: none;
-  }
+
   
   table tfoot td {
-    padding: 10px 20px;
+    padding: 2px 2px;
     background: #FFFFFF;
     border-bottom: none;
     font-size: 1.2em;
@@ -244,6 +254,7 @@
   #tablafoot2{
     border-bottom: 1px solid #156b4f;
     border-right: 1px solid #156b4f;
+    text-align: center;
     font-size: 1.4em;
   }
   
@@ -269,12 +280,16 @@
   footer {
     color: #777777;
     width: 100%;
-    height: 30px;
-    position: absolute;
+    height: 120px;
+    position: fixed;
     bottom: 0;
-    border-top: 1px solid #AAAAAA;
     padding: 8px 0;
     text-align: center;
+  }
+
+  #contactofooter{
+    padding-top: 8px;
+    border-top: 1px solid #AAAAAA;
   }
   
   #serviciodetalle{

@@ -151,10 +151,19 @@ class PedidosController extends Controller
 
     public function reporteClientePdf()
     {
-        $reporte= \PDF::loadView('Pedido.reporte');
+        $data= Producto::all()->take(70);
+        $reporte= \PDF::loadView('Pedido.reporte', compact('data'));
 
         return $reporte->download('export.pdf');
     }
+
+    public function reporteClienteVista()
+    {
+        $data= Producto::all()->take(70);
+
+        return view('Pedido.detalles', compact('data'));
+    }
+
 
     public function indexMedidasProductos(){
         return Medida::all();

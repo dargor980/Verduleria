@@ -614,19 +614,10 @@
     }
 
     .pdf1{
-      background: #ffffff;
-      height: 29.7cm;
+      background:rgba(21, 107, 79, 0.9);
       margin: 0 auto;
-    }
-
-    .contactoemp{
-      padding-top: 25px;
-    }
-
-    .imagenpdf{
-      height: auto;
-      width: 150px;
-      margin-top: 10px;
+      color: #ffffff;
+      border-radius: 15px;
     }
 
     .detallecontacto{
@@ -643,4 +634,23 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+    }
+
+    .Cliente{
+      padding-left: 6px;
+      border-left: 6px solid #ffffff;  
+    }
+
+    .textcolor{
+      color: #ffffff;
+    }
+
+    .piepagina{
+      bottom: 0;
+      width: 100%;
+    }
+
+    .tablita{
+      height: 15cm;
+      overflow-y: scroll;
     }

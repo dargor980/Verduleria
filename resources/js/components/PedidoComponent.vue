@@ -144,7 +144,7 @@
                         </thead>
                         <tbody>
                             <tr v-for="(item,index) in productosadd" :key="index">
-                            <td class="pl-4"><i class="fas fa-trash-alt text-danger"></a></i></td>
+                            <td class="pl-4"><i class="fas fa-trash-alt text-danger"></i></td>
                             <td>{{item.nombre}}</td>
                             <td>{{item.precio}}</td>
                             <td v-for="(item2, index2) in cantidadAdd" :key="index2" v-show="index2===index" >{{item2}}</td>
@@ -347,14 +347,10 @@ export default {
                     dataContenido.cantidad=parseInt(this.cantidadAdd[i]);
                     productos.push(dataContenido);
                 }
-
                 
-
                 productos.forEach(element => {
-                    console.log(element.productoId);
                     axios.post('/pedido/new/create/addproducto',element).then(res =>{
                     });
-                    
                 });
                 
             });

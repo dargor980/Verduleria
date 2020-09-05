@@ -4,6 +4,7 @@
     <script src="https://kit.fontawesome.com/a35944550c.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <link rel="stylesheet" href="css/style.css" media="all" />
     <title>@yield('titulo')</title>
   </head>
   <body class="fondobody" onload="startTime()">

@@ -101,7 +101,7 @@ Route::post('/searchcliente','PedidosController@SearchClienteById');
 
 Route::get('/pedido/lista', 'PedidosController@index')->name('listaped');
 
-Route::get('/pedido/detalle', 'PedidosController@show')->name('detallepedido');
+Route::get('/pedido/detalle', 'PedidosController@reporteClienteVista')->name('detallepedido');
 
 Route::get('/pedido/detalle/download', 'PedidosController@reporteClientePdf')->name('export');
 
