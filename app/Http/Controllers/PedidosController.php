@@ -73,6 +73,8 @@ class PedidosController extends Controller
         $newProducto->pedidoId=$request->pedidoId;
         $newProducto->productoId= $request->productoId;
         $newProducto->cantidad= $request->cantidad;
+        $producto= Producto::find($request->productoId);
+        $newProducto->subtotal= $request->cantidad*$producto->precio;
 
         $newProducto->save();
         
@@ -162,10 +164,25 @@ class PedidosController extends Controller
         return $cliente;
     }
 
-    public function reporteClientePdf()
+    public function reporteClientePdf($id)
     {
-        $data= Producto::all()->take(70);
-        $reporte= \PDF::loadView('Pedido.reporte', compact('data'));
+        $productos= DB::table('contenidos')
+        ->join('productos','productoId','=','productos.id')
+        ->join('pedidos','pedidoId','=','pedidos.id')
+        ->where('contenidos.pedidoId','=',$id)
+        ->select('productos.id','productos.nombre','productos.medidaId','productos.precio','contenidos.cantidad','contenidos.subtotal')
+        ->get();
+
+        $datosCliente= DB::table('pedidos')
+        ->join('clientes','clienteId','clientes.id')
+        ->where('pedidos.id','=',$id)
+        ->select('clientes.nombre','clientes.domicilio','clientes.fono','clientes.depto')->distinct('clientes.nombre')->get();
+
+        $medidas= Medida::all();
+
+        $pedido= Pedido::findOrFail($id);
+        
+        $reporte= \PDF::loadView('Pedido.reporte', compact('productos','datosCliente','medidas','pedido'));
 
         return $reporte->download('export.pdf');
     }
@@ -176,7 +193,7 @@ class PedidosController extends Controller
                     ->join('productos','productoId','=','productos.id')
                     ->join('pedidos','pedidoId','=','pedidos.id')
                     ->where('contenidos.pedidoId','=',$id)
-                    ->select('productos.id','productos.nombre','productos.medidaId','productos.precio','contenidos.cantidad')
+                    ->select('productos.id','productos.nombre','productos.medidaId','productos.precio','contenidos.cantidad','contenidos.subtotal')
                     ->get();
         
         $datosCliente= DB::table('pedidos')

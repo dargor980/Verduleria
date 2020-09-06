@@ -11,8 +11,8 @@
             <img src="comidapdf.png">
         </div>
         <div id="details3">
-            <div>Pedido N°: 15</div>
-            <div>Fecha: 22/09/1998</div>
+            <div>Pedido N°: {{$pedido->id}}</div>
+            <div>Fecha: {{$pedido->created_at}}</div>
         </div>
         <div id="details2">
             <h2 class="titulo">Verduleria Santa Gemita</h2>

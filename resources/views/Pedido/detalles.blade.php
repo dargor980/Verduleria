@@ -5,7 +5,7 @@
 <div class="pdf1" style="width: 21cm;">
 
     <div class="text-center my-4">
-        <a href="{{route('export')}}"><h1>  Descargar PDF</h1></a>
+        <a href="{{route('export',$pedido->id)}}"><h1>  Descargar PDF</h1></a>
     </div>
     <hr class="bg-light">
     <div class="row">
@@ -58,7 +58,7 @@
                             <td>{{$item->precio}}</td>
                             <td>{{$item->cantidad}}</td>
                             <td>@foreach($medidas as $medida) @if($medida->id==$item->medidaId) {{$medida->nombre}} @endif @endforeach</td>
-                            <td>19990</td>
+                            <td>{{$item->subtotal}}</td>
                             </tr>
                         @endforeach
                     </tbody>

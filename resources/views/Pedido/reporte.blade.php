@@ -7,9 +7,11 @@
     <div id="client">
         <div id="clientedetalle">
             <div class="to">Señor/a:</div>
-            <h2 class="name">Braulio Argandoña Carrasco</h2>
-            <div class="address">Ester Hunneus 2045, Puente Alto</div>
-            <div class="email">+569 501 61 342</div>
+            @foreach($datosCliente as $cliente)
+            <h2 class="name">{{$cliente->nombre}}</h2>
+          <div class="address">{{$cliente->domicilio}}, Depto: {{$cliente->depto}}</div>
+            <div class="email">+569 {{$cliente->fono}}</div>
+            @endforeach
         </div>
     </div>
   </div>
@@ -26,7 +28,7 @@
     </thead>
     <tbody>
       @php $i=0 @endphp
-      @foreach ($data as $item)
+      @foreach ($productos as $item)
         @php $i++ @endphp
         
         @if ($i == 24)
@@ -38,10 +40,10 @@
         <tr>
           <td class="nodetalle">20</td>
           <td class="descdetalle"><h3>{{$item->nombre}}</h3></td>
-          <td class="preciodetalle">$1200</td>
-          <td class="qtydetalle">2</td>
-          <td class="unitdetalle">Kg</td>
-          <td class="totaldetalle">$2400</td>
+          <td class="preciodetalle">${{$item->precio}}</td>
+          <td class="qtydetalle">{{$item->cantidad}}</td>
+          <td class="unitdetalle">@foreach($medidas as $medida) @if($medida->id==$item->medidaId)  {{$medida->nombre}} @endif @endforeach</td>
+          <td class="totaldetalle">${{$item->subtotal}}</td>
         </tr>
         @else
           @if ($i%28==0)
@@ -52,19 +54,19 @@
             <tr>
               <td class="nodetalle">25</td>
               <td class="descdetalle"><h3>{{$item->nombre}}</h3></td>
-              <td class="preciodetalle">$1200</td>
-              <td class="qtydetalle">2</td>
-              <td class="unitdetalle">Kg</td>
-              <td class="totaldetalle">$2400</td>
+              <td class="preciodetalle">${{$item->precio}}</td>
+              <td class="qtydetalle">{{$item->cantidad}}</td>
+              <td class="unitdetalle">@foreach($medidas as $medida) @if($medida->id==$item->medidaId)  {{$medida->nombre}} @endif @endforeach</td>
+              <td class="totaldetalle">${{$item->subtotal}}</td>
             </tr>
           @else
             <tr>
               <td class="nodetalle">{{$item->id}}</td>
               <td class="descdetalle"><h3>{{$item->nombre}}</h3></td>
-              <td class="preciodetalle">$1200</td>
-              <td class="qtydetalle">2</td>
-              <td class="unitdetalle">Kg</td>
-              <td class="totaldetalle">$2400</td>
+              <td class="preciodetalle">${{$item->precio}}</td>
+              <td class="qtydetalle">{{$item->cantidad}}</td>
+              <td class="unitdetalle">@foreach($medidas as $medida) @if($medida->id==$item->medidaId)  {{$medida->nombre}} @endif @endforeach</td>
+              <td class="totaldetalle">${{$item->subtotal}}</td>
             </tr>
           @endif
         @endif
@@ -74,7 +76,7 @@
       <tr>
         <td colspan="4"></td>
         <td id="tablafoot1">TOTAL: </td>
-        <td id="tablafoot2">$6,500</td>
+        <td id="tablafoot2">${{$pedido->total}}</td>
       </tr>
     </tfoot>
   </table>

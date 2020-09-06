@@ -371,7 +371,11 @@ export default {
                     dataContenido= {pedidoId:'', productoId:'', cantidad:0};
                     
                 }
-                window.location.href =`http://127.0.0.1:8000/pedido/detalle/${idPedido.id}`;
+                
+               setTimeout(function(){
+                 window.location.href =`http://127.0.0.1:8000/pedido/detalle/${idPedido.id}`;
+               },500);
+              
                          
             });
 
