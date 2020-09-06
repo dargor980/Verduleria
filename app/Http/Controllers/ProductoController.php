@@ -54,7 +54,7 @@ class ProductoController extends Controller
         $request->validate([                  //Validación de los campos del formulario
             'nombre' => 'required',
             'precio' => 'required',
-            'medidaId' => 'required',
+            'medidaId' => 'required|not_in:0',
             'categoriaId' => 'required|not_in:0',
             'cantidad' => 'required',
             'costo'    =>  'required'

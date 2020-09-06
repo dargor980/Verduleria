@@ -57,7 +57,7 @@
                     <div class="badge badge-danger float-right"> *Debe seleccionar una categoría </div>
                 @enderror
                 <select name='categoriaId' class="custom-select  mb-3">
-                    <option selected>Seleccione una categoria:</option>
+                    <option selected value="0">Seleccione una categoria:</option>
                     @foreach($categorias as $item)
                     <option value="{{$item->id}}">{{$item->tipo}}</option>
                     @endforeach
@@ -73,9 +73,11 @@
                     
                     <input name='cantidad' type="number" min="0" placeholder="Cantidad de Stock" class="form-control"> 
                 </div>
-
+                @error('medidaId')
+                    <div class="badge badge-danger float-right"> *Debe seleccionar una unidad de medida</div>
+                @enderror
                 <select name='medidaId' class="custom-select  mb-3">
-                    <option selected>Seleccione Unidad de Medida:</option>
+                    <option selected value="0">Seleccione Unidad de Medida:</option>
                     @foreach($unidadMedida as $item)
                     <option value="{{$item->id}}">{{$item->nombre}}</option>  
                     @endforeach                

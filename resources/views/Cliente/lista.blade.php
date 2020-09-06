@@ -5,7 +5,7 @@
 @section('contenido')
 
 <div class="container">
-
+@php $id;@endphp
 <div class="card card5 table-responsive">
     <h1 class="text-center text-white my-4">Lista de Clientes</h1>
     <div class="container">
@@ -35,15 +35,35 @@
             <td>{{$item->depto}}</td>
             <td>
                 <span><a href="{{route('editcliente',$item->id)}}" ><i class="fas fa-edit text-success">&nbsp;</a></i></span>
-              <span><a href="{{route('deletecliente',$item->id)}}" ><i class="fas fa-trash-alt text-danger"></a></i></span>
+            <span><button class="btn btn-sm botona" data-toggle="modal" data-target="#idmodal"  data-descr="{{$item->id}}"><i class="fas fa-trash-alt text-danger"></i></button></span>
             </td>
           </tr>
-
           @endforeach
         </tbody>
       </table>
       {{$clientes->links()}}
     </div>
     </div>
+    <!--Confirmación eliminación cliente-->
+    <div class="modal fade" id="idmodal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title text-white" id="staticBackdropLabel">Eliminar cliente</h5>
+            <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body text-white">
+              <strong><i class="fas fa-exclamation-triangle"></i>&nbsp;Advertencia</strong>: <br><br> Al eliminar el cliente, se eliminarán también todos los datos asociados (incluyendo los pedidos). <br><br> <strong>¿Desea continuar?</strong> 
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+            <a href="{{route('deletecliente',$item->id)}}" id="link" ><button type="button" class="btn btn-success"><i class="fas fa-trash text-white"></i> Eliminar</button></a>
+          </div>
+        </div>
+      </div>
+      <!--Confirmación eliminación cliente-->
+      
 </div>
 @endsection

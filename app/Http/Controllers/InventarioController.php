@@ -32,7 +32,7 @@ class InventarioController extends Controller
                     ->join('sucursals','sucursalId','=','sucursals.id')
                     ->where('sucursals.nombre','=','Verduleria')
                     ->select('productos.id','productos.nombre','productos.medidaId','productos.precio','productos.categoriaId','productos.stockId')
-                    ->get();
+                    ->paginate(10);
         
         $categorias= Categoria::all();
         $stocks= Stock::all();

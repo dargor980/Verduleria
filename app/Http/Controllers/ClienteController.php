@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Cliente;
+use App\Contenido;
+use App\Producto;
+use App\Pedido;
 
 class ClienteController extends Controller
 {
@@ -112,10 +115,24 @@ class ClienteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id)   //elimina todo lo asociado al cliente (datos de cliente, pedidos y su respectivo contenido).
     {
         $destroyCliente= Cliente::find($id);
-        $destroyCliente->delete();
+        $pedidos= Pedido::where('clienteId','=',$id)->get();
+        foreach($pedidos as $pedido)
+        {
+            $contenidos= Contenido::where('pedidoId','=',$pedido->id)->get();
+            foreach($contenidos as $contenido)
+            {
+                $contenido->delete();  //Borra el contenido de los pedidos
+            }
+        }
+        foreach($pedidos as $pedido)
+        {
+            $pedido->delete();   //Borra los pedidos
+        }
+        
+        $destroyCliente->delete();  //Borra el cliente
         return ClienteController::index()->with('mensaje','Datos de cliente eliminado');
     }
 }
