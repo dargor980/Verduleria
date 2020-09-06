@@ -1,5 +1,5 @@
 @extends('plantilla')
-
+@section('titulo', 'Detalles del pedido')
 @section('contenido')
 <br><br>
 <div class="pdf1" style="width: 21cm;">
@@ -14,8 +14,8 @@
         </div>
         <div class="col-md-9">
             <div class="float-right">
-                <div>N° Pedido: 15</div>
-                <div>Fecha: 04/09/2020</div>
+                <div>N° Pedido: {{$pedido->id}}</div>
+                <div>Fecha: {{$pedido->created_at}}</div>
             </div>
              <h2 class="titulo textcolor">Verduleria Santa Gemita</h2>
              <div>Av. Suecia 3097, Ñuñoa</div>
@@ -28,9 +28,10 @@
     <h3 class="text-center">Detalle de pedido</h3>
     <div class="Cliente">
         <div>Señor/a:</div>
-        <h4 class="textcolor">Braulio Argandoña Carrasco</h4>
-        <div>Ester Hunneus 2045, Puente Alto</div>
-        <div>+569 501 61 342</div>
+        <h4 class="textcolor">@foreach($datosCliente as $dato){{$dato->nombre}}</h4>
+        <div>{{$dato->domicilio}} Depto: {{$dato->depto}}</div>
+        <div>+569 {{$dato->fono}}</div>
+        @endforeach()
     </div>
     
     <div>
@@ -50,13 +51,13 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($data as $item)
+                        @foreach ($productos as $item)
                             <tr>
                             <td class="text-center">{{$item->id}}</td>
                             <td>{{$item->nombre}}</td>
                             <td>{{$item->precio}}</td>
-                            <td>0.5</td>
-                            <td>KG</td>
+                            <td>{{$item->cantidad}}</td>
+                            <td>@foreach($medidas as $medida) @if($medida->id==$item->medidaId) {{$medida->nombre}} @endif @endforeach</td>
                             <td>19990</td>
                             </tr>
                         @endforeach
@@ -64,7 +65,7 @@
                 </table>
             </div>
             <div class="mt-2 mx-3" style="border-top: 2px solid #ffffff;">
-                <h3 class="float-right mr-3">Total: 19990</h3>
+                <h3 class="float-right mr-3">Total: $ {{$pedido->total}}</h3>
             </div>
         </div>
     </div>

@@ -28,7 +28,7 @@
         <tbody>
           @foreach($pedidos as $pedido)
           <tr>
-            <td><a href="{{route('detallepedido')}}">@foreach($clientes as $cliente) @if($cliente->id==$pedido->clienteId){{$cliente->nombre}} @endif @endforeach</a></td>
+            <td><a href="{{route('detallepedido',$pedido->id)}}">@foreach($clientes as $cliente) @if($cliente->id==$pedido->clienteId){{$cliente->nombre}} @endif @endforeach</a></td>
             <td>{{$pedido->created_at}}</td>
             <td>${{$pedido->total}}</td>
             <td>

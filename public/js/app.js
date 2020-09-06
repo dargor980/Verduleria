@@ -2314,7 +2314,7 @@ __webpack_require__.r(__webpack_exports__);
           };
         }
 
-        window.location.href = 'http://127.0.0.1:8000/pedido/detalle';
+        window.location.href = "http://127.0.0.1:8000/pedido/detalle/".concat(idPedido.id);
       });
     }
   }

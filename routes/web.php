@@ -101,7 +101,7 @@ Route::post('/searchcliente','PedidosController@SearchClienteById');
 
 Route::get('/pedido/lista', 'PedidosController@index')->name('listaped');
 
-Route::get('/pedido/detalle', 'PedidosController@reporteClienteVista')->name('detallepedido');
+Route::get('/pedido/detalle/{id}', 'PedidosController@reporteClienteVista')->name('detallepedido');
 
 Route::get('/pedido/detalle/download', 'PedidosController@reporteClientePdf')->name('export');
 
@@ -110,8 +110,6 @@ Route::get('/medidasproductos','PedidosController@indexMedidasProductos');
 Route::post('/pedido/new/create/addproducto','PedidosController@addProductoToPedido');
 
 Route::post('/pedido/new/create','PedidosController@store');
-
-Route::post('/pedido/new/stock/update','PedidosController@updateStock');
 
 Route::get('/pedido/lista/delete/{id}','PedidosController@destroy')->name('deletepedido');
 

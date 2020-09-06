@@ -64,7 +64,6 @@ class PedidosController extends Controller
         $pedido->total= $request->total;
         $pedido->save();
         return $pedido;
-
     }
 
     public function addProductoToPedido(Request $request)
@@ -84,11 +83,6 @@ class PedidosController extends Controller
     public function updateStock(Request $request)
     {
         /*actualización inmediata del stock del producto de acuerdo a la cantidad seleccionada */
-        $producto= Producto::where('id','=',$request->productoId)->get();
-        $updateStock= Stock::where('id','=',$producto->stockId)->get();
-        $cantidad= Contenido::where('productoId','=',$request->productoId)->get();
-        $updateStock->cantidad= ($updateStock->cantidad) - ($cantidad->cantidad);
-        $updateStock->save();
         
        
     }
@@ -176,11 +170,25 @@ class PedidosController extends Controller
         return $reporte->download('export.pdf');
     }
 
-    public function reporteClienteVista()
+    public function reporteClienteVista($id)
     {
-        $data= Producto::all()->take(70);
+        $productos= DB::table('contenidos')
+                    ->join('productos','productoId','=','productos.id')
+                    ->join('pedidos','pedidoId','=','pedidos.id')
+                    ->where('contenidos.pedidoId','=',$id)
+                    ->select('productos.id','productos.nombre','productos.medidaId','productos.precio','contenidos.cantidad')
+                    ->get();
+        
+        $datosCliente= DB::table('pedidos')
+        ->join('clientes','clienteId','clientes.id')
+        ->where('pedidos.id','=',$id)
+        ->select('clientes.nombre','clientes.domicilio','clientes.fono','clientes.depto')->distinct('clientes.nombre')->get();
 
-        return view('Pedido.detalles', compact('data'));
+        $medidas= Medida::all();
+
+        $pedido= Pedido::find($id);
+
+        return view('Pedido.detalles', compact('productos','datosCliente','medidas','pedido'));
     }
 
 
