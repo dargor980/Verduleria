@@ -113,3 +113,9 @@ Route::post('/pedido/new/create','PedidosController@store');
 
 Route::get('/pedido/lista/delete/{id}','PedidosController@destroy')->name('deletepedido');
 
+Route::get('/estadisticas/clientesfrecuentes','EstadisticasController@clientesFrecuentes')->name('clientesfrecuentes');
+
+Route::get('/estadisticas/masvendidos','EstadisticasController@masVendidos')->name('masvendidos');
+
+Route::get('/estadisticas/historialventas','EstadisticasController@historialVentas')->name('historialventas');
+

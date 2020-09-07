@@ -156,13 +156,13 @@
                   <div class="sidebar-submenu">
                     <ul>
                       <li>
-                        <a href="#">Historial de Ventas</a>
+                        <a href="{{route('historialventas')}}">Historial de Ventas</a>
                       </li>
                       <li>
-                        <a href="#">Clientes Frecuentes</a>
+                        <a href="{{route('clientesfrecuentes')}}">Clientes Frecuentes</a>
                       </li>
                       <li>
-                        <a href="#">Mas Vendidos</a>
+                        <a href="{{route('masvendidos')}}">Mas Vendidos</a>
                       </li>
                     </ul>
                   </div>
