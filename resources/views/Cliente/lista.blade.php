@@ -35,7 +35,7 @@
             <td>{{$item->depto}}</td>
             <td>
                 <span><a href="{{route('editcliente',$item->id)}}" ><i class="fas fa-edit text-success">&nbsp;</a></i></span>
-            <span><button class="btn btn-sm botona" data-toggle="modal" data-target="#idmodal"  data-descr="{{$item->id}}"><i class="fas fa-trash-alt text-danger"></i></button></span>
+            <span><button class="btn btn-sm botona" data-toggle="modal" data-target="#id{{$item->id}}"><i class="fas fa-trash-alt text-danger"></i></button></span>
             </td>
           </tr>
           @endforeach
@@ -43,13 +43,15 @@
       </table>
       {{$clientes->links()}}
     </div>
-    </div>
+    </div>    
+</div>
+    @foreach($clientes as $item)
     <!--Confirmación eliminación cliente-->
-    <div class="modal fade" id="idmodal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal fade" id="id{{$item->id}}" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="{{$item->nombre}}" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title text-white" id="staticBackdropLabel">Eliminar cliente</h5>
+            <h5 class="modal-title text-white" id="{{$item->nombre}}">Eliminar cliente</h5>
             <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -63,7 +65,7 @@
           </div>
         </div>
       </div>
-      <!--Confirmación eliminación cliente-->
-      
-</div>
+    </div>
+    <!--Confirmación eliminación cliente-->
+   @endforeach
 @endsection
