@@ -8,6 +8,7 @@ use App\Producto;
 use App\Proveedor;
 use App\Cliente;
 use App\Contenido;
+use Illuminate\Support\Facades\DB;
 
 
 class EstadisticasController extends Controller
@@ -25,6 +26,9 @@ class EstadisticasController extends Controller
 
     public function clientesFrecuentes()
     {
+        $clientesFrecuentes= DB::table('clientes')
+                                ->join('pedidos','clienteId','clientes.id')
+                                ->whereBetween('pedidos.created_at',[,])
 
     }
 
