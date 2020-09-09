@@ -7,6 +7,10 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
+import Chartkick from 'vue-chartkick'
+import Chart from 'chart.js'
+
+Vue.use(Chartkick.use(Chart))
 
 /**
  * The following block of code may be used to automatically register your
@@ -20,6 +24,7 @@ window.Vue = require('vue');
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('pedido', require('./components/PedidoComponent.vue').default);
+Vue.component('estadistica', require('./components/EstadisticasComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

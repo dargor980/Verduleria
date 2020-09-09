@@ -4,7 +4,6 @@
     <script src="https://kit.fontawesome.com/a35944550c.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script src="{{ asset('js/app.js') }}" defer></script>
-    <link rel="stylesheet" href="css/style.css" media="all" />
     <title>@yield('titulo')</title>
   </head>
   <body class="fondobody" onload="startTime()">
@@ -15,7 +14,7 @@
         <ul class="navbar-nav ml-md-auto d-none d-md-flex">
           <li class="nav-item active container-fluid"> 
             <div id="clockdate">
-              <div class="clockdate-wrapper row">  
+              <div class="clockdate-wrapper row">
                 <div id="clock" class="text-white"></div>&nbsp;&nbsp;
                 <div id="date" class="text-white"></div>
               </div>
@@ -56,7 +55,7 @@
                       <div class="sidebar-submenu">
                           <a href="{{ route('logout') }}"
                               onclick="event.preventDefault();
-                                            document.getElementById('logout-form').submit();">
+                              document.getElementById('logout-form').submit();">
                               {{ __('Cerrar Sesión') }}
                           </a>
 

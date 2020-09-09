@@ -6,8 +6,7 @@
 <br>
 
 <div class="container text-center">
-    <div class="modal-content my-2">
-        <br>
+    <div class="modal-content my-1">
         @if (session('mensaje'))
             <div class="container my-3">
                 <div class="alert alert-success">
@@ -16,7 +15,7 @@
             </div>           
         @endif
         <div>
-            <h2 class="my-2 text-white">Stock de Producto</h2>
+            <h2 class="my-2 mt-3 text-white">Stock de Producto</h2>
         </div>
         
         
@@ -25,11 +24,10 @@
             <div class="col-md-10">
                 <form method="POST" action="{{route('updatestock')}}" class="col-12" enctype="multipart/form-data">
                     @csrf
-                    <br>
                     @error('stockId')
                         <div class="badge badge-danger float-right">*Debe seleccionar un producto </div>
                     @enderror
-                    <select name='stockId' class="custom-select my-3">
+                    <select name='stockId' class="custom-select my-2">
                         <option selected value="0">Seleccione producto:</option>
                         @foreach($productos as $item)
                         <option value="{{$item->stockId}}">{{$item->nombre}}</option>
@@ -38,15 +36,14 @@
                     @error('cantidad')
                         <div class="badge badge-danger float-right">*El Stock es obligatorio </div>
                     @enderror
-                    <div class="input-group form-group">
+                    <div class="input-group form-group mt-1">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-box-open"></i></span>
                         </div>
                        
                         <input name='cantidad' type="number" placeholder="Cantidad de Stock" class="form-control"> 
                     </div>
-                    <br>
-                    <button class="btn btn-success mb-3 text-white" type="submit"><i class="fas fa-cash-register"></i> Enviar</button>
+                    <button class="btn btn-success text-white mt-2" type="submit"><i class="fas fa-cash-register"></i> Enviar</button>
                 </form>
             </div>
             <div class="col-md-1"></div>
@@ -82,8 +79,9 @@
                 @endforeach
                 </tbody>
             </table>
-
-            {{$productos->links()}}
+            <div>  
+                {{$productos->links()}}
+            </div>
         </div>
     </div>
 </div>

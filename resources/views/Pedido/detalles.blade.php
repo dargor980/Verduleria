@@ -65,7 +65,7 @@
                 </table>
             </div>
             <div class="mt-2 mx-3" style="border-top: 2px solid #ffffff;">
-                <h3 class="float-right mr-3">Total: $ {{$pedido->total}}</h3>
+                <h4 class="float-right mr-3">Total: $ {{$pedido->total}}</h4>
             </div>
         </div>
     </div>

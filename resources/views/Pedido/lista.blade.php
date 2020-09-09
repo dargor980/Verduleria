@@ -7,7 +7,7 @@
 <div class="container">
 
 <div class="card card5 table-responsive">
-    <h1 class="text-center text-white my-4">Últimos Pedidos</h1>
+    <h1 class="text-center text-white my-4">Lista de Pedidos</h1>
     <div class="container">
       @if (session('mensaje'))
         <div class="container my-3">
