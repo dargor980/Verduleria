@@ -119,3 +119,7 @@ Route::get('/estadisticas/masvendidos','EstadisticasController@masVendidos')->na
 
 Route::get('/estadisticas/historialventas','EstadisticasController@historialVentas')->name('historialventas');
 
+Route::get('/estadísticas/historialventas/ganancias','EstadisticasController@graficoGanancias');
+
+Route::get('/estadisticas/historialventas/ganancias/actual','EstadisticasController@gananciasMesActual');
+

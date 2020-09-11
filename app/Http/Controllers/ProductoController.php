@@ -25,7 +25,7 @@ class ProductoController extends Controller
     }
     public function index()
     {
-        $productos= Producto::paginate(10);
+        $productos= Producto::orderBy('nombre')->paginate(15);
         $categorias= Categoria::all();
         $medidas= Medida::all();
         return view('Producto.lista',compact('productos','categorias','medidas'));

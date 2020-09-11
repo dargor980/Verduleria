@@ -71,6 +71,57 @@
         </div>
         <!--/Nuevo cliente-->
 
+       
+
+        <!--Datos Cliente-->
+
+        <div v-if="isClientePedidoExists">
+            <hr class="bg-light">
+            <h3 class="text-white text-center">Datos del cliente</h3>
+            <div class="row">
+                    <div class="col-md-7">
+                        <h5 class="text-white mt-2">Señor(a):&nbsp;</h5>
+                    </div>
+                    <div class="col-md-5">
+                        <h5 class="text-white mt-2">Teléfono:&nbsp;</h5>
+                    </div>
+                    <div class="col-md-7">
+                        
+                        <div>
+                            <input name='nombre' type="text" placeholder="Nombre del cliente" class="form-control" v-model="clienteNew.nombre" disabled>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        
+                        <div>
+                            <input name='fono' type="text" placeholder="Ingrese número" class="form-control" v-model="clienteNew.fono" disabled> 
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-7">
+                        <h5 class="text-white mt-2">Domicilio:&nbsp;</h5>
+                    </div>
+                    <div class="col-md-5">
+                        <h5 class="text-white mt-2">Depto:&nbsp;</h5>
+                    </div>
+                    <div class="col-md-7">
+                      
+                        <div>
+                            <input name='domicilio' type="text" placeholder="Ingrese dirección" class="form-control" v-model="clienteNew.domicilio" disabled>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div>
+                            <input name='depto' type="text" placeholder="Ingrese depto" class="form-control" v-model="clienteNew.depto" disabled> 
+                        </div>
+                    </div>
+                </div>
+
+        </div>
+
+        <!--/Datos Cliente-->
+
          <!--Cliente en lista-->
         <div v-if="optionCliente==='existente'">
             <hr class="bg-light">
@@ -290,12 +341,13 @@ export default {
                 return;
             }
             const params={nombre: this.clienteNew.nombre, fono: this.clienteNew.fono, domicilio: this.clienteNew.domicilio, depto: this.clienteNew.depto};
-            this.clienteNew={nombre:'',fono:'',domicilio:'',depto:''};
+            //this.clienteNew={nombre:'',fono:'',domicilio:'',depto:''};
             axios.post('/addclientepedido',params).then(res =>{
                 this.clientes.push(res.data);
                 this.clientePedidoData=res.data;
                 console.log(this.clientePedidoData.nombre);
                 this.isClientePedidoExists=true;
+                this.optionCliente='';
             });
 
         },

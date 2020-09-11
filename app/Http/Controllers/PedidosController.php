@@ -26,7 +26,7 @@ class PedidosController extends Controller
     public function index()
     {
         $clientes= Cliente::all();
-        $pedidos= Pedido::paginate(10);
+        $pedidos= Pedido::orderBy('created_at','desc')->paginate(15);
         return view('Pedido.lista',compact('pedidos','clientes'));
     }
 

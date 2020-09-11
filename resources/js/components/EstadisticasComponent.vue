@@ -9,8 +9,26 @@
 export default {
     data() {
       return{
-          chartData: [["Jan", 4], ["Feb", 2], ["Mar", 10], ["Apr", 5], ["May", 3]],
+          chartData:[],
       }
+    },
+
+    created(){
+        var aux=[]
+        axios.get('/estadísticas/historialventas/ganancias').then(res =>{
+            res.data.forEach(element=>{
+                aux=[element.fecha,element.ganancia]
+                this.chartData.push(aux);
+            })
+        })
+    },
+
+    computed:{
+
+    },
+
+    methods:{
+
     }
 }
 </script>

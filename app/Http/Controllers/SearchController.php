@@ -21,8 +21,9 @@ class SearchController extends Controller
 
     }
 
-    public function searchProveedor()
+    public function searchProveedor(Request $request)
     {
+        $proveedor= Proveedor::where('nombre','LIKE',`%$request->search%`)->get();
 
     }
     
