@@ -54,17 +54,44 @@ class EstadisticasController extends Controller
     public function gananciasMesActual()
     {
         $total=0;
-        $ganancias=EstadisticasController::graficoGanancias();
-        foreach($ganancias as $value)
+        $subquery="DATE_FORMAT(pedidos.created_at,'%d-%m-%Y') AS created_at";  //string que le cambia el formato a la fecha pedida en el query.
+        $now= Carbon::now();                                                   //toma la fecha del día actual
+        $old= Carbon::now()->add('-30','day');    
+        /* Consulta de la cual se obtiene las ganancias obtenidas de los productos vendidos de los últimos 30 días */
+        $query= DB::table('contenidos')                           
+                    ->join('productos','productos.id','contenidos.productoId')
+                    ->join('pedidos','pedidos.id','contenidos.pedidoId')
+                    ->whereBetween('pedidos.created_at',[$old,$now])
+                    ->select(DB::raw('SUM(productos.ganancia*contenidos.cantidad) AS ganancia'), DB::raw($subquery))
+                    ->groupBy('created_at')
+                    ->get();   
+        /*suma de las ganancias */
+        foreach($query as $row)
         {
-            $total+=$value->ganancia;
-        }
-        return $total;
+            $total+=$row->ganancia;
+        }  
+        return [$total,$now->format('d-m-Y'),$old->format('d-m-Y')];
     }
 
     public function gananciasMesAnterior()
     {
-
+        $total=0;
+        $subquery="DATE_FORMAT(pedidos.created_at,'%d-%m-%Y') AS created_at";  //string que le cambia el formato a la fecha pedida en el query.
+        $now= Carbon::now()->add('-30','day');                                                   //toma la fecha del día actual
+        $old= Carbon::now()->add('-60','day');    
+        /* Consulta de la cual se obtiene las ganancias obtenidas de los productos vendidos de los últimos 30 días */
+        $query= DB::table('contenidos')                           
+                    ->join('productos','productos.id','contenidos.productoId')
+                    ->join('pedidos','pedidos.id','contenidos.pedidoId')
+                    ->whereBetween('pedidos.created_at',[$old,$now])
+                    ->select(DB::raw('SUM(productos.ganancia*contenidos.cantidad) AS ganancia'), DB::raw($subquery))
+                    ->groupBy('created_at')
+                    ->get();   
+        foreach($query as $row)
+        {
+            $total+=$row->ganancia;
+        }  
+        return [$total,$now->format('d-m-Y'),$old->format('d-m-Y')];
     }
 
     public function masVendidos()
@@ -81,22 +108,75 @@ class EstadisticasController extends Controller
                                 ->whereBetween('pedidos.created_at',[$old,$now])
                                 ->select('clientes.id','clientes.nombre','clientes.fono','clientes.domicilio','clientes.depto')
                                 ->get();
-        return view('Estadisticas.clientesFrecuentes');
+        return view('Estadisticas.clientesFrecuentes',compact('clientesFrecuentes'));
                 
     }
 
 
     public function topVerduleria()
     {
+        $old= Carbon::now()->add('-30','day');
+        $now= Carbon::now();
+        $query= DB::table('contenidos')
+                ->join('productos','productos.id','contenidos.productoId')
+                ->join('categorias','categorias.id','productos.categoriaId')
+                ->join('sucursals','sucursals.id','categorias.sucursalId')
+                ->whereBetween('contenidos.created_at',[$old,$now])
+                ->where('sucursals.nombre','=','Verduleria')
+                ->select('productos.id','productos.nombre', DB::raw('SUM(contenidos.cantidad) AS cantidad'))
+                ->groupBy('productos.nombre','productos.id')
+                ->limit(5)
+                ->orderBy('cantidad','DESC')
+                ->get();
+        $top=array();
+        foreach($query as $row)
+        {
+            $aux=array(
+                'id' => $row->id,
+                'nombre' => $row->nombre,
+                'cantidad' => $row->cantidad,
+            );
 
+            array_push($top,$aux);
+        }
+
+        return $top;
     }
 
     public function topCongelados()
     {
+        $old= Carbon::now()->add('-30','day');
+        $now= Carbon::now();
+        $query= DB::table('contenidos')
+                ->join('productos','productos.id','contenidos.productoId')
+                ->join('categorias','categorias.id','productos.categoriaId')
+                ->join('sucursals','sucursals.id','categorias.sucursalId')
+                ->whereBetween('contenidos.created_at',[$old,$now])
+                ->where('sucursals.nombre','=','Congelados')
+                ->select('productos.id','productos.nombre', DB::raw('SUM(contenidos.cantidad) AS cantidad'))
+                ->groupBy('productos.nombre','productos.id')
+                ->limit(5)
+                ->orderBy('cantidad','DESC')
+                ->get();
+        $top=array();
+        foreach($query as $row)
+        {
+            $aux=array(
+                'id' => $row->id,
+                'nombre' => $row->nombre,
+                'cantidad' => $row->cantidad,
+            );
+
+            array_push($top,$aux);
+        }
+
+        return $top;
 
     }
     public function historialVentas()
     {
+        
+
         return view('Estadisticas.historial');
         
     }

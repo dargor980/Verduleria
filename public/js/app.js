@@ -1915,22 +1915,137 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      chartData: []
+      /*datos correspondientes a los gráficos y tablas */
+      chartData: [],
+      totalMesActual: '',
+      totalMesAnterior: '',
+      topVerduleria: [],
+      topCongelados: [],
+
+      /*fechas desde-hasta del mes actual*/
+      actualOld: '',
+      actualNow: '',
+
+      /*fechas desde hasta del mes anterior */
+      anteriorOld: '',
+      anteriorNow: ''
     };
   },
   created: function created() {
     var _this = this;
 
     var aux = [];
+    /*obtiene los datos para el gráfico de ganancias*/
+
     axios.get('/estadísticas/historialventas/ganancias').then(function (res) {
       res.data.forEach(function (element) {
         aux = [element.fecha, element.ganancia];
 
         _this.chartData.push(aux);
       });
+    });
+    /*obtiene la ganancia del mes actual*/
+
+    axios.get('/estadisticas/historialventas/ganancias/actual').then(function (res) {
+      _this.totalMesActual = res.data[0];
+      _this.actualNow = res.data[1];
+      _this.actualOld = res.data[2];
+    });
+    /*obtiene la ganancia del mes anterior*/
+
+    axios.get('/estadisticas/historialventas/ganancias/anterior').then(function (res) {
+      console.log(res.data);
+      _this.totalMesAnterior = res.data[0];
+      _this.anteriorNow = res.data[1];
+      _this.anteriorOld = res.data[2];
+    });
+    /*Obtiene el top 5 de verduleria */
+
+    axios.get('/estadisticas/historialventas/top/verduleria').then(function (res) {
+      _this.topVerduleria = res.data;
+    });
+    /*obtiene el top 5 de congelados */
+
+    axios.get('/estadisticas/historialventas/top5/congelados').then(function (res) {
+      _this.topCongelados = res.data;
     });
   },
   computed: {},
@@ -79315,9 +79430,181 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [_c("line-chart", { attrs: { data: _vm.chartData } })], 1)
+  return _c("div", [
+    _c("h5", { staticClass: "my-4 text-center hit-the-floor-3" }, [
+      _vm._v("Ganancias del mes")
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "row mb-3" }, [
+      _c("div", { staticClass: "col-md-4 pt-4" }, [
+        _c(
+          "div",
+          {
+            staticClass: "card text-white cardmesactual mb-3",
+            staticStyle: { width: "18rem", height: "7.7rem" }
+          },
+          [
+            _c("div", { staticClass: "ml-2 mt-2 row" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-9" }, [
+                _c("h5", [_vm._v("Mes actual")]),
+                _vm._v(" "),
+                _c("h2", [_vm._v("$" + _vm._s(_vm.totalMesActual))]),
+                _vm._v(" "),
+                _c("h6", [
+                  _vm._v(_vm._s(_vm.actualOld) + " - " + _vm._s(_vm.actualNow))
+                ])
+              ])
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "card text-white cardmesanterior mb-1",
+            staticStyle: { width: "18rem", height: "7.7rem" }
+          },
+          [
+            _c("div", { staticClass: "ml-2 mt-2 row" }, [
+              _vm._m(1),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-9" }, [
+                _c("h5", [_vm._v("Mes pasado")]),
+                _vm._v(" "),
+                _c("h2", [_vm._v("$" + _vm._s(_vm.totalMesAnterior))]),
+                _vm._v(" "),
+                _c("h6", [
+                  _vm._v(
+                    _vm._s(_vm.anteriorOld) + " - " + _vm._s(_vm.anteriorNow)
+                  )
+                ])
+              ])
+            ])
+          ]
+        )
+      ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "col-md-8 pt-3 card card4" },
+        [_c("line-chart", { attrs: { data: _vm.chartData } })],
+        1
+      )
+    ]),
+    _vm._v(" "),
+    _c("hr", { staticClass: "bg-light" }),
+    _vm._v(" "),
+    _c("h5", { staticClass: "my-4 text-center hit-the-floor-2" }, [
+      _vm._v("Top 5: Productos más vendidos del mes")
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "row my-4" }, [
+      _c("div", { staticClass: "col-md-5 card card4" }, [
+        _c("h4", { staticClass: "text-center titulotop5 mt-3" }, [
+          _vm._v("Verduleria")
+        ]),
+        _vm._v(" "),
+        _c("table", { staticClass: "table" }, [
+          _vm._m(2),
+          _vm._v(" "),
+          _c(
+            "tbody",
+            _vm._l(_vm.topVerduleria, function(item, index) {
+              return _c("tr", { key: index }, [
+                _c("td", [_vm._v(_vm._s(item.id))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(item.nombre))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(item.cantidad))])
+              ])
+            }),
+            0
+          )
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-2" }),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-5 card card4" }, [
+        _c("h4", { staticClass: "text-center titulotop5 mt-3" }, [
+          _vm._v("Congelados")
+        ]),
+        _vm._v(" "),
+        _c("table", { staticClass: "table" }, [
+          _vm._m(3),
+          _vm._v(" "),
+          _c(
+            "tbody",
+            _vm._l(_vm.topCongelados, function(item, index) {
+              return _c("tr", { key: index }, [
+                _c("td", [_vm._v(_vm._s(item.id))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(item.nombre))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(item.cantidad))])
+              ])
+            }),
+            0
+          )
+        ])
+      ])
+    ])
+  ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-3" }, [
+      _c("i", {
+        staticClass: "fas fa-balance-scale-left pt-4",
+        staticStyle: { "font-size": "45px" }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-3" }, [
+      _c("i", {
+        staticClass: "fas fa-balance-scale-right pt-4",
+        staticStyle: { "font-size": "45px" }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("#")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Nombre")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Cant. vendida")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("#")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Nombre")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Cant. vendida")])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 

@@ -123,3 +123,9 @@ Route::get('/estadísticas/historialventas/ganancias','EstadisticasController@gr
 
 Route::get('/estadisticas/historialventas/ganancias/actual','EstadisticasController@gananciasMesActual');
 
+Route::get('/estadisticas/historialventas/ganancias/anterior','EstadisticasController@gananciasMesAnterior');
+
+Route::get('/estadisticas/historialventas/top/verduleria','EstadisticasController@topVerduleria');
+
+Route::get('/estadisticas/historialventas/top5/congelados','EstadisticasController@topCongelados');
+
