@@ -1,7 +1,7 @@
 @extends('plantilla')
 
 @section('contenido')
-    <div class="card card3 my-5" style="width: 28cm;">
+    <div class="card card3 my-5 mx-5">
         <h5 class="my-4 text-center hit-the-floor-3">Ganancias del mes</h5>
         <div id="app" class="row mb-3">
             <div class="col-md-4 pt-4">

@@ -6,8 +6,20 @@
 
 <div class="container">
 @php $id;@endphp
-<div class="card card5 table-responsive">
-    <h1 class="text-center text-white my-4">Lista de Clientes</h1>
+<div class="card card5">
+    <h1 class="text-center text-white mt-4">Lista de Clientes</h1>
+    <div class="row mb-2">
+      <div class="col-md-3">
+          <h3 class="text-white pl-4 my-3">Buscar cliente:</h3>
+      </div>
+      <div class="col-md-4 input-group md-form form-sm form-2 pr-3 my-3">
+          <input class="form-control my-0 py-1 lime-border" type="text" placeholder="Buscar" aria-label="Search">
+          <div class="input-group-append">
+              <span class="input-group-text lime lighten-2" id="basic-text1"><i class="fas fa-search text-grey"
+                  aria-hidden="true"></i></span>
+          </div>
+      </div>
+    </div>
     <div class="container">
       @if (session('mensaje'))
         <div class="container my-3">

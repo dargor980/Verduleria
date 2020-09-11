@@ -152,18 +152,31 @@
          <!--Selecciona Productos-->
         <div v-if="isClientePedidoExists">
             <hr class="bg-light">
-            <h3 class="text-white pl-4">Seleccione los productos:</h3>
+            <div class="row mb-2">
+                <div class="col-md-7">
+                    <h3 class="text-white pl-4 my-3">Seleccione los productos:</h3>
+                </div>
+                <div class="col-md-5 input-group md-form form-sm form-2 pl-0 my-3">
+                    <input class="form-control my-0 py-1 lime-border" type="text" placeholder="Buscar producto" aria-label="Search">
+                    <div class="input-group-append">
+                        <span class="input-group-text lime lighten-2" id="basic-text1"><i class="fas fa-search text-grey"
+                            aria-hidden="true"></i></span>
+                    </div>
+                </div>
+            </div>
             <form @submit.prevent="">
+                <div class="container productos">
                 <ul class="list-inline ml-5 pl-5">
                     <li class="list-inline-item col-md-5 my-1 p-0" v-for="(item,index) in productos" :key="index">
                         <div class="container-fluid cardproducto">    
-                        <h6 class="mt-2">
-                            <input type="checkbox" v-model="productosSeleccionados" :checked="checked" :value="item">
-                            {{item.nombre}}
-                        </h6>
+                            <h6 class="mt-2">
+                                <input type="checkbox" v-model="productosSeleccionados" :checked="checked" :value="item">
+                                {{item.nombre}}
+                            </h6>
                         </div>
                     </li>
                 </ul>
+                </div>
                 <div class="text-center">
                     <button class="btn btn-success mb-3 text-white" type="submit" @click="addProducto"><i class="fas fa-plus text-white"></i> Añadir Producto(s)</button>
                 </div>
@@ -179,7 +192,7 @@
             <form @submit.prevent="">
                 <div class="card table-responsive">
                     <div class="container">
-                        <table class="table table-sm">
+                        <table class="table table-sm mt-3">
                         <thead>
                             <tr class="boton text-white">
                             <th scope="col">Descartar</th>
