@@ -2493,8 +2493,11 @@ __webpack_require__.r(__webpack_exports__);
             productoId: '',
             cantidad: 0
           };
-        } //setTimeout(function(){window.location.href =`http://127.0.0.1:8000/pedido/detalle/${idPedido.id}`;},500);             
+        }
 
+        setTimeout(function () {
+          window.location.href = "http://127.0.0.1:8000/pedido/detalle/".concat(idPedido.id);
+        }, 500);
       });
     }
   }
