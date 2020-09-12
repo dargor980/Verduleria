@@ -7,20 +7,19 @@
 <div class="container">
   <div class="card card5 table-responsive">
       <h1 class="text-center text-white mt-4">Lista de Productos</h1>
-      <div class="row mb-2">
-        <div class="col-md-3">
-            <h3 class="text-white pl-4 my-3">Buscar producto:</h3>
-        </div>
-        <div class="col-md-4 input-group md-form form-sm form-2 pr-3 my-3">
-          <form action="{{route('searchproductolista')}}" @method('POST')>
-            @csrf
-            <input class="form-control my-0 py-1 lime-border" type="text" placeholder="Buscar" aria-label="Search">
-            <div class="input-group-append">
-              <button class="btn input-group-text lime lighten-2" id="basic-text1" type="submit"><i class="fas fa-search text-grey"aria-hidden="true"></i></button>
+      <form action="{{route('searchproductolista')}}">
+          @method('POST')
+          @csrf
+          <div class="row">
+            <h3 class="text-white pl-4 ml-2 my-3">Buscar producto:</h3>
+            <div class="input-group md-form form-sm form-2 pl-2 my-3" style="width: 400px;">
+              <input class="form-control my-0 py-1 lime-border" type="text" placeholder="Buscar" aria-label="Search">
+              <div class="input-group-append">
+                <button class="btn input-group-text lime lighten-2" id="basic-text1" type="submit"><i class="fas fa-search text-grey"aria-hidden="true"></i></button>
+              </div>
             </div>
-          </form>
-        </div>
-    </div>
+          </div>
+        </form>
     <div class="container">
       <table class="table table-sm table-hover">
         <thead>

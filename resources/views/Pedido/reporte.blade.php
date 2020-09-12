@@ -74,7 +74,7 @@
     </tbody>
     <tfoot>
       <tr>
-        <td colspan="4"></td>
+        <td id="tablafoot1" colspan="4"></td>
         <td id="tablafoot1">TOTAL: </td>
         <td id="tablafoot2">${{$pedido->total}}</td>
       </tr>
