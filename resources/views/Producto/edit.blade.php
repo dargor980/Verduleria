@@ -40,7 +40,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-money-bill-wave"></i></span>
                     </div>
-                    <input name='precio' type="number" placeholder="Precio venta" class="form-control" value="{{$producto->precio}}"> 
+                    <input name='precio' type="number" min="0" placeholder="Precio venta" class="form-control" value="{{$producto->precio}}"> 
                 </div>
 
                 @error('costo')
@@ -51,7 +51,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-money-bill-wave"></i></span>
                     </div>
-                    <input name='costo' type="number" placeholder="Precio costo" class="form-control" value="{{$producto->costo}}"> 
+                    <input name='costo' type="number" min="0" placeholder="Precio costo" class="form-control" value="{{$producto->costo}}"> 
                 </div>
 
                 @error('categoriaId')

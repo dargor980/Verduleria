@@ -12,11 +12,13 @@
             <h3 class="text-white pl-4 my-3">Buscar producto:</h3>
         </div>
         <div class="col-md-4 input-group md-form form-sm form-2 pr-3 my-3">
+          <form action="{{route('searchproductolista')}}" @method('POST')>
+            @csrf
             <input class="form-control my-0 py-1 lime-border" type="text" placeholder="Buscar" aria-label="Search">
             <div class="input-group-append">
-                <span class="input-group-text lime lighten-2" id="basic-text1"><i class="fas fa-search text-grey"
-                    aria-hidden="true"></i></span>
+              <button class="btn input-group-text lime lighten-2" id="basic-text1" type="submit"><i class="fas fa-search text-grey"aria-hidden="true"></i></button>
             </div>
+          </form>
         </div>
     </div>
     <div class="container">

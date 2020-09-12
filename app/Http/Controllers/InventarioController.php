@@ -32,7 +32,7 @@ class InventarioController extends Controller
                     ->join('sucursals','sucursalId','=','sucursals.id')
                     ->where('sucursals.nombre','=','Verduleria')
                     ->select('productos.id','productos.nombre','productos.medidaId','productos.precio','productos.categoriaId','productos.stockId')
-                    ->paginate(10);
+                    ->paginate(15);
         
         $categorias= Categoria::all();
         $stocks= Stock::all();
@@ -42,7 +42,17 @@ class InventarioController extends Controller
 
     public function showcongelados()
     {
-        return view('Inventario.listacongelados');
+        $productos= DB::table('productos')
+                    ->join('categorias','categoriaId','=','categorias.id')
+                    ->join('sucursals','sucursalId','=','sucursals.id')
+                    ->where('sucursals.nombre','=','Congelados')
+                    ->select('productos.id','productos.nombre','productos.medidaId','productos.precio','productos.categoriaId','productos.stockId')
+                    ->paginate(15);
+
+        $categorias=Categoria::all();
+        $stocks= Stock::all();
+        $medidas= Medida::all();                    
+        return view('Inventario.listacongelados',compact('productos','stocks','medidas','categorias'));
     }
 
     public function updateStock(Request $request)

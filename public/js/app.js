@@ -2351,6 +2351,7 @@ __webpack_require__.r(__webpack_exports__);
       medidas: [],
       cantidadAdd: [],
       subtotal: [],
+      clientenuevo: false,
       total: 0,
 
       /*variables de control */
@@ -2427,6 +2428,7 @@ __webpack_require__.r(__webpack_exports__);
         _this2.clientePedidoData = res.data;
         console.log(_this2.clientePedidoData.nombre);
         _this2.isClientePedidoExists = true;
+        _this2.clientenuevo = true;
         _this2.optionCliente = '';
       });
     },
@@ -2485,20 +2487,14 @@ __webpack_require__.r(__webpack_exports__);
           dataContenido.productoId = _this4.productosadd[i].id;
           dataContenido.cantidad = parseInt(_this4.cantidadAdd[i]);
           axios.post('/pedido/new/create/addproducto', dataContenido).then(function (res) {});
-          /* axios.post('/pedido/new/stock/update',dataContenido).then(res =>{
-             });
-           */
-
+          axios.put('/pedido/new/stock/update', dataContenido).then(function (res) {});
           dataContenido = {
             pedidoId: '',
             productoId: '',
             cantidad: 0
           };
-        }
+        } //setTimeout(function(){window.location.href =`http://127.0.0.1:8000/pedido/detalle/${idPedido.id}`;},500);             
 
-        setTimeout(function () {
-          window.location.href = "http://127.0.0.1:8000/pedido/detalle/".concat(idPedido.id);
-        }, 500);
       });
     }
   }
@@ -79852,7 +79848,7 @@ var render = function() {
         ])
       : _vm._e(),
     _vm._v(" "),
-    _vm.isClientePedidoExists
+    _vm.isClientePedidoExists && _vm.clientenuevo
       ? _c("div", [
           _c("hr", { staticClass: "bg-light" }),
           _vm._v(" "),
@@ -80262,6 +80258,7 @@ var render = function() {
                                     staticClass: "form-control",
                                     attrs: {
                                       type: "number",
+                                      min: "0",
                                       placeholder: "Cantidad"
                                     },
                                     domProps: {
@@ -93028,8 +93025,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\xampp\htdocs\xampp\Proyectos\Verduleria\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\xampp\Proyectos\Verduleria\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /opt/lampp/htdocs/verduleria/verduleria/Verduleria/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /opt/lampp/htdocs/verduleria/verduleria/Verduleria/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

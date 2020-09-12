@@ -111,6 +111,8 @@ Route::post('/pedido/new/create/addproducto','PedidosController@addProductoToPed
 
 Route::post('/pedido/new/create','PedidosController@store');
 
+Route::put('/pedido/new/stock/update','PedidosController@updateStock');
+
 Route::get('/pedido/lista/delete/{id}','PedidosController@destroy')->name('deletepedido');
 
 Route::get('/estadisticas/clientesfrecuentes','EstadisticasController@clientesFrecuentes')->name('clientesfrecuentes');
@@ -128,4 +130,6 @@ Route::get('/estadisticas/historialventas/ganancias/anterior','EstadisticasContr
 Route::get('/estadisticas/historialventas/top/verduleria','EstadisticasController@topVerduleria');
 
 Route::get('/estadisticas/historialventas/top5/congelados','EstadisticasController@topCongelados');
+
+Route::get('/producto/lista/search','SearchController@searchProducto')->name('searchproductolista');
 

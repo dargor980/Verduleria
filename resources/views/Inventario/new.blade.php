@@ -41,7 +41,7 @@
                             <span class="input-group-text"><i class="fas fa-box-open"></i></span>
                         </div>
                        
-                        <input name='cantidad' type="number" placeholder="Cantidad de Stock" class="form-control"> 
+                        <input name='cantidad' type="number" min="0" placeholder="Cantidad de Stock" class="form-control"> 
                     </div>
                     <button class="btn btn-success text-white mt-2" type="submit"><i class="fas fa-cash-register"></i> Enviar</button>
                 </form>

@@ -75,7 +75,7 @@
 
         <!--Datos Cliente-->
 
-        <div v-if="isClientePedidoExists">
+        <div v-if="isClientePedidoExists && clientenuevo">
             <hr class="bg-light">
             <h3 class="text-white text-center">Datos del cliente</h3>
             <div class="row">
@@ -211,7 +211,7 @@
                             <td>
                                 <div class="row">
                                     <div class="col">
-                                        <input type="number" class="form-control" placeholder="Cantidad" v-model="cantidadSeleccionada[index]">
+                                        <input type="number" min="0" class="form-control" placeholder="Cantidad" v-model="cantidadSeleccionada[index]">
                                     </div>
                                 </div>
                             </td>
@@ -281,6 +281,7 @@ export default {
             medidas:[],
             cantidadAdd:[],
             subtotal:[],
+            clientenuevo:false,
             total:0,
             
             
@@ -360,6 +361,7 @@ export default {
                 this.clientePedidoData=res.data;
                 console.log(this.clientePedidoData.nombre);
                 this.isClientePedidoExists=true;
+                this.clientenuevo=true;
                 this.optionCliente='';
             });
 
@@ -427,17 +429,21 @@ export default {
                     dataContenido.productoId=this.productosadd[i].id;
                     dataContenido.cantidad=parseInt(this.cantidadAdd[i]);
                     axios.post('/pedido/new/create/addproducto',dataContenido).then(res =>{
+
+                        
                         
                     });
-                   /* axios.post('/pedido/new/stock/update',dataContenido).then(res =>{
+
+                    axios.put('/pedido/new/stock/update',dataContenido).then(res =>{
 
                     });
-                    */
+                   
                     dataContenido= {pedidoId:'', productoId:'', cantidad:0};
                     
                 }
+
                 
-               setTimeout(function(){window.location.href =`http://127.0.0.1:8000/pedido/detalle/${idPedido.id}`;},500);             
+               //setTimeout(function(){window.location.href =`http://127.0.0.1:8000/pedido/detalle/${idPedido.id}`;},500);             
             });
         },
     }

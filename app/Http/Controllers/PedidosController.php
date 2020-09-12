@@ -36,8 +36,11 @@ class PedidosController extends Controller
 
     public function indexProductos()
     {
-        return Producto::all();
-
+        $productos= DB::table('productos')
+                    ->join('stocks','stockId','stocks.id')
+                    ->where('stocks.cantidad','>',0)
+                    ->get();
+        return $productos;
     }
 
     /**
@@ -85,8 +88,20 @@ class PedidosController extends Controller
     public function updateStock(Request $request)
     {
         /*actualización inmediata del stock del producto de acuerdo a la cantidad seleccionada */
+        $producto= Producto::where('id','=',$request->productoId)->get();
+        $id=0;
+        foreach($producto as $value)
+        {
+            $id= $value->stockId;
+        }
+        $stock= Stock::where('id','=',$id)->get();
+        foreach($stock as $value)
+        {
+            $value->cantidad= $value->cantidad-$request->cantidad;
+            $value->save();
+        }
         
-       
+        return $stock;      
     }
 
     /**
