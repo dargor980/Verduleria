@@ -2,7 +2,9 @@
 @section('contenido')
 <br><br><br><br>
     <div class="container card3 my-5" style="width: 28cm;">
+        <hr class="bg-light">
         <h5 class="my-4 text-center hit-the-floor-3">Estadísticas de Clientes</h5>
+        <hr class="bg-light">
         <div class="row my-4 px-4">
             <div class="col-md-5 card card4">
                 <h4 class="text-center titulotop5 mt-3">Top 5: Mayor Monto</h4>
