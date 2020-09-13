@@ -54,6 +54,7 @@ class SearchController extends Controller
 
     public function searchProductoVerduleria(Request $request)
     {
+        $search= $request->search;
         $productos= DB::table('productos')
                     ->join('categorias','categoriaId','=','categorias.id')
                     ->join('sucursals','sucursalId','=','sucursals.id')
@@ -66,23 +67,25 @@ class SearchController extends Controller
         $stocks= Stock::all();
         $medidas= Medida::all();
 
-        return view('Inventario.buscar',compact('productos','categorias','stocks','medidas'));
+        return view('Inventario.buscar',compact('productos','categorias','stocks','medidas','search'));
     }
 
-    public function searchProductoCongelados()
+    public function searchProductoCongelados(Request $request)
     {
-        $productoVerduleria= DB::table('productos')
+        $search= $request->search;
+        $productos= DB::table('productos')
                             ->join('categorias','categoriaId','=','categorias.id')
                             ->join('sucursals','sucursalId','=','sucursals.id')
                             ->where('sucursals.nombre','=','Congelados')
                             ->where('productos.nombre','LIKE','%'.$request->search.'%')
-                            ->select('productos.id','productos.nombre','productos.precio','productos.cantidad','productos.stockId','productos.medidaId','productos.categoriaId')
-                            ->get();
-        $categoria= Categoria::where('id','=',$productoVerduleria->categoriaId)->get();
-        $stock= Stock::where('id','=',$productoVerduleria->stockId)->get();
-        $medida= Medida::where('id','=',$productoVerduleria->medidaId);
+                            ->select('productos.id','productos.nombre','productos.precio','productos.stockId','productos.medidaId','productos.categoriaId')
+                            ->paginate(18);
+        $categorias= Categoria::all();
+        $stocks= Stock::all();
+        $medidas= Medida::all();
+       
 
-        return view('Inventario.resultadoBusqueda',compact('productoVerduleria','categoria','stock','medida'));
+        return view('Inventario.buscar',compact('productos','categorias','stocks','medidas','search'));
     }
 
     public function searchCliente(Request $request)

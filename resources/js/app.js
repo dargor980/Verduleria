@@ -25,6 +25,8 @@ Vue.use(Chartkick.use(Chart))
 
 Vue.component('pedido', require('./components/PedidoComponent.vue').default);
 Vue.component('estadistica', require('./components/EstadisticasComponent.vue').default);
+Vue.component('frecuentes', require('./components/ClientesFrecuentesComponent.vue').default);
+Vue.component('masvendidos', require('./components/MasVendidosComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

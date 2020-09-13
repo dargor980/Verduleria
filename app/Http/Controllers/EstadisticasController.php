@@ -8,6 +8,9 @@ use App\Producto;
 use App\Proveedor;
 use App\Cliente;
 use App\Contenido;
+use App\Categoria;
+use App\Stock;
+use App\Medida;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -99,18 +102,13 @@ class EstadisticasController extends Controller
         return view('Estadisticas.masVendidos');
     }
 
+    
     public function clientesFrecuentes()
     { 
-        $old=Carbon::now()->add('-10','day');
-        $now=Carbon::now();
-        $clientesFrecuentes= DB::table('clientes')
-                                ->join('pedidos','clienteId','clientes.id')
-                                ->whereBetween('pedidos.created_at',[$old,$now])
-                                ->select('clientes.id','clientes.nombre','clientes.fono','clientes.domicilio','clientes.depto')
-                                ->get();
-        return view('Estadisticas.clientesFrecuentes',compact('clientesFrecuentes'));
+       
+        return view('Estadisticas.clientesFrecuentes');
                 
-    }
+    }  
 
 
     public function topVerduleria()
@@ -180,4 +178,125 @@ class EstadisticasController extends Controller
         return view('Estadisticas.historial');
         
     }
+/*Estadísticas para vista clientes frecuentes-------------------------------*/
+    public function topMayorMonto()
+    {
+        $old= Carbon::now()->add('-30','day');
+        $now= Carbon::now();
+
+        $query= DB::table('clientes')
+                     ->join('pedidos','pedidos.clienteId','clientes.id')
+                     ->whereBetween('pedidos.created_at',[$old,$now])
+                     ->select('clientes.nombre', DB::raw('SUM(pedidos.total) AS monto'))
+                     ->groupBy('clientes.nombre')
+                     ->limit(5)
+                     ->orderBy('monto','DESC')
+                     ->get();
+
+        $mayorMonto=array();
+        
+        foreach($query as $row)
+        {
+            $aux= array(
+                'nombre' => $row->nombre,
+                'monto' => $row->monto,
+            );
+
+            array_push($mayorMonto,$aux);
+        }
+
+        return $mayorMonto;
+    }
+
+    public function topCantPedidos()
+    {
+        $old= Carbon::now()->add('-30','day');
+        $now= Carbon::now();
+        $query= DB::table('clientes')
+                      ->join('pedidos','pedidos.clienteId','clientes.id')
+                      ->whereBetween('pedidos.created_at',[$old,$now])
+                      ->select('clientes.nombre',DB::raw('COUNT(*) AS cantidad'))
+                      ->groupBy('clientes.nombre')
+                      ->limit(5)
+                      ->orderBy('cantidad','DESC')
+                      ->get();
+
+        $cantPedidos=array();
+        foreach($query as $row)
+        {
+            $aux= array(
+                'nombre' => $row->nombre,
+                'cantidad' => $row->cantidad,
+            );
+
+            array_push($cantPedidos,$aux);
+        }
+        
+        return $cantPedidos;
+
+    }
+/*/Estadísticas para vista clientes frecuentes-------------------------------*/
+
+
+/*Estadísticas para vista mas vendidos-----------------------------------------*/
+
+public function prodMasVendidos()
+{
+    $old=Carbon::now()->add('-30','day');
+    $now=Carbon::now();
+    $query= DB::table('productos')
+            ->join('contenidos','contenidos.productoId','productos.id')
+            ->join('categorias','productos.categoriaId','categorias.id')
+            ->join('medidas','productos.medidaId','medidas.id')
+            ->whereBetween('contenidos.created_at',[$old,$now])
+            ->select('productos.nombre','categorias.tipo',DB::raw('medidas.nombre AS medida'),DB::raw('SUM(contenidos.cantidad) AS cantidad'))
+            ->groupBy('productos.nombre','categorias.tipo','medida')
+            ->limit(10)
+            ->orderBy('cantidad','DESC')
+            ->get();
+
+    $masVendidos=array();
+    foreach($query as $row)
+    {
+        $aux=array(
+            'nombre' => $row->nombre,
+            'categoria' => $row->tipo,
+            'cantidad' => $row->cantidad,
+            'medida' => $row->medida,        
+        );
+
+        array_push($masVendidos,$aux);
+    }
+
+    return $masVendidos;
+
+}
+
+public function masVendidosPorCategorias()
+{
+    $old=Carbon::now()->add('-30','day');
+    $new=Carbon::now();
+
+    $query=DB::table('');
+
+}
+
+public function masVendidosCongelados()
+{
+
+}
+
+public function masVendidosVerduleria()
+{
+
+}
+
+
+
+
+
+/*/Estadísticas para vista mas vendidos-----------------------------------------*/
+
+
+
 }

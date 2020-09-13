@@ -291,7 +291,8 @@ export default {
             this.total=0;
             for(var i=0; i<this.cantidadSeleccionada.length;i++)
             {
-                this.total=parseInt(this.total)+(parseInt(this.cantidadSeleccionada[i])*parseInt(this.productosSeleccionados[i].precio));
+                this.total=parseInt(this.total)+this.cantidadSeleccionada[i]*this.productosSeleccionados[i].precio;
+                this.total= parseInt(this.total);
                 this.cantidadAdd[i]=this.cantidadSeleccionada[i];
             }
 

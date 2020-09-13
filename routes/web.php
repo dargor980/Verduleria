@@ -137,9 +137,25 @@ Route::get('/proveedor/lista/search','SearchController@searchProveedor')->name('
 
 Route::get('/inventario/lista/search','SearchController@searchProductoVerduleria')->name('searchinventariolista');
 
+Route::get('/inventario/lista/search/congelados','SearchController@searchProductoCongelados')->name('searchcongelado');
+
 Route::get('/clientes/lista/search','SearchController@searchCliente')->name('searchcliente');
 
 Route::get('/pedido/administrarpagos','PedidosController@administrarPagos')->name('adminpagos');
 
 Route::get('/pedido/eliminarpedidos','PedidosController@eliminarPedido')->name('deletepedidos');
+
+Route::get('/estadisticas/clientesfrecuentes/mayormonto','EstadisticasController@topMayorMonto');
+
+Route::get('/estadisticas/clientesfrecuentes/cantpedidos','EstadisticasController@topCantPedidos');
+
+Route::get('/estadisticas/masvendidos/masvendido','EstadisticasController@prodMasVendidos');
+/*
+Route::get('/estadisticas/','EstadisticasController@');
+
+Route::get('/','EstadisticasController@');
+
+Route::get('/','EstadisticasController@'); */
+
+
 

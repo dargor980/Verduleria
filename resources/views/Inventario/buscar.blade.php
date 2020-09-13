@@ -7,7 +7,7 @@
 <div class="container">
   <div class="card card5">
     <h1 class="text-center text-white my-4">Stock de Productos</h1>
-    <h3 class="text-white pl-4 my-3">Resultados: AQUI PONER LO QUE SE BUSCO</h3>
+    <h3 class="text-white pl-4 my-3">Resultados: {{$search}}</h3>
     <div class="container table-responsive">
       <table class="table table-sm table-hover">
         <thead>
