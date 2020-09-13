@@ -21,6 +21,13 @@
           </div>
         </form>
     <div class="container">
+      @if (session('mensaje'))
+            <div class="container my-3">
+                <div class="alert alert-success">
+                    <span><i class="fas fa-check"></i></span>{{session('mensaje')}}
+                </div>
+            </div>           
+      @endif
       <table class="table table-sm table-hover">
         <thead>
           <tr class="boton text-white">

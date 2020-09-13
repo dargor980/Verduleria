@@ -9,6 +9,13 @@
       <h1 class="text-center text-white mt-4">Lista de Productos</h1>
       <h3 class="text-white pl-4 ml-2 my-3">Resultados: AQUI PONER LO QUE SE BUSCO</h3>
     <div class="container">
+      @if (session('mensaje'))
+            <div class="container my-3">
+                <div class="alert alert-success">
+                    <span><i class="fas fa-check"></i></span>{{session('mensaje')}}
+                </div>
+            </div>           
+        @endif
       <table class="table table-sm table-hover">
         <thead>
           <tr class="boton text-white">
