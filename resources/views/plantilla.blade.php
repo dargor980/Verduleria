@@ -81,9 +81,6 @@
                       <li>
                         <a href="{{route('adminpagos')}}">Administrar Pagos</a>
                       </li>
-                      <li>
-                        <a href="{{route('deletepedidos')}}">Eliminar Pedido</a>
-                      </li>
                     </ul>
                   </div>
                 </li>

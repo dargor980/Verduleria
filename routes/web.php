@@ -143,7 +143,6 @@ Route::get('/clientes/lista/search','SearchController@searchCliente')->name('sea
 
 Route::get('/pedido/administrarpagos','PedidosController@administrarPagos')->name('adminpagos');
 
-Route::get('/pedido/eliminarpedidos','PedidosController@eliminarPedido')->name('deletepedidos');
 
 Route::get('/estadisticas/clientesfrecuentes/mayormonto','EstadisticasController@topMayorMonto');
 

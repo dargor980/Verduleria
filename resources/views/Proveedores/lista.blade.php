@@ -41,7 +41,7 @@
           <tbody>
             @foreach($proveedores as $item)
             <tr>
-              <td><a href="{{route('detalleprov',$item->id)}}"> {{$item->nombre}} </a></td>
+              <td class="pl-3"><a href="{{route('detalleprov',$item->id)}}"> {{$item->nombre}} </a></td>
               <td>{{$item->empresa}}</td>
               <td>{{$item->rut}}</td>
               <td>{{$item->fono}}</td>

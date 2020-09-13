@@ -31,6 +31,7 @@
       <table class="table table-sm table-hover">
         <thead>
           <tr class="boton text-white">
+            <th scope="col">Cod.</th>
             <th scope="col">Nombre</th>
             <th scope="col">Precio</th>
             <th scope="col">Medida</th>
@@ -41,8 +42,9 @@
         <tbody>
           @foreach($productos as $item)
           <tr>
+            <td class="pl-3">{{$item->id}}</td>
             <td><a href="{{route('detalleprod', $item->id)}}">{{$item->nombre}} </a></td>
-            <td>{{$item->precio}}</td>
+            <td>${{$item->precio}}</td>
             <td>@foreach($medidas as $aux)@if($aux->id==$item->medidaId){{$aux->nombre}}@endif @endforeach</td>
             <td>@foreach($categorias as $aux)@if($aux->id == $item->categoriaId){{$aux->tipo}}@endif @endforeach</td>
             <td>

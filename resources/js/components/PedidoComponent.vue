@@ -151,7 +151,18 @@
          <!--Selecciona Productos-->
         <div v-if="isClientePedidoExists">
             <hr class="bg-light">
-            <h3 class="text-white pl-4 my-3 mb-4">Seleccione los productos:</h3>
+            <form class="row mb-2">
+                <div class="col-md-7">
+                    <h3 class="text-white pl-4 my-3">Seleccione los productos:</h3>
+                </div>
+                <div class="col-md-5 input-group md-form form-sm form-2 pl-0 my-3">
+                    <input class="form-control my-0 py-1 lime-border" type="text" placeholder="Buscar producto" aria-label="Search">
+                    <div class="input-group-append">
+                        <span class="input-group-text lime lighten-2" id="basic-text1"><i class="fas fa-search text-grey"
+                            aria-hidden="true"></i></span>
+                    </div>
+                </div>
+            </form>
             <form @submit.prevent="">
                 <div class="container productos">
                 <ul class="list-inline ml-5 pl-5">

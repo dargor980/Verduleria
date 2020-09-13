@@ -17,7 +17,7 @@
         <h3 class="text-white text-center col-md-6 mb-4">Datos del producto:</h3>
         <div class="row mb-3">
             <div class="col-md-3"></div>
-                <div class="col-md-6 card card4">
+                <div class="col-md-6 card card6">
                     <div class="my-2">
                         <div class="row">
                             <div class="col-md-2"></div>
