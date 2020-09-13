@@ -5,7 +5,7 @@
 @section('contenido')
 <br>
 <div class="container">
-  <div class="card card5 table-responsive">
+  <div class="card card5">
       <h1 class="text-center text-white my-4">Lista de Proveedores</h1>
       <form action="{{route('searchproveedorlista')}}">
         @method('POST')
@@ -20,7 +20,7 @@
           </div>
         </div>
       </form>
-      <div class="container">
+      <div class="container table-responsive">
         @if (session('mensaje'))
           <div class="container my-3">
               <div class="alert alert-success">
