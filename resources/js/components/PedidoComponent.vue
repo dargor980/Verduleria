@@ -442,8 +442,7 @@ export default {
                     
                 }
 
-                
-               setTimeout(function(){window.location.href =`http://127.0.0.1:8000/pedido/detalle/${idPedido.id}`;},500);             
+                   setTimeout(function(){window.location.href =`http://127.0.0.1:8000/pedido/detalle/${idPedido.id}`;},500);             
             });
         },
     }

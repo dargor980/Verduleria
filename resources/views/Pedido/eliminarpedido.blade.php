@@ -1,5 +1,5 @@
 @extends('plantilla')
-@section('titulo', 'Resultados de búsqueda')
+@section('titulo', 'Eliminar pedido')
 @section('contenido')
 
 

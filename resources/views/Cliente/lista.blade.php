@@ -8,7 +8,7 @@
 @php $id;@endphp
 <div class="card card5">
     <h1 class="text-center text-white mt-4">Lista de Clientes</h1>
-    <form action="">
+    <form action="{{route('searchcliente')}}">
       @method('POST')
       @csrf
       <div class="row">

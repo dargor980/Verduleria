@@ -227,4 +227,14 @@ class PedidosController extends Controller
     public function indexMedidasProductos(){
         return Medida::all();
     }
+
+    public function administrarPagos()
+    {
+        return view('Pedido.adminpagos');
+    }
+
+    public function eliminarPedido()
+    {
+        return view('Pedido.eliminarpedido');
+    }
 }

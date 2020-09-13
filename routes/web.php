@@ -133,3 +133,9 @@ Route::get('/estadisticas/historialventas/top5/congelados','EstadisticasControll
 
 Route::get('/producto/lista/search','SearchController@searchProducto')->name('searchproductolista');
 
+Route::get('/clientes/lista/search','SearchController@searchCliente')->name('searchcliente');
+
+Route::get('/pedido/administrarpagos','PedidosController@administrarPagos')->name('adminpagos');
+
+Route::get('/pedido/eliminarpedidos','PedidosController@eliminarPedido')->name('deletepedidos');
+

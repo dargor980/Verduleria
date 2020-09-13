@@ -39,8 +39,7 @@
               <div id="close-sidebar">
                 <i class="fas fa-times"></i>
               </div>
-            </div>
-            
+            </div>          
             
         
             <div class="sidebar-menu">
@@ -80,10 +79,10 @@
                         <a href="{{route('listaped')}}">Ver Pedidos</a>
                       </li>
                       <li>
-                        <a href="#">Administrar Pagos</a>
+                        <a href="{{route('adminpagos')}}">Administrar Pagos</a>
                       </li>
                       <li>
-                        <a href="#">Eliminar Pedido</a>
+                        <a href="{{route('deletepedidos')}}">Eliminar Pedido</a>
                       </li>
                     </ul>
                   </div>

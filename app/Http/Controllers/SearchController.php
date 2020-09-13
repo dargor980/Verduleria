@@ -19,7 +19,7 @@ class SearchController extends Controller
     public function searchProducto(Request $request)
     {
         $producto= Producto::where('nombre','LIKE',`%$request->search%`)->get();
-        return view('Producto.resultadosBusqueda',compact('producto'));
+        return view('Producto.buscar',compact('producto'));
 
     }
 
@@ -77,7 +77,7 @@ class SearchController extends Controller
     {
         $cliente= Cliente::where('nombre','LIKE',`%$request->search%`)->get();
 
-        return view('Cliente.resultadosBusqueda',compact('cliente'));
+        return view('Cliente.buscar',compact('cliente'));
         
     }
 }
