@@ -8,7 +8,7 @@
     @php $id;@endphp
     <div class="card card5">
         <h1 class="text-center text-white mt-4">Lista de Clientes</h1>
-        <h3 class="text-white pl-4 ml-2 my-3">Resultado: AQUI PONER LO QUE SE BUSCO</h3>
+        <h3 class="text-white pl-4 ml-2 my-3">Resultado: {{$search}}</h3>
         <div class="container">
           @if (session('mensaje'))
             <div class="container my-3">
@@ -28,7 +28,7 @@
               </tr>
             </thead>
             <tbody>
-              @foreach($clientes as $item)
+              @foreach($cliente as $item)
               <tr>
                 <td><a href="{{route('detallec',$item->id)}}"> {{$item->nombre}} </a></td>
                 <td>{{$item->fono}}</td>
@@ -42,11 +42,11 @@
               @endforeach
             </tbody>
           </table>
-          {{$clientes->links()}}
+          {{$cliente->links()}}
         </div>
         </div>    
     </div>
-        @foreach($clientes as $item)
+        @foreach($cliente as $item)
         <!--Confirmación eliminación cliente-->
         <div class="modal fade" id="id{{$item->id}}" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="{{$item->nombre}}" aria-hidden="true">
           <div class="modal-dialog">

@@ -7,7 +7,7 @@
 <div class="container">
   <div class="card card5 table-responsive">
       <h1 class="text-center text-white mt-4">Lista de Productos</h1>
-      <h3 class="text-white pl-4 ml-2 my-3">Resultados: AQUI PONER LO QUE SE BUSCO</h3>
+      <h3 class="text-white pl-4 ml-2 my-3">Resultados: {{$search}}</h3>
     <div class="container">
       @if (session('mensaje'))
             <div class="container my-3">
@@ -27,7 +27,7 @@
           </tr>
         </thead>
         <tbody>
-          @foreach($productos as $item)
+          @foreach($producto as $item)
           <tr>
             <td><a href="{{route('detalleprod', $item->id)}}">{{$item->nombre}} </a></td>
             <td>{{$item->precio}}</td>
@@ -41,7 +41,7 @@
           @endforeach
         </tbody>
       </table>
-      {{$productos->links()}}
+      {{$producto->links()}}
     </div>
   </div>
 </div>

@@ -39,6 +39,7 @@ class PedidosController extends Controller
         $productos= DB::table('productos')
                     ->join('stocks','stockId','stocks.id')
                     ->where('stocks.cantidad','>',0)
+                    ->orderBy('productos.nombre','ASC')
                     ->get();
         return $productos;
     }

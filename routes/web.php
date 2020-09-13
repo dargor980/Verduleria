@@ -135,7 +135,7 @@ Route::get('/producto/lista/search','SearchController@searchProducto')->name('se
 
 Route::get('/proveedor/lista/search','SearchController@searchProveedor')->name('searchproveedorlista');
 
-Route::get('/inventario/lista/search','SearchController@searchInventario')->name('searchinventariolista');
+Route::get('/inventario/lista/search','SearchController@searchProductoVerduleria')->name('searchinventariolista');
 
 Route::get('/clientes/lista/search','SearchController@searchCliente')->name('searchcliente');
 
