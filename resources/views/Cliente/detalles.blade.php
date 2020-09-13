@@ -14,10 +14,10 @@
             </div>
             <h2 class="my-2 text-white text-center">{{$cliente->nombre}}</h2>
         </div>
-        <h3 class="text-white text-center col-md-6">Datos del cliente:</h3>
-        <div class="row mb-4">
+        <h3 class="text-white text-center col-md-6 my-2">Datos del cliente:</h3>
+        <div class="row mb-4 mt-2">
             <div class="col-md-2"></div>
-                <div class="col-md-8 card card4">
+                <div class="col-md-8 card card6">
                     <div class="row mt-4">
                         <div class="col-md-1"></div>
                         <div class="col-md-3">
@@ -46,7 +46,7 @@
                             <h5 class="text-white">Depto:</h5>
                         </div>
                         <div class="col-md-7">
-                            <h5 class="card card1 text-center">{{$cliente->depto}}</h5>
+                            <h5 class="card card1 text-center">&nbsp;{{$cliente->depto}}</h5>
                         </div>
                         <div class="col-md-1"></div>
                     </div>

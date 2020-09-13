@@ -2319,6 +2319,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -80089,9 +80100,7 @@ var render = function() {
       ? _c("div", [
           _c("hr", { staticClass: "bg-light" }),
           _vm._v(" "),
-          _c("h3", { staticClass: "text-white pl-4 my-3 mb-4" }, [
-            _vm._v("Seleccione los productos:")
-          ]),
+          _vm._m(9),
           _vm._v(" "),
           _c(
             "form",
@@ -80220,7 +80229,7 @@ var render = function() {
               _c("div", { staticClass: "card table-responsive" }, [
                 _c("div", { staticClass: "container" }, [
                   _c("table", { staticClass: "table table-sm mt-3" }, [
-                    _vm._m(9),
+                    _vm._m(10),
                     _vm._v(" "),
                     _c(
                       "tbody",
@@ -80229,7 +80238,7 @@ var render = function() {
                           "tr",
                           { key: index },
                           [
-                            _vm._m(10, true),
+                            _vm._m(11, true),
                             _vm._v(" "),
                             _c("td", [_vm._v(_vm._s(item.nombre))]),
                             _vm._v(" "),
@@ -80347,7 +80356,7 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _vm._m(11)
+              _vm._m(12)
             ]
           )
         ])
@@ -80369,7 +80378,7 @@ var render = function() {
       [
         _c("div", { staticClass: "modal-dialog" }, [
           _c("div", { staticClass: "modal-content" }, [
-            _vm._m(12),
+            _vm._m(13),
             _vm._v(" "),
             _c("div", { staticClass: "modal-body text-white" }, [
               _vm._v(
@@ -80479,6 +80488,51 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-md-5" }, [
       _c("h5", { staticClass: "text-white mt-2" }, [_vm._v("Depto: ")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("form", { staticClass: "row mb-2" }, [
+      _c("div", { staticClass: "col-md-7" }, [
+        _c("h3", { staticClass: "text-white pl-4 my-3" }, [
+          _vm._v("Seleccione los productos:")
+        ])
+      ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "col-md-5 input-group md-form form-sm form-2 pl-0 my-3"
+        },
+        [
+          _c("input", {
+            staticClass: "form-control my-0 py-1 lime-border",
+            attrs: {
+              type: "text",
+              placeholder: "Buscar producto",
+              "aria-label": "Search"
+            }
+          }),
+          _vm._v(" "),
+          _c("div", { staticClass: "input-group-append" }, [
+            _c(
+              "span",
+              {
+                staticClass: "input-group-text lime lighten-2",
+                attrs: { id: "basic-text1" }
+              },
+              [
+                _c("i", {
+                  staticClass: "fas fa-search text-grey",
+                  attrs: { "aria-hidden": "true" }
+                })
+              ]
+            )
+          ])
+        ]
+      )
     ])
   },
   function() {

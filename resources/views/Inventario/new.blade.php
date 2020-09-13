@@ -55,6 +55,7 @@
             <table class="table table-sm table-hover">
                 <thead>
                 <tr class="boton text-white">
+                    <th scope="col">Cod.</th>
                     <th scope="col">Nombre</th>
                     <th scope="col">Precio</th>
                     <th scope="col">Cantidad</th>
@@ -66,6 +67,7 @@
                 <tbody>
                 @foreach($productos as $item)
                 <tr>
+                    <td class="pl-3">{{$item->id}}</td>
                     <td>{{$item->nombre}}</td>
                     <td>{{$item->precio}}</td>
                     <td>@foreach($stocks as $cantidad)@if($cantidad->id==$item->stockId){{$cantidad->cantidad}}@endif @endforeach</td>

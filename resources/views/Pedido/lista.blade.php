@@ -1,6 +1,6 @@
 @extends('plantilla')
 
-@section('titulo', 'Clientes')
+@section('titulo', 'Pedidos')
 
 @section('contenido')
 <br>
@@ -19,6 +19,8 @@
     <table class="table table-sm table-hover">
         <thead>
           <tr class="boton text-white">
+            <th scope="col">N°</th>
+            <th scope="col">Estado</th>
             <th scope="col">Cliente</th>
             <th scope="col">Fecha</th>
             <th scope="col">Total</th>
@@ -28,6 +30,8 @@
         <tbody>
           @foreach($pedidos as $pedido)
           <tr>
+            <td class="pl-2">{{$pedido->id}}</td>
+            <td>¿Pagado?</td>
             <td><a href="{{route('detallepedido',$pedido->id)}}">@foreach($clientes as $cliente) @if($cliente->id==$pedido->clienteId){{$cliente->nombre}} @endif @endforeach</a></td>
             <td>{{$pedido->created_at}}</td>
             <td>${{$pedido->total}}</td>

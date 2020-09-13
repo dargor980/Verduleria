@@ -17,7 +17,7 @@
         <h3 class="text-white text-center col-md-6 mb-4">Datos del proveedor:</h3>
         <div class="row my-2 mb-3">
             <div class="col-md-2"></div>
-                <div class="col-md-8 card card4">
+                <div class="col-md-8 card card6">
                     <div class="row mt-4">
                         <div class="col-md-1"></div>
                         <div class="col-md-3">

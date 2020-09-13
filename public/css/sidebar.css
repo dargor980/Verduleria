@@ -536,7 +536,7 @@
   }
 
   .opcionmenu1{
-    background: #ff8812;
+    background:#CDD973;
     color: white;
     border-radius: 25px;
   }
@@ -545,7 +545,7 @@
   }
 
   .opcionmenu2{
-    background: #39b0ff;
+    background: #F0F2A7;
     color: white;
     border-radius: 25px;
   }
@@ -554,7 +554,7 @@
   }
 
   .opcionmenu3{
-    background-color: #58d831;
+    background-color: #BF9169;
     color: white;
     border-radius: 25px;
   }
@@ -588,6 +588,11 @@
   .card4{
     background: rgba(248, 243, 167, 0.85) !important;
     border-radius: 15px !important;
+  }
+
+  .card6{
+    background: rgba(20, 167, 118, 0.6) !important;
+    border-radius: 10px !important;
   }
 
   .cardmesactual{
