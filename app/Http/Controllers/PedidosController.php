@@ -72,7 +72,24 @@ class PedidosController extends Controller
 
     public function addProductoToPedido(Request $request)
     {
-        /*creación del un contenido del pedido */
+
+        foreach($request->all() as $req)
+        {
+            $producto= Producto::find($req['productoId']);
+            Contenido::create([
+                'pedidoId' => $req['pedidoId'],
+                'productoId' =>$req['productoId'],
+                'cantidad' => $req['cantidad'],
+                'subtotal' => $req['cantidad']*$producto->precio  ,   
+            ]);
+            
+           
+            
+            
+        }
+
+        return;
+        /*creación del un contenido del pedido 
         $newProducto= new Contenido();
         $newProducto->pedidoId=$request->pedidoId;
         $newProducto->productoId= $request->productoId;
@@ -84,25 +101,24 @@ class PedidosController extends Controller
         
         return $newProducto;
 
+        */
+
     }
 
     public function updateStock(Request $request)
     {
-        /*actualización inmediata del stock del producto de acuerdo a la cantidad seleccionada */
-        $producto= Producto::where('id','=',$request->productoId)->get();
-        $id=0;
-        foreach($producto as $value)
+        foreach($request->all() as $req)
         {
-            $id= $value->stockId;
+            $producto=Producto::find($req['productoId']);
+            $id=$producto->stockId;
+            $stock= Stock::where('id','=',$id)->get();
+            foreach($stock as $val)
+            {
+                $val->cantidad= $val->cantidad-$req['cantidad'];
+                $val->update();
+            }
         }
-        $stock= Stock::where('id','=',$id)->get();
-        foreach($stock as $value)
-        {
-            $value->cantidad= $value->cantidad-$request->cantidad;
-            $value->save();
-        }
-        
-        return $stock;      
+        return;
     }
 
     /**

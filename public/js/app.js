@@ -2534,6 +2534,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2557,6 +2558,7 @@ __webpack_require__.r(__webpack_exports__);
       clientenuevo: false,
       total: 0,
       search: '',
+      spin: false,
 
       /*variables de control */
       checked: false,
@@ -2581,6 +2583,11 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       return this.total;
+    },
+    calcularSubtotales: function calcularSubtotales() {
+      for (var i = 0; i < this.productosadd.length; i++) {
+        this.subtotal[i] = this.productosadd[i].precio * this.cantidadAdd[i];
+      }
     }
   },
   watch: {
@@ -2665,11 +2672,6 @@ __webpack_require__.r(__webpack_exports__);
         });
       }
     },
-    calcularSubtotales: function calcularSubtotales() {
-      for (var i = 0; i < this.productosadd.length; i++) {
-        this.subtotal[i] = this.productosadd[i].precio * this.cantidadAdd[i];
-      }
-    },
     spliceProductoSeleccionado: function spliceProductoSeleccionado(index) {
       this.productosSeleccionados.splice(index, 1);
       this.cantidadSeleccionada.splice(index, 1);
@@ -2677,7 +2679,7 @@ __webpack_require__.r(__webpack_exports__);
     addProducto: function addProducto() {
       this.productosadd = this.productosSeleccionados;
       this.cantidadAdd = this.cantidadSeleccionada;
-      this.calcularSubtotales(); //this.productosSeleccionados=[];
+      this.calcularSubtotales; //this.productosSeleccionados=[];
 
       this.cantidadSeleccionada = [];
       this.pedidoFinal = true;
@@ -2685,7 +2687,7 @@ __webpack_require__.r(__webpack_exports__);
     createPedido: function createPedido() {
       var _this5 = this;
 
-      /*creación del registro de pedido*/
+      /creación del registro de pedido/;
       var data = {
         clienteId: '',
         estado: 0,
@@ -2701,14 +2703,14 @@ __webpack_require__.r(__webpack_exports__);
           productoId: '',
           cantidad: 0
         };
-        /*creación de los contenidos del pedido*/
+        var pedidofinal = [];
+        /creación de los contenidos del pedido/;
 
         for (var i = 0; i < _this5.productosadd.length; i++) {
           dataContenido.pedidoId = idPedido.id;
           dataContenido.productoId = _this5.productosadd[i].id;
           dataContenido.cantidad = parseInt(_this5.cantidadAdd[i]);
-          axios.post('/pedido/new/create/addproducto', dataContenido).then(function (res) {});
-          axios.put('/pedido/new/stock/update', dataContenido).then(function (res) {});
+          pedidofinal.push(dataContenido);
           dataContenido = {
             pedidoId: '',
             productoId: '',
@@ -2716,10 +2718,13 @@ __webpack_require__.r(__webpack_exports__);
           };
         }
 
-        setTimeout(function () {
-          window.location.href = "http://127.0.0.1:8000/pedido/detalle/".concat(idPedido.id);
-        }, 5000);
+        axios.post('/pedido/new/create/addproducto', pedidofinal).then(function (res) {});
+        axios.put('/pedido/new/stock/update', pedidofinal).then(function (res) {});
       });
+      this.spin = true;
+      setTimeout(function () {
+        window.location.href = "http://127.0.0.1:8000/pedido/detalle/".concat(idPedido.id);
+      }, 5000);
     }
   }
 });
@@ -80981,11 +80986,39 @@ var render = function() {
       [
         _c("div", { staticClass: "modal-dialog" }, [
           _c("div", { staticClass: "modal-content" }, [
-            _vm._m(13),
+            _c("div", { staticClass: "modal-header" }, [
+              _c(
+                "h5",
+                {
+                  staticClass: "modal-title text-white",
+                  attrs: { id: "staticBackdropLabel" }
+                },
+                [_vm._v("Finalizar Pedido")]
+              ),
+              _vm._v(" "),
+              !_vm.spin
+                ? _c(
+                    "button",
+                    {
+                      staticClass: "close text-white",
+                      attrs: {
+                        type: "button",
+                        "data-dismiss": "modal",
+                        "aria-label": "Close"
+                      }
+                    },
+                    [
+                      _c("span", { attrs: { "aria-hidden": "true" } }, [
+                        _vm._v("×")
+                      ])
+                    ]
+                  )
+                : _vm._e()
+            ]),
             _vm._v(" "),
             _c("div", { staticClass: "modal-body text-white" }, [
               _vm._v(
-                "\n            ¿Estas seguro que desea finalizar el pedido?\n        "
+                "\n                ¿Estas seguro que desea finalizar el pedido?\n            "
               )
             ]),
             _vm._v(" "),
@@ -80999,15 +81032,24 @@ var render = function() {
                 [_vm._v("No")]
               ),
               _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-success",
-                  attrs: { type: "button" },
-                  on: { click: _vm.createPedido }
-                },
-                [_vm._v("Finalizar")]
-              )
+              !_vm.spin
+                ? _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-success",
+                      attrs: { type: "button" },
+                      on: { click: _vm.createPedido }
+                    },
+                    [_vm._v("Finalizar")]
+                  )
+                : _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-success",
+                      attrs: { type: "button", disabled: "" }
+                    },
+                    [_vm._m(13), _vm._v("  Registrando...")]
+                  )
             ])
           ])
         ])
@@ -81115,31 +81157,10 @@ var staticRenderFns = [
           attrs: { id: "basic-text1" }
         },
         [
-          _c("input", {
-            staticClass: "form-control my-0 py-1 lime-border",
-            attrs: {
-              id: "buscador",
-              type: "text",
-              placeholder: "Buscar producto",
-              "aria-label": "Search"
-            }
-          }),
-          _vm._v(" "),
-          _c("div", { staticClass: "input-group-append" }, [
-            _c(
-              "span",
-              {
-                staticClass: "input-group-text lime lighten-2",
-                attrs: { id: "basic-text1" }
-              },
-              [
-                _c("i", {
-                  staticClass: "fas fa-search text-grey",
-                  attrs: { "aria-hidden": "true" }
-                })
-              ]
-            )
-          ])
+          _c("i", {
+            staticClass: "fas fa-search text-grey",
+            attrs: { "aria-hidden": "true" }
+          })
         ]
       )
     ])
@@ -81187,28 +81208,11 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-header" }, [
-      _c(
-        "h5",
-        {
-          staticClass: "modal-title text-white",
-          attrs: { id: "staticBackdropLabel" }
-        },
-        [_vm._v("Finalizar Pedido")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "close text-white",
-          attrs: {
-            type: "button",
-            "data-dismiss": "modal",
-            "aria-label": "Close"
-          }
-        },
-        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
-      )
+    return _c("span", [
+      _c("img", {
+        staticStyle: { width: "25px", height: "25px" },
+        attrs: { src: "/img/spinner.gif", alt: "" }
+      })
     ])
   }
 ]
@@ -93768,8 +93772,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\xampp\htdocs\xampp\Proyectos\Verduleria\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\xampp\Proyectos\Verduleria\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /opt/lampp/htdocs/verduleria/verduleria/Verduleria/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /opt/lampp/htdocs/verduleria/verduleria/Verduleria/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

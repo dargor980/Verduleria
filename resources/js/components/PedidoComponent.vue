@@ -240,22 +240,23 @@
 
         <!--Confirmación pedido-->
         <div class="modal fade" id="seguro" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title text-white" id="staticBackdropLabel">Finalizar Pedido</h5>
-              <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" >
+                    <h5 class="modal-title text-white" id="staticBackdropLabel">Finalizar Pedido</h5>
+                    <button v-if="!spin" type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body text-white">
+                    ¿Estas seguro que desea finalizar el pedido?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                    <button type="button" class="btn btn-success" @click="createPedido" v-if="!spin">Finalizar</button>
+                    <button  type="button" class="btn btn-success" disabled v-else><span ><img src="/img/spinner.gif" alt="" style="width:25px; height:25px"></span>&nbsp; Registrando...</button>
+                </div>
             </div>
-            <div class="modal-body text-white">
-                ¿Estas seguro que desea finalizar el pedido?
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
-              <button type="button" class="btn btn-success" @click="createPedido">Finalizar</button>
-            </div>
-          </div>
         </div>
 
         <!--Confirmación pedido-->
@@ -283,6 +284,7 @@ export default {
             clientenuevo:false,
             total:0,
             search:'',
+            spin:false,
             
             
 
@@ -312,6 +314,17 @@ export default {
             return this.total;
 
         },
+        calcularSubtotales()
+        {
+            for(var i=0; i<this.productosadd.length; i++)
+            {
+                this.subtotal[i]=this.productosadd[i].precio*this.cantidadAdd[i];
+            }
+           
+
+        },
+
+        
 
     },
 
@@ -400,15 +413,7 @@ export default {
             
         },
 
-        calcularSubtotales()
-        {
-            for(var i=0; i<this.productosadd.length; i++)
-            {
-                this.subtotal[i]=this.productosadd[i].precio*this.cantidadAdd[i];
-            }
-           
-
-        },
+        
 
         spliceProductoSeleccionado(index)
         {
@@ -421,7 +426,7 @@ export default {
         addProducto(){
             this.productosadd=this.productosSeleccionados;
             this.cantidadAdd=this.cantidadSeleccionada;
-            this.calcularSubtotales();
+            this.calcularSubtotales;
             //this.productosSeleccionados=[];
             this.cantidadSeleccionada=[];
             this.pedidoFinal=true;
@@ -429,40 +434,42 @@ export default {
         },
 
         createPedido(){
-            /*creación del registro de pedido*/
+            /creación del registro de pedido/
             var data= {clienteId:'', estado:0, total:parseInt(0)};
             data.clienteId=this.clientePedidoData.id;
             data.total=parseInt(this.total);
             var idPedido=[];
+            
+            
             axios.post('/pedido/new/create',data).then(res =>{
                 idPedido=res.data;
                  var dataContenido= {pedidoId:'', productoId:'', cantidad:0};
-            
+                 var pedidofinal=[];
 
-
-                /*creación de los contenidos del pedido*/              
+                /creación de los contenidos del pedido/
                 for(var i=0; i<this.productosadd.length; i++)
                 {
                     dataContenido.pedidoId=idPedido.id;
                     dataContenido.productoId=this.productosadd[i].id;
                     dataContenido.cantidad=parseInt(this.cantidadAdd[i]);
-                    axios.post('/pedido/new/create/addproducto',dataContenido).then(res =>{
+                    pedidofinal.push(dataContenido);
 
-                        
-                        
-                    });
-
-                    axios.put('/pedido/new/stock/update',dataContenido).then(res =>{
-
-                    });
-                   
                     dataContenido= {pedidoId:'', productoId:'', cantidad:0};
-                    
                 }
 
-                   setTimeout(function(){window.location.href =`http://127.0.0.1:8000/pedido/detalle/${idPedido.id}`;},5000);             
+
+                axios.post('/pedido/new/create/addproducto',pedidofinal).then(res =>{
+
+                })
+
+                axios.put('/pedido/new/stock/update',pedidofinal).then(res =>{
+
+                });
             });
+            this.spin=true;
+            setTimeout(function(){window.location.href =`http://127.0.0.1:8000/pedido/detalle/${idPedido.id}`;},5000);
         }
-    }
+    },
+
 }
 </script>
