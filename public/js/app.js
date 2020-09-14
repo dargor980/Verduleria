@@ -2682,6 +2682,10 @@ __webpack_require__.r(__webpack_exports__);
         this.subtotal[i] = this.productosadd[i].precio * this.cantidadAdd[i];
       }
     },
+    spliceProductoSeleccionado: function spliceProductoSeleccionado(index) {
+      this.productosSeleccionados.splice(index, 1);
+      this.cantidadSeleccionada.splice(index, 1);
+    },
     addProducto: function addProducto() {
       this.productosadd = this.productosSeleccionados;
       this.cantidadAdd = this.cantidadSeleccionada;
@@ -80648,46 +80652,57 @@ var render = function() {
       ? _c("div", [
           _c("hr", { staticClass: "bg-light" }),
           _vm._v(" "),
-          _c("form", { staticClass: "row mb-2" }, [
-            _vm._m(9),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass:
-                  "col-md-5 input-group md-form form-sm form-2 pl-0 my-3"
-              },
-              [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.search,
-                      expression: "search"
-                    }
-                  ],
-                  staticClass: "form-control my-0 py-1 lime-border",
-                  attrs: {
-                    type: "text",
-                    placeholder: "Buscar producto",
-                    name: "search"
-                  },
-                  domProps: { value: _vm.search },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
+          _c(
+            "form",
+            {
+              staticClass: "row mb-2",
+              on: {
+                submit: function($event) {
+                  $event.preventDefault()
+                }
+              }
+            },
+            [
+              _vm._m(9),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "col-md-5 input-group md-form form-sm form-2 pl-0 my-3"
+                },
+                [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.search,
+                        expression: "search"
                       }
-                      _vm.search = $event.target.value
+                    ],
+                    staticClass: "form-control my-0 py-1 lime-border",
+                    attrs: {
+                      type: "text",
+                      placeholder: "Buscar producto",
+                      name: "search"
+                    },
+                    domProps: { value: _vm.search },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.search = $event.target.value
+                      }
                     }
-                  }
-                }),
-                _vm._v(" "),
-                _vm._m(10)
-              ]
-            )
-          ]),
+                  }),
+                  _vm._v(" "),
+                  _vm._m(10)
+                ]
+              )
+            ]
+          ),
           _vm._v(" "),
           _c(
             "form",
@@ -80813,137 +80828,162 @@ var render = function() {
               }
             },
             [
-              _c("div", { staticClass: "card table-responsive" }, [
-                _c("div", { staticClass: "container" }, [
-                  _c("table", { staticClass: "table table-sm mt-3" }, [
-                    _vm._m(11),
-                    _vm._v(" "),
-                    _c(
-                      "tbody",
-                      _vm._l(_vm.productosadd, function(item, index) {
-                        return _c(
-                          "tr",
-                          { key: index },
-                          [
-                            _vm._m(12, true),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(item.nombre))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(item.precio))]),
-                            _vm._v(" "),
-                            _c("td", [
-                              _c("div", { staticClass: "row" }, [
-                                _c("div", { staticClass: "col" }, [
-                                  _c("input", {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: _vm.cantidadSeleccionada[index],
-                                        expression:
-                                          "cantidadSeleccionada[index]"
-                                      }
-                                    ],
-                                    staticClass: "form-control",
-                                    attrs: {
-                                      type: "number",
-                                      min: "0",
-                                      placeholder: "Cantidad"
-                                    },
-                                    domProps: {
-                                      value: _vm.cantidadSeleccionada[index]
-                                    },
+              _c(
+                "div",
+                { staticClass: "card table-responsive", attrs: { id: "prod" } },
+                [
+                  _c("div", { staticClass: "container" }, [
+                    _c("table", { staticClass: "table table-sm mt-3" }, [
+                      _vm._m(11),
+                      _vm._v(" "),
+                      _c(
+                        "tbody",
+                        _vm._l(_vm.productosadd, function(item, index) {
+                          return _c(
+                            "tr",
+                            { key: index },
+                            [
+                              _c("td", { staticClass: "pl-4" }, [
+                                _c(
+                                  "a",
+                                  {
+                                    attrs: { href: "#prod" },
                                     on: {
-                                      input: function($event) {
-                                        if ($event.target.composing) {
-                                          return
-                                        }
-                                        _vm.$set(
-                                          _vm.cantidadSeleccionada,
-                                          index,
-                                          $event.target.value
+                                      click: function($event) {
+                                        return _vm.spliceProductoSeleccionado(
+                                          index
                                         )
                                       }
                                     }
-                                  })
+                                  },
+                                  [
+                                    _c("i", {
+                                      staticClass:
+                                        "fas fa-trash-alt text-danger"
+                                    })
+                                  ]
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("td", [_vm._v(_vm._s(item.nombre))]),
+                              _vm._v(" "),
+                              _c("td", [_vm._v(_vm._s(item.precio))]),
+                              _vm._v(" "),
+                              _c("td", [
+                                _c("div", { staticClass: "row" }, [
+                                  _c("div", { staticClass: "col" }, [
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value:
+                                            _vm.cantidadSeleccionada[index],
+                                          expression:
+                                            "cantidadSeleccionada[index]"
+                                        }
+                                      ],
+                                      staticClass: "form-control",
+                                      attrs: {
+                                        type: "number",
+                                        min: "0",
+                                        placeholder: "Cantidad"
+                                      },
+                                      domProps: {
+                                        value: _vm.cantidadSeleccionada[index]
+                                      },
+                                      on: {
+                                        input: function($event) {
+                                          if ($event.target.composing) {
+                                            return
+                                          }
+                                          _vm.$set(
+                                            _vm.cantidadSeleccionada,
+                                            index,
+                                            $event.target.value
+                                          )
+                                        }
+                                      }
+                                    })
+                                  ])
                                 ])
-                              ])
-                            ]),
-                            _vm._v(" "),
-                            _vm._l(_vm.medidas, function(med, medidas) {
-                              return _c(
-                                "td",
-                                {
-                                  directives: [
-                                    {
-                                      name: "show",
-                                      rawName: "v-show",
-                                      value: med.id === item.medidaId,
-                                      expression: "med.id===item.medidaId"
-                                    }
-                                  ],
-                                  key: medidas
-                                },
-                                [_vm._v(_vm._s(med.nombre))]
-                              )
-                            }),
-                            _vm._v(" "),
-                            _vm._l(_vm.subtotal, function(sub, subt) {
-                              return _c(
-                                "td",
-                                {
-                                  directives: [
-                                    {
-                                      name: "show",
-                                      rawName: "v-show",
-                                      value: subt === index,
-                                      expression: "subt===index"
-                                    }
-                                  ],
-                                  key: subt
-                                },
-                                [
-                                  _vm._v(
-                                    _vm._s(
-                                      (sub =
-                                        _vm.cantidadSeleccionada[index] *
-                                        item.precio)
+                              ]),
+                              _vm._v(" "),
+                              _vm._l(_vm.medidas, function(med, medidas) {
+                                return _c(
+                                  "td",
+                                  {
+                                    directives: [
+                                      {
+                                        name: "show",
+                                        rawName: "v-show",
+                                        value: med.id === item.medidaId,
+                                        expression: "med.id===item.medidaId"
+                                      }
+                                    ],
+                                    key: medidas
+                                  },
+                                  [_vm._v(_vm._s(med.nombre))]
+                                )
+                              }),
+                              _vm._v(" "),
+                              _vm._l(_vm.subtotal, function(sub, subt) {
+                                return _c(
+                                  "td",
+                                  {
+                                    directives: [
+                                      {
+                                        name: "show",
+                                        rawName: "v-show",
+                                        value: subt === index,
+                                        expression: "subt===index"
+                                      }
+                                    ],
+                                    key: subt
+                                  },
+                                  [
+                                    _vm._v(
+                                      _vm._s(
+                                        (sub =
+                                          _vm.cantidadSeleccionada[index] *
+                                          item.precio)
+                                      )
                                     )
-                                  )
-                                ]
-                              )
-                            })
-                          ],
-                          2
-                        )
-                      }),
-                      0
-                    ),
-                    _vm._v(" "),
-                    _c("tfoot", [
-                      _c("tr", [
-                        _c("th", { staticClass: "border-top border-dark" }),
-                        _vm._v(" "),
-                        _c("th", { staticClass: "border-top border-dark" }),
-                        _vm._v(" "),
-                        _c("th", { staticClass: "border-top border-dark" }),
-                        _vm._v(" "),
-                        _c("th", { staticClass: "border-top border-dark" }),
-                        _vm._v(" "),
-                        _c("th", { staticClass: "border-top border-dark" }, [
-                          _vm._v("Total:")
-                        ]),
-                        _vm._v(" "),
-                        _c("th", { staticClass: "border-top border-dark" }, [
-                          _vm._v(_vm._s(_vm.calcularTotal))
+                                  ]
+                                )
+                              })
+                            ],
+                            2
+                          )
+                        }),
+                        0
+                      ),
+                      _vm._v(" "),
+                      _c("tfoot", [
+                        _c("tr", [
+                          _c("th", { staticClass: "border-top border-dark" }),
+                          _vm._v(" "),
+                          _c("th", { staticClass: "border-top border-dark" }),
+                          _vm._v(" "),
+                          _c("th", { staticClass: "border-top border-dark" }),
+                          _vm._v(" "),
+                          _c("th", { staticClass: "border-top border-dark" }),
+                          _vm._v(" "),
+                          _c("th", { staticClass: "border-top border-dark" }, [
+                            _vm._v("Total:")
+                          ]),
+                          _vm._v(" "),
+                          _c("th", { staticClass: "border-top border-dark" }, [
+                            _vm._v(_vm._s(_vm.calcularTotal))
+                          ])
                         ])
                       ])
                     ])
                   ])
-                ])
-              ]),
+                ]
+              ),
               _vm._v(" "),
-              _vm._m(13)
+              _vm._m(12)
             ]
           )
         ])
@@ -80965,7 +81005,7 @@ var render = function() {
       [
         _c("div", { staticClass: "modal-dialog" }, [
           _c("div", { staticClass: "modal-content" }, [
-            _vm._m(14),
+            _vm._m(13),
             _vm._v(" "),
             _c("div", { staticClass: "modal-body text-white" }, [
               _vm._v(
@@ -81125,14 +81165,6 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Subtotal")])
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", { staticClass: "pl-4" }, [
-      _c("i", { staticClass: "fas fa-trash-alt text-danger" })
     ])
   },
   function() {
@@ -93656,15 +93688,14 @@ __webpack_require__.r(__webpack_exports__);
 /*!*****************************************************!*\
   !*** ./resources/js/components/PedidoComponent.vue ***!
   \*****************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _PedidoComponent_vue_vue_type_template_id_461d98c6___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PedidoComponent.vue?vue&type=template&id=461d98c6& */ "./resources/js/components/PedidoComponent.vue?vue&type=template&id=461d98c6&");
 /* harmony import */ var _PedidoComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PedidoComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/PedidoComponent.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _PedidoComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _PedidoComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -93694,7 +93725,7 @@ component.options.__file = "resources/js/components/PedidoComponent.vue"
 /*!******************************************************************************!*\
   !*** ./resources/js/components/PedidoComponent.vue?vue&type=script&lang=js& ***!
   \******************************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

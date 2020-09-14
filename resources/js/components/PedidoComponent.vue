@@ -151,7 +151,7 @@
          <!--Selecciona Productos-->
         <div v-if="isClientePedidoExists">
             <hr class="bg-light">
-            <form class="row mb-2">
+            <form class="row mb-2"  @submit.prevent="">
                 <div class="col-md-7">
                     <h3 class="text-white pl-4 my-3">Seleccione los productos:</h3>
                 </div>
@@ -189,7 +189,7 @@
             <hr class="bg-light">
             <h3 class="text-white pl-4 text-center">Pedido final</h3>
             <form @submit.prevent="">
-                <div class="card table-responsive">
+                <div class="card table-responsive" id="prod">
                     <div class="container">
                         <table class="table table-sm mt-3">
                         <thead>
@@ -204,7 +204,7 @@
                         </thead>
                         <tbody>
                             <tr v-for="(item,index) in productosadd" :key="index">
-                            <td class="pl-4"><i class="fas fa-trash-alt text-danger"></i></td>
+                            <td class="pl-4"><a href="#prod" @click="spliceProductoSeleccionado(index)"><i class="fas fa-trash-alt text-danger"></i></a></td>
                             <td>{{item.nombre}}</td>
                             <td>{{item.precio}}</td>
                             <td>
@@ -408,6 +408,12 @@ export default {
             }
            
 
+        },
+
+        spliceProductoSeleccionado(index)
+        {
+            this.productosSeleccionados.splice(index,1);
+            this.cantidadSeleccionada.splice(index,1);
         },
 
 
