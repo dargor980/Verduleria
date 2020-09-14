@@ -151,10 +151,12 @@ Route::get('/estadisticas/clientesfrecuentes/cantpedidos','EstadisticasControlle
 Route::get('/estadisticas/masvendidos/masvendido','EstadisticasController@prodMasVendidos');
 
 Route::post('/pedido/search','SearchController@searchProductoPedido');
-/*
-Route::get('/estadisticas/','EstadisticasController@');
 
-Route::get('/','EstadisticasController@');
+Route::get('/estadisticas/masvendidos/congelados','EstadisticasController@masVendidosCongelados');
+
+Route::get('/estadisticas/masvendidos/verduleria','EstadisticasController@masVendidosVerduleria');
+
+/* Route::get('/','EstadisticasController@');
 
 Route::get('/','EstadisticasController@'); */
 

@@ -2233,25 +2233,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       masVendidos: [],
-      vendPorCat: [],
       congelados: [],
       verduleria: []
     };
@@ -2262,9 +2247,12 @@ __webpack_require__.r(__webpack_exports__);
     axios.get('/estadisticas/masvendidos/masvendido').then(function (res) {
       _this.masVendidos = res.data;
     });
-    axios.get('').then(function (res) {});
-    axios.get('').then(function (res) {});
-    axios.get('').then(function (res) {});
+    axios.get('/estadisticas/masvendidos/congelados').then(function (res) {
+      _this.congelados = res.data;
+    });
+    axios.get('/estadisticas/masvendidos/verduleria').then(function (res) {
+      _this.verduleria = res.data;
+    });
   }
 });
 
@@ -79984,8 +79972,10 @@ var render = function() {
       _vm._v("Top 10: Productos")
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "row my-4 px-4" }, [
-      _c("div", { staticClass: "col-md-5 card card4" }, [
+    _c("div", { staticClass: "row my-4 px-4 pb-4" }, [
+      _c("div", { staticClass: "col-md-1" }),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-10 card card4 table-responsive" }, [
         _c("h4", { staticClass: "text-center titulotop5 mt-3" }, [
           _vm._v("Más vendidos")
         ]),
@@ -80003,9 +79993,47 @@ var render = function() {
                 _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(item.categoria))]),
                 _vm._v(" "),
-                _c("td", [
-                  _vm._v(_vm._s(item.cantidad) + " " + _vm._s(item.medida))
-                ])
+                _c("td", [_vm._v(_vm._s(item.cantidad))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(item.medida))])
+              ])
+            }),
+            0
+          )
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-1" })
+    ]),
+    _vm._v(" "),
+    _c("hr", { staticClass: "bg-light" }),
+    _vm._v(" "),
+    _c("h4", { staticClass: "my-4 text-center hit-the-floor-2" }, [
+      _vm._v("Top 5: Productos por sucursal")
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "row my-4 px-4 pb-4" }, [
+      _c("div", { staticClass: "col-md-5 card card4 table-responsive" }, [
+        _c("h4", { staticClass: "text-center titulotop5 mt-3" }, [
+          _vm._v("Congelados")
+        ]),
+        _vm._v(" "),
+        _c("table", { staticClass: "table" }, [
+          _vm._m(1),
+          _vm._v(" "),
+          _c(
+            "tbody",
+            _vm._l(_vm.congelados, function(item, index) {
+              return _c("tr", { key: index }, [
+                _c("td", [_vm._v(_vm._s(index + 1))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(item.nombre))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(item.categoria))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(item.cantidad))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(item.medida))])
               ])
             }),
             0
@@ -80015,16 +80043,34 @@ var render = function() {
       _vm._v(" "),
       _c("div", { staticClass: "col-md-2" }),
       _vm._v(" "),
-      _vm._m(1)
+      _c("div", { staticClass: "col-md-5 card card4 table-responsive" }, [
+        _c("h4", { staticClass: "text-center titulotop5 mt-3" }, [
+          _vm._v("Verduleria")
+        ]),
+        _vm._v(" "),
+        _c("table", { staticClass: "table" }, [
+          _vm._m(2),
+          _vm._v(" "),
+          _c(
+            "tbody",
+            _vm._l(_vm.verduleria, function(item, index) {
+              return _c("tr", { key: index }, [
+                _c("td", [_vm._v(_vm._s(index + 1))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(item.nombre))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(item.categoria))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(item.cantidad))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(item.medida))])
+              ])
+            }),
+            0
+          )
+        ])
+      ])
     ]),
-    _vm._v(" "),
-    _c("hr", { staticClass: "bg-light" }),
-    _vm._v(" "),
-    _c("h4", { staticClass: "my-4 text-center hit-the-floor-2" }, [
-      _vm._v("Top 5: Productos por sucursal")
-    ]),
-    _vm._v(" "),
-    _vm._m(2),
     _vm._v(" "),
     _c("hr", { staticClass: "bg-light" })
   ])
@@ -80042,7 +80088,9 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Categoria")]),
         _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Cantidad")])
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Cant.")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Medida")])
       ])
     ])
   },
@@ -80050,35 +80098,17 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-5 card card4" }, [
-      _c("h4", { staticClass: "text-center titulotop5 mt-3" }, [
-        _vm._v("Más vendidos por categorias")
-      ]),
-      _vm._v(" "),
-      _c("table", { staticClass: "table" }, [
-        _c("thead", [
-          _c("tr", [
-            _c("th", { attrs: { scope: "col" } }, [_vm._v("#")]),
-            _vm._v(" "),
-            _c("th", { attrs: { scope: "col" } }, [_vm._v("Categoria")]),
-            _vm._v(" "),
-            _c("th", { attrs: { scope: "col" } }, [_vm._v("Nombre")]),
-            _vm._v(" "),
-            _c("th", { attrs: { scope: "col" } }, [_vm._v("Cantidad")])
-          ])
-        ]),
+    return _c("thead", [
+      _c("tr", [
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("#")]),
         _vm._v(" "),
-        _c("tbody", [
-          _c("tr", [
-            _c("td", [_vm._v("N°")]),
-            _vm._v(" "),
-            _c("td", [_vm._v("Categoria")]),
-            _vm._v(" "),
-            _c("td", [_vm._v("Nombre")]),
-            _vm._v(" "),
-            _c("td", [_vm._v("58")])
-          ])
-        ])
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Nombre")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Categoria")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Cant.")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Medida")])
       ])
     ])
   },
@@ -80086,71 +80116,17 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row my-4 px-4" }, [
-      _c("div", { staticClass: "col-md-5 card card4" }, [
-        _c("h4", { staticClass: "text-center titulotop5 mt-3" }, [
-          _vm._v("Congelados")
-        ]),
+    return _c("thead", [
+      _c("tr", [
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("#")]),
         _vm._v(" "),
-        _c("table", { staticClass: "table" }, [
-          _c("thead", [
-            _c("tr", [
-              _c("th", { attrs: { scope: "col" } }, [_vm._v("#")]),
-              _vm._v(" "),
-              _c("th", { attrs: { scope: "col" } }, [_vm._v("Nombre")]),
-              _vm._v(" "),
-              _c("th", { attrs: { scope: "col" } }, [_vm._v("Categoria")]),
-              _vm._v(" "),
-              _c("th", { attrs: { scope: "col" } }, [_vm._v("Cantidad")])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("tbody", [
-            _c("tr", [
-              _c("td", [_vm._v("N°")]),
-              _vm._v(" "),
-              _c("td", [_vm._v("Nombre")]),
-              _vm._v(" "),
-              _c("td", [_vm._v("Categoria")]),
-              _vm._v(" "),
-              _c("td", [_vm._v("58")])
-            ])
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-2" }),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-5 card card4" }, [
-        _c("h4", { staticClass: "text-center titulotop5 mt-3" }, [
-          _vm._v("Verduleria")
-        ]),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Nombre")]),
         _vm._v(" "),
-        _c("table", { staticClass: "table" }, [
-          _c("thead", [
-            _c("tr", [
-              _c("th", { attrs: { scope: "col" } }, [_vm._v("#")]),
-              _vm._v(" "),
-              _c("th", { attrs: { scope: "col" } }, [_vm._v("Nombre")]),
-              _vm._v(" "),
-              _c("th", { attrs: { scope: "col" } }, [_vm._v("Categoria")]),
-              _vm._v(" "),
-              _c("th", { attrs: { scope: "col" } }, [_vm._v("Cantidad")])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("tbody", [
-            _c("tr", [
-              _c("td", [_vm._v("N°")]),
-              _vm._v(" "),
-              _c("td", [_vm._v("Nombre")]),
-              _vm._v(" "),
-              _c("td", [_vm._v("Categoria")]),
-              _vm._v(" "),
-              _c("td", [_vm._v("58")])
-            ])
-          ])
-        ])
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Categoria")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Cant.")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Medida")])
       ])
     ])
   }
@@ -81139,10 +81115,31 @@ var staticRenderFns = [
           attrs: { id: "basic-text1" }
         },
         [
-          _c("i", {
-            staticClass: "fas fa-search text-grey",
-            attrs: { "aria-hidden": "true" }
-          })
+          _c("input", {
+            staticClass: "form-control my-0 py-1 lime-border",
+            attrs: {
+              id: "buscador",
+              type: "text",
+              placeholder: "Buscar producto",
+              "aria-label": "Search"
+            }
+          }),
+          _vm._v(" "),
+          _c("div", { staticClass: "input-group-append" }, [
+            _c(
+              "span",
+              {
+                staticClass: "input-group-text lime lighten-2",
+                attrs: { id: "basic-text1" }
+              },
+              [
+                _c("i", {
+                  staticClass: "fas fa-search text-grey",
+                  attrs: { "aria-hidden": "true" }
+                })
+              ]
+            )
+          ])
         ]
       )
     ])
@@ -93771,8 +93768,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /opt/lampp/htdocs/verduleria/verduleria/Verduleria/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /opt/lampp/htdocs/verduleria/verduleria/Verduleria/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\xampp\htdocs\xampp\Proyectos\Verduleria\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\xampp\Proyectos\Verduleria\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

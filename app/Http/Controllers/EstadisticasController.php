@@ -272,23 +272,70 @@ public function prodMasVendidos()
 
 }
 
-public function masVendidosPorCategorias()
-{
-    $old=Carbon::now()->add('-30','day');
-    $new=Carbon::now();
-
-    $query=DB::table('');
-
-}
-
 public function masVendidosCongelados()
 {
+    $old=Carbon::now()->add('-30','day');
+    $now=Carbon::now();
+    $query= $productos= DB::table('productos')
+            ->join('contenidos','contenidos.productoId','productos.id')
+            ->join('categorias','categoriaId','=','categorias.id')
+            ->join('sucursals','sucursalId','=','sucursals.id')
+            ->join('medidas','productos.medidaId','medidas.id')
+            ->where('sucursals.nombre','=','Congelados')
+            ->whereBetween('contenidos.created_at',[$old,$now])
+            ->select('productos.nombre','categorias.tipo',DB::raw('medidas.nombre AS medida'),DB::raw('SUM(contenidos.cantidad) AS cantidad'))
+            ->groupBy('productos.nombre','categorias.tipo','medida')
+            ->limit(5)
+            ->orderBy('cantidad','DESC')
+            ->get();
 
+    $congelados=array();
+    foreach($query as $row)
+    {
+        $aux=array(
+            'nombre' => $row->nombre,
+            'categoria' => $row->tipo,
+            'cantidad' => $row->cantidad,
+            'medida' => $row->medida,        
+        );
+
+        array_push($congelados,$aux);
+    }
+
+    return $congelados;
 }
 
 public function masVendidosVerduleria()
 {
+    $old=Carbon::now()->add('-30','day');
+    $now=Carbon::now();
+    $query= $productos= DB::table('productos')
+            ->join('contenidos','contenidos.productoId','productos.id')
+            ->join('categorias','categoriaId','=','categorias.id')
+            ->join('sucursals','sucursalId','=','sucursals.id')
+            ->join('medidas','productos.medidaId','medidas.id')
+            ->where('sucursals.nombre','=','Verduleria')
+            ->whereBetween('contenidos.created_at',[$old,$now])
+            ->select('productos.nombre','categorias.tipo',DB::raw('medidas.nombre AS medida'),DB::raw('SUM(contenidos.cantidad) AS cantidad'))
+            ->groupBy('productos.nombre','categorias.tipo','medida')
+            ->limit(5)
+            ->orderBy('cantidad','DESC')
+            ->get();
 
+    $verduleria=array();
+    foreach($query as $row)
+    {
+        $aux=array(
+            'nombre' => $row->nombre,
+            'categoria' => $row->tipo,
+            'cantidad' => $row->cantidad,
+            'medida' => $row->medida,        
+        );
+
+        array_push($verduleria,$aux);
+    }
+
+    return $verduleria;
 }
 
 
