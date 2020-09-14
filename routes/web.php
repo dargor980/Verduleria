@@ -149,6 +149,8 @@ Route::get('/estadisticas/clientesfrecuentes/mayormonto','EstadisticasController
 Route::get('/estadisticas/clientesfrecuentes/cantpedidos','EstadisticasController@topCantPedidos');
 
 Route::get('/estadisticas/masvendidos/masvendido','EstadisticasController@prodMasVendidos');
+
+Route::post('/pedido/search','SearchController@searchProductoPedido');
 /*
 Route::get('/estadisticas/','EstadisticasController@');
 

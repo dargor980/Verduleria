@@ -2568,6 +2568,7 @@ __webpack_require__.r(__webpack_exports__);
       subtotal: [],
       clientenuevo: false,
       total: 0,
+      search: '',
 
       /*variables de control */
       checked: false,
@@ -2594,17 +2595,29 @@ __webpack_require__.r(__webpack_exports__);
       return this.total;
     }
   },
+  watch: {
+    search: function search(nuevo, old) {
+      var _this = this;
+
+      var param = {
+        search: nuevo
+      };
+      axios.post('/pedido/search', param).then(function (res) {
+        _this.productos = res.data;
+      });
+    }
+  },
   created: function created() {
-    var _this = this;
+    var _this2 = this;
 
     axios.get('/clientespedidos').then(function (res) {
-      _this.clientes = res.data;
+      _this2.clientes = res.data;
     });
     axios.get('/productospedidos').then(function (res) {
-      _this.productos = res.data;
+      _this2.productos = res.data;
     });
     axios.get('/medidasproductos').then(function (res) {
-      _this.medidas = res.data;
+      _this2.medidas = res.data;
     });
   },
   methods: {
@@ -2624,7 +2637,7 @@ __webpack_require__.r(__webpack_exports__);
       this.productosSeleccionados = [];
     },
     addCliente: function addCliente() {
-      var _this2 = this;
+      var _this3 = this;
 
       if (this.clienteNew.nombre.trim() === '' || this.clienteNew.fono.trim() === '' || this.clienteNew.domicilio.trim() === '') {
         alert('Debe rellenar los campos antes de proseguir');
@@ -2639,17 +2652,17 @@ __webpack_require__.r(__webpack_exports__);
       }; //this.clienteNew={nombre:'',fono:'',domicilio:'',depto:''};
 
       axios.post('/addclientepedido', params).then(function (res) {
-        _this2.clientes.push(res.data);
+        _this3.clientes.push(res.data);
 
-        _this2.clientePedidoData = res.data;
-        console.log(_this2.clientePedidoData.nombre);
-        _this2.isClientePedidoExists = true;
-        _this2.clientenuevo = true;
-        _this2.optionCliente = '';
+        _this3.clientePedidoData = res.data;
+        console.log(_this3.clientePedidoData.nombre);
+        _this3.isClientePedidoExists = true;
+        _this3.clientenuevo = true;
+        _this3.optionCliente = '';
       });
     },
     selectClienteLista: function selectClienteLista() {
-      var _this3 = this;
+      var _this4 = this;
 
       if (this.clientePedidoId === 0 || this.clientePedidoId === '') {
         alert("Debe seleccionar un cliente.");
@@ -2659,8 +2672,8 @@ __webpack_require__.r(__webpack_exports__);
           id: this.clientePedidoId
         };
         axios.post('/searchcliente', params).then(function (res) {
-          _this3.clientePedidoData = res.data;
-          _this3.isClientePedidoExists = true;
+          _this4.clientePedidoData = res.data;
+          _this4.isClientePedidoExists = true;
         });
       }
     },
@@ -2678,7 +2691,7 @@ __webpack_require__.r(__webpack_exports__);
       this.pedidoFinal = true;
     },
     createPedido: function createPedido() {
-      var _this4 = this;
+      var _this5 = this;
 
       /*creación del registro de pedido*/
       var data = {
@@ -2698,10 +2711,10 @@ __webpack_require__.r(__webpack_exports__);
         };
         /*creación de los contenidos del pedido*/
 
-        for (var i = 0; i < _this4.productosadd.length; i++) {
+        for (var i = 0; i < _this5.productosadd.length; i++) {
           dataContenido.pedidoId = idPedido.id;
-          dataContenido.productoId = _this4.productosadd[i].id;
-          dataContenido.cantidad = parseInt(_this4.cantidadAdd[i]);
+          dataContenido.productoId = _this5.productosadd[i].id;
+          dataContenido.cantidad = parseInt(_this5.cantidadAdd[i]);
           axios.post('/pedido/new/create/addproducto', dataContenido).then(function (res) {});
           axios.put('/pedido/new/stock/update', dataContenido).then(function (res) {});
           dataContenido = {
@@ -2713,7 +2726,7 @@ __webpack_require__.r(__webpack_exports__);
 
         setTimeout(function () {
           window.location.href = "http://127.0.0.1:8000/pedido/detalle/".concat(idPedido.id);
-        }, 500);
+        }, 5000);
       });
     }
   }
@@ -80635,7 +80648,46 @@ var render = function() {
       ? _c("div", [
           _c("hr", { staticClass: "bg-light" }),
           _vm._v(" "),
-          _vm._m(9),
+          _c("form", { staticClass: "row mb-2" }, [
+            _vm._m(9),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass:
+                  "col-md-5 input-group md-form form-sm form-2 pl-0 my-3"
+              },
+              [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.search,
+                      expression: "search"
+                    }
+                  ],
+                  staticClass: "form-control my-0 py-1 lime-border",
+                  attrs: {
+                    type: "text",
+                    placeholder: "Buscar producto",
+                    name: "search"
+                  },
+                  domProps: { value: _vm.search },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.search = $event.target.value
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _vm._m(10)
+              ]
+            )
+          ]),
           _vm._v(" "),
           _c(
             "form",
@@ -80764,7 +80816,7 @@ var render = function() {
               _c("div", { staticClass: "card table-responsive" }, [
                 _c("div", { staticClass: "container" }, [
                   _c("table", { staticClass: "table table-sm mt-3" }, [
-                    _vm._m(10),
+                    _vm._m(11),
                     _vm._v(" "),
                     _c(
                       "tbody",
@@ -80773,7 +80825,7 @@ var render = function() {
                           "tr",
                           { key: index },
                           [
-                            _vm._m(11, true),
+                            _vm._m(12, true),
                             _vm._v(" "),
                             _c("td", [_vm._v(_vm._s(item.nombre))]),
                             _vm._v(" "),
@@ -80891,7 +80943,7 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _vm._m(12)
+              _vm._m(13)
             ]
           )
         ])
@@ -80913,7 +80965,7 @@ var render = function() {
       [
         _c("div", { staticClass: "modal-dialog" }, [
           _c("div", { staticClass: "modal-content" }, [
-            _vm._m(13),
+            _vm._m(14),
             _vm._v(" "),
             _c("div", { staticClass: "modal-body text-white" }, [
               _vm._v(
@@ -81029,43 +81081,28 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("form", { staticClass: "row mb-2" }, [
-      _c("div", { staticClass: "col-md-7" }, [
-        _c("h3", { staticClass: "text-white pl-4 my-3" }, [
-          _vm._v("Seleccione los productos:")
-        ])
-      ]),
-      _vm._v(" "),
+    return _c("div", { staticClass: "col-md-7" }, [
+      _c("h3", { staticClass: "text-white pl-4 my-3" }, [
+        _vm._v("Seleccione los productos:")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group-append" }, [
       _c(
-        "div",
+        "span",
         {
-          staticClass: "col-md-5 input-group md-form form-sm form-2 pl-0 my-3"
+          staticClass: "input-group-text lime lighten-2",
+          attrs: { id: "basic-text1" }
         },
         [
-          _c("input", {
-            staticClass: "form-control my-0 py-1 lime-border",
-            attrs: {
-              type: "text",
-              placeholder: "Buscar producto",
-              "aria-label": "Search"
-            }
-          }),
-          _vm._v(" "),
-          _c("div", { staticClass: "input-group-append" }, [
-            _c(
-              "span",
-              {
-                staticClass: "input-group-text lime lighten-2",
-                attrs: { id: "basic-text1" }
-              },
-              [
-                _c("i", {
-                  staticClass: "fas fa-search text-grey",
-                  attrs: { "aria-hidden": "true" }
-                })
-              ]
-            )
-          ])
+          _c("i", {
+            staticClass: "fas fa-search text-grey",
+            attrs: { "aria-hidden": "true" }
+          })
         ]
       )
     ])

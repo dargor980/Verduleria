@@ -29,6 +29,15 @@ class SearchController extends Controller
         return view('Producto.buscar',compact('producto','categorias','medidas','search'));
     }
 
+    public function searchProductoPedido(Request $request)
+    {
+        $search= $request->search;
+        $producto= Producto::where('nombre','LIKE','%'.$request->search.'%')->get();
+        $medidas= Medida::all();
+        $categorias= Categoria::all();
+        return $producto;
+    }
+
     public function searchProveedor(Request $request)
     {
         $search= $request->search;
