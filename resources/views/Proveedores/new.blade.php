@@ -52,7 +52,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-edit"></i></span>
                     </div>
-                    <input name='fono' type="number" placeholder="Teléfono" class="form-control"> 
+                    <input name='fono' type="number" min="0" placeholder="Teléfono" class="form-control"> 
                 </div>
 
                 <div class="input-group form-group">
