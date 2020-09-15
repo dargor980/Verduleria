@@ -52,7 +52,7 @@
 @slot('subcopy')
 @lang(
     "Si tiene problemas para hacer clic en el botón \":actionText\", copie y pegue la siguiente URL\n"
-    'en su navegador web:',
+    .'en su navegador web:',
     [
         'actionText' => $actionText,
     ]
