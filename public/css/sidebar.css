@@ -536,31 +536,14 @@
   }
 
   .opcionmenu1{
-    background:#CDD973;
+    background:#b7c264;
     color: white;
     border-radius: 25px;
   }
   .opcionmenu1:hover{
-    background: #FFA03F;
+    background: #d9e67d;
   }
 
-  .opcionmenu2{
-    background: #F0F2A7;
-    color: white;
-    border-radius: 25px;
-  }
-  .opcionmenu2:hover{
-    background: #6ec6ff;
-  }
-
-  .opcionmenu3{
-    background-color: #BF9169;
-    color: white;
-    border-radius: 25px;
-  }
-  .opcionmenu3:hover{
-    background: #91F274;
-  }
 
   .opcionmenu4{
     background-color: #db1616;

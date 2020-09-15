@@ -451,7 +451,7 @@ export default {
                 {
                     dataContenido.pedidoId=idPedido.id;
                     dataContenido.productoId=this.productosadd[i].id;
-                    dataContenido.cantidad=parseInt(this.cantidadAdd[i]);
+                    dataContenido.cantidad=this.cantidadAdd[i];
                     pedidofinal.push(dataContenido);
 
                     dataContenido= {pedidoId:'', productoId:'', cantidad:0};
@@ -461,7 +461,7 @@ export default {
                 axios.post('/pedido/new/create/addproducto',pedidofinal).then(res =>{
 
                 })
-
+                
                 axios.put('/pedido/new/stock/update',pedidofinal).then(res =>{
 
                 });

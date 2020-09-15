@@ -2719,7 +2719,7 @@ __webpack_require__.r(__webpack_exports__);
         for (var i = 0; i < _this5.productosadd.length; i++) {
           dataContenido.pedidoId = idPedido.id;
           dataContenido.productoId = _this5.productosadd[i].id;
-          dataContenido.cantidad = parseInt(_this5.cantidadAdd[i]);
+          dataContenido.cantidad = _this5.cantidadAdd[i];
           pedidofinal.push(dataContenido);
           dataContenido = {
             pedidoId: '',
@@ -93794,8 +93794,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /opt/lampp/htdocs/verduleria/verduleria/Verduleria/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /opt/lampp/htdocs/verduleria/verduleria/Verduleria/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\xampp\htdocs\xampp\Proyectos\Verduleria\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\xampp\Proyectos\Verduleria\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

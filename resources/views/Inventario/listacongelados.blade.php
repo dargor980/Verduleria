@@ -30,7 +30,6 @@
               <th scope="col">Cantidad</th>
               <th scope="col">Medida</th>
               <th scope="col">Categoria</th>
-              <th scope="col">Opción</th>
             </tr>
         </thead>
         <tbody>
@@ -42,10 +41,6 @@
               <td>@foreach($stocks as $stock)  @if($stock->id==$item->stockId) {{$stock->cantidad}} @endif @endforeach</td>
               <td>@foreach($medidas as $medida) @if($medida->id==$item->medidaId) {{$medida->nombre}} @endif @endforeach</td>
               <td>@foreach($categorias as $categoria) @if($categoria->id==$item->categoriaId) {{$categoria->tipo}} @endif @endforeach</td>
-              <td>
-                <span><a href="{{route('editprod',$item->id)}}" ><i class="fas fa-edit text-success">&nbsp;</a></i></span>
-                <span><a href="{{route('deleteprod',$item->id)}}" ><i class="fas fa-trash-alt text-danger"></a></i></span>
-              </td>
             </tr>
           @endforeach
         </tbody>

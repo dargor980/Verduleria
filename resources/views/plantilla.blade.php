@@ -53,15 +53,25 @@
                       <span>{{ Auth::user()->name }}</span>
                     </a>
                       <div class="sidebar-submenu">
-                          <a href="{{ route('logout') }}"
-                              onclick="event.preventDefault();
-                              document.getElementById('logout-form').submit();">
-                              {{ __('Cerrar Sesión') }}
-                          </a>
-
-                          <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                              @csrf
-                          </form>
+                        <ul>
+                          <li>
+                            <a href="{{route('adminuser')}}">Administrar Usuarios</a>
+                          </li>
+                          <li>
+                            <a href="{{ route('register') }}">Registrar</a>
+                          </li>
+                          <li>
+                            <a href="{{ route('logout') }}"
+                                onclick="event.preventDefault();
+                                document.getElementById('logout-form').submit();">
+                                {{ __('Cerrar Sesión') }}
+                            </a>
+    
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                @csrf
+                            </form>
+                          </li>
+                        </ul>
                       </div>
                     </li>
                 @endguest

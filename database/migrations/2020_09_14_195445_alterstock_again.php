@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AlterTableContenidosagain extends Migration
+class AlterstockAgain extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AlterTableContenidosagain extends Migration
      */
     public function up()
     {
-        Schema::table('contenidos', function (Blueprint $table) {
-            $table->double('cantidad',15,4)->change();
+        Schema::table('stocks', function (Blueprint $table) {
+            $table->float('cantidad')->change();
         });
     }
 
@@ -25,7 +25,7 @@ class AlterTableContenidosagain extends Migration
      */
     public function down()
     {
-        Schema::table('contenidos', function (Blueprint $table) {
+        Schema::table('stocks', function (Blueprint $table) {
             //
         });
     }

@@ -1,5 +1,7 @@
 @extends('plantilla')
 
+@section('titulo', 'Home')
+
 @section('contenido')
 <br><br><br>
 <div class="container">
@@ -34,7 +36,7 @@
             <div class="col-md-3"></div>
             <div class="col-md-6">
                 <a href="{{route('listaped')}}" style="text-decoration: none;">
-                    <div class="opcionmenu2">
+                    <div class="opcionmenu1">
                         <div class="row">
                             <div class="col-md-4">
                                 <h2><i class="fas fa-file-download text-white pt-4 mt-1 float-right"></i></h2>
@@ -52,7 +54,7 @@
             <div class="col-md-3"></div>
             <div class="col-md-6">
                 <a href="{{route('newstock')}}" style="text-decoration: none;">
-                    <div class="opcionmenu3">
+                    <div class="opcionmenu1">
                         <div class="row">
                             <div class="col-md-4">
                                 <h2><i class="fas fa-plus text-white pt-4 mt-1 float-right"></i></h2>
