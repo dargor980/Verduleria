@@ -2233,6 +2233,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -80014,66 +80024,78 @@ var render = function() {
     _c("hr", { staticClass: "bg-light" }),
     _vm._v(" "),
     _c("h4", { staticClass: "my-4 text-center hit-the-floor-2" }, [
-      _vm._v("Top 5: Productos por sucursal")
+      _vm._v("Top 5: Productos congelados")
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "row my-4 px-4 pb-4" }, [
-      _c("div", { staticClass: "col-md-5 card card4 table-responsive" }, [
-        _c("h4", { staticClass: "text-center titulotop5 mt-3" }, [
-          _vm._v("Congelados")
+    _c("div", {}, [
+      _c("div", { staticClass: "row pb-4" }, [
+        _c("div", { staticClass: "col-md-1" }),
+        _vm._v(" "),
+        _c("div", { staticClass: "card col-md-10 card4 table-responsive" }, [
+          _c("table", { staticClass: "table my-4" }, [
+            _vm._m(1),
+            _vm._v(" "),
+            _c(
+              "tbody",
+              _vm._l(_vm.congelados, function(item, index) {
+                return _c("tr", { key: index }, [
+                  _c("td", [_vm._v(_vm._s(index + 1))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(item.nombre))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(item.categoria))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(item.cantidad))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(item.medida))])
+                ])
+              }),
+              0
+            )
+          ])
         ]),
         _vm._v(" "),
-        _c("table", { staticClass: "table" }, [
-          _vm._m(1),
-          _vm._v(" "),
-          _c(
-            "tbody",
-            _vm._l(_vm.congelados, function(item, index) {
-              return _c("tr", { key: index }, [
-                _c("td", [_vm._v(_vm._s(index + 1))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(item.nombre))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(item.categoria))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(item.cantidad))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(item.medida))])
-              ])
-            }),
-            0
-          )
-        ])
+        _c("div", { staticClass: "col-md-1" })
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "col-md-2" }),
+      _c("hr", { staticClass: "bg-light" }),
       _vm._v(" "),
-      _c("div", { staticClass: "col-md-5 card card4 table-responsive" }, [
-        _c("h4", { staticClass: "text-center titulotop5 mt-3" }, [
-          _vm._v("Verduleria")
-        ]),
+      _c("h4", { staticClass: "mt-4 mb-1 text-center hit-the-floor-2" }, [
+        _vm._v("Top 5: Productos verdulería")
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-md-1" }),
         _vm._v(" "),
-        _c("table", { staticClass: "table" }, [
-          _vm._m(2),
-          _vm._v(" "),
-          _c(
-            "tbody",
-            _vm._l(_vm.verduleria, function(item, index) {
-              return _c("tr", { key: index }, [
-                _c("td", [_vm._v(_vm._s(index + 1))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(item.nombre))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(item.categoria))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(item.cantidad))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(item.medida))])
-              ])
-            }),
-            0
-          )
-        ])
+        _c(
+          "div",
+          { staticClass: "my-4 card card4 col-md-10 table-responsive" },
+          [
+            _c("table", { staticClass: "table my-4" }, [
+              _vm._m(2),
+              _vm._v(" "),
+              _c(
+                "tbody",
+                _vm._l(_vm.verduleria, function(item, index) {
+                  return _c("tr", { key: index }, [
+                    _c("td", [_vm._v(_vm._s(index + 1))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(item.nombre))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(item.categoria))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(item.cantidad) + " ")]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(item.medida))])
+                  ])
+                }),
+                0
+              )
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-1" })
       ])
     ]),
     _vm._v(" "),

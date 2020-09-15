@@ -28,6 +28,13 @@
                 </div>
             </div>           
       @endif
+      @if (session('error'))
+        <div class="container my-3">
+            <div class="alert alert-success">
+                <span><i class="fas fa-exclamation-triangle text-danger"></i></span>&nbsp;{{session('error')}}
+            </div>
+        </div>           
+      @endif
       <table class="table table-sm table-hover">
         <thead>
           <tr class="boton text-white">

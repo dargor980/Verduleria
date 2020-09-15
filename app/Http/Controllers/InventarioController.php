@@ -19,7 +19,7 @@ class InventarioController extends Controller
     public function show()
     {
         $stocks=Stock::all();
-        $productos=Producto::paginate(12);
+        $productos=Producto::orderBy('nombre')->paginate(12);
         $categorias=Categoria::all();
         $medidas= Medida::all();
         return view('Inventario.new',compact('stocks','productos','categorias','medidas'));

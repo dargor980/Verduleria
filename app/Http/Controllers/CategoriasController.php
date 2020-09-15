@@ -94,12 +94,19 @@ class CategoriasController extends Controller
      */
     public function destroy(Request $request)
     {
-        $request->validate([
-            'categoriaId' => 'required|not_in:0'
-        ]);
-        $destroyCategoria= Categoria::find($request->categoriaId);
-        $destroyCategoria->delete();
+        try{
 
-        return back()->with('mensaje2','Categoría eliminada');
+            $request->validate([
+                'categoriaId' => 'required|not_in:0'
+            ]);
+            $destroyCategoria= Categoria::find($request->categoriaId);
+            $destroyCategoria->delete();
+    
+            return back()->with('mensaje2','Categoría eliminada');
+        }
+        catch(\Illuminate\Database\QueryException $ex){
+            return back()->with('error','esta categoría posee productos. Si desea eliminarla, primero elimine los productos asociados a ella.');
+
+        }
     }
 }

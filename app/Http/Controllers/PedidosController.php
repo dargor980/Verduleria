@@ -9,6 +9,7 @@ use App\Cliente;
 use App\Producto;
 use App\Medida;
 use App\Stock;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class PedidosController extends Controller
@@ -26,7 +27,11 @@ class PedidosController extends Controller
     public function index()
     {
         $clientes= Cliente::all();
-        $pedidos= Pedido::orderBy('created_at','desc')->paginate(15);
+        $pedidos= DB::table('pedidos')
+                  ->select('pedidos.id','pedidos.clienteId',DB::raw('DATE_FORMAT(pedidos.created_at,"%d-%m-%Y") AS created_at'),'pedidos.total','pedidos.estado')
+                  ->orderBy('created_at','DESC')
+                  ->paginate(18);
+        
         return view('Pedido.lista',compact('pedidos','clientes'));
     }
 
@@ -89,20 +94,6 @@ class PedidosController extends Controller
         }
 
         return;
-        /*creación del un contenido del pedido 
-        $newProducto= new Contenido();
-        $newProducto->pedidoId=$request->pedidoId;
-        $newProducto->productoId= $request->productoId;
-        $newProducto->cantidad= $request->cantidad;
-        $producto= Producto::find($request->productoId);
-        $newProducto->subtotal= $request->cantidad*$producto->precio;
-
-        $newProducto->save();
-        
-        return $newProducto;
-
-        */
-
     }
 
     public function updateStock(Request $request)
@@ -247,6 +238,20 @@ class PedidosController extends Controller
 
     public function administrarPagos()
     {
-        return view('Pedido.adminpagos');
+        $pendientes= DB::table('pedidos')
+                     ->join('clientes','clienteId','clientes.id')
+                     ->where('pedidos.estado','=',0)
+                     ->select('pedidos.id','clientes.nombre',DB::raw('DATE_FORMAT(pedidos.created_at,"%d-%m-%Y") AS created_at'),'pedidos.total')
+                     ->paginate(18);
+        return view('Pedido.adminpagos',compact('pendientes'));
+    }
+
+    public function marcarPagado($id)
+    {
+        $pagado= Pedido::find($id);
+        $pagado->estado= 1;
+        $pagado->save();
+
+        return back()->with('mensaje','El pedido ya está pagado');
     }
 }

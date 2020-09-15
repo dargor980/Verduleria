@@ -14,6 +14,13 @@
             </div>
             <h1 class="my-2 text-white text-center">{{$producto->nombre}}</h1>
         </div>
+        @if (session('error'))
+            <div class="container my-3">
+                <div class="alert alert-success">
+                    <span><i class="fas fa-exclamation-triangle text-danger"></i></span>&nbsp;{{session('error')}}
+                </div>
+            </div>           
+        @endif
         <h3 class="text-white text-center col-md-6 mb-4">Datos del producto:</h3>
         <div class="row mb-3">
             <div class="col-md-3"></div>

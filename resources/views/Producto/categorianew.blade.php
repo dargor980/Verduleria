@@ -60,6 +60,13 @@
                 </div>
             </div>           
         @endif
+        @if (session('error'))
+            <div class="container my-3">
+                <div class="alert alert-success">
+                    <span><i class="fas fa-exclamation-triangle text-danger"></i></span>&nbsp;{{session('error')}}
+                </div>
+            </div>           
+        @endif
             <div>
                 <h4 class="my-2 text-white">Eliminar Categoria</h4>
             </div>

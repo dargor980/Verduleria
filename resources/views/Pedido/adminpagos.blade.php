@@ -27,18 +27,20 @@
           </tr>
         </thead>
         <tbody>
+          @foreach($pendientes as $item)
           <tr>
-            <td class="pt-2 pl-2">13</td> {{-- N° DE PEDIDO --}}
-            <td class="pt-2"><a>Nombre Cliente</a></td>
-            <td class="pt-2">Fecha</td>
-            <td class="pt-2">Total</td>
+            <td class="pt-2 pl-2">{{$item->id}}</td> {{-- N° DE PEDIDO --}}
+            <td class="pt-2"><a href="{{route('detallepedido',$item->id)}}">{{$item->nombre}}</a></td>
+            <td class="pt-2">{{$item->created_at}}</td>
+            <td class="pt-2">${{$item->total}}</td>
             <td>
-                <span><a><i class="btn btn-success"> Marcar Pagado</a></i></span>
+            <span><a href="{{route('marcarpagado',$item->id)}}"><i class="btn btn-success"> Marcar Pagado</a></i></span>
             </td>
           </tr>
+          @endforeach
         </tbody>
       </table>
-      {{-- {{$pedidos->links()}} --}}
+       {{$pendientes->links()}} 
     </div>
 </div>
 @endsection

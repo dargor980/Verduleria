@@ -31,7 +31,7 @@
           @foreach($pedidos as $pedido)
           <tr>
             <td class="pl-2">{{$pedido->id}}</td>
-            <td>¿Pagado?</td>
+            <td>@if($pedido->estado==0) Pendiente @else Pagado @endif</td>
             <td><a href="{{route('detallepedido',$pedido->id)}}">@foreach($clientes as $cliente) @if($cliente->id==$pedido->clienteId){{$cliente->nombre}} @endif @endforeach</a></td>
             <td>{{$pedido->created_at}}</td>
             <td>${{$pedido->total}}</td>

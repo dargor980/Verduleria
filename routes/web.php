@@ -156,9 +156,9 @@ Route::get('/estadisticas/masvendidos/congelados','EstadisticasController@masVen
 
 Route::get('/estadisticas/masvendidos/verduleria','EstadisticasController@masVendidosVerduleria');
 
-/* Route::get('/','EstadisticasController@');
+Route::get('/pedido/administrarpagos/pagado/{id}','PedidosController@marcarPagado')->name('marcarpagado');
 
-Route::get('/','EstadisticasController@'); */
+
 
 
 
