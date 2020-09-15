@@ -1,11 +1,12 @@
 <html>
   <head>
     <link rel="stylesheet" href="{{asset('css/sidebar.css')}}">
-    <script src="https://kit.fontawesome.com/a35944550c.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="{{asset('bootstrap/bootstrap.min.css')}}" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="{{asset('bootstrap/bootstrap.min.js')}}">
+    <link rel="stylesheet" href="{{asset('css/icon/all.css')}}">
     <script src="{{ asset('js/app.js') }}" defer></script>
-    <title>@yield('titulo')</title>
+    <title> @yield('titulo') | Santa Gemita </title>
+    <link rel="icon" href="{!! asset('logo.ico') !!}"/>
   </head>
   <body class="fondobody" onload="startTime()">
 
