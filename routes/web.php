@@ -156,7 +156,16 @@ Route::get('/estadisticas/masvendidos/congelados','EstadisticasController@masVen
 
 Route::get('/estadisticas/masvendidos/verduleria','EstadisticasController@masVendidosVerduleria');
 
-Route::get('/Admin/usuarios','Admin@index')->name('adminuser');
+
+Route::group(['middleware' => 'admin'],function(){
+    
+    Route::get('/Admin/usuarios','Admin@index')->name('adminuser');
+
+    Route::post('/Admin/usuarios/delete','Admin@destroy')->name('deleteuser');
+
+});
+
+
 
 Route::get('/pedido/administrarpagos/pagado/{id}','PedidosController@marcarPagado')->name('marcarpagado');
 

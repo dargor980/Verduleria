@@ -6,17 +6,10 @@
     <div class="container">
         <div class="card card5 py-3 my-2 text-center">
         <br>
-        @if (session('mensaje2'))
+        @if (session('mensaje'))
             <div class="container my-3">
                 <div class="alert alert-success">
-                    {{session('mensaje2')}}
-                </div>
-            </div>           
-        @endif
-        @if (session('error'))
-            <div class="container my-3">
-                <div class="alert alert-success">
-                    <span><i class="fas fa-exclamation-triangle text-danger"></i></span>&nbsp;{{session('error')}}
+                    <span><i class="fas fa-check"></i></span>&nbsp;{{session('mensaje')}}
                 </div>
             </div>           
         @endif
@@ -26,15 +19,17 @@
             <div class="row">
                 <div class="col-md-1"></div>
                 <div class="col-md-10">
-                    <form method="POST" action="" class="col-12" enctype="multipart/form-data">
+                    <form method="POST" action="{{route('deleteuser')}}" class="col-12" enctype="multipart/form-data">
                         @csrf
                     <br>
-                    @error('categoriaId')
+                    @error('userId')
                         <div class="badge badge-danger float-right">*Debe seleccionar un usuario</div>
                     @enderror
-                    <select name='categoriaId' class="custom-select">
+                    <select name='userId' class="custom-select">
                         <option selected value="0">Seleccione un usuario:</option>
-                        <option value="">usuario 1</option>
+                        @foreach($usuarios as $user)
+                        <option value="{{$user->id}}">{{$user->name}}</option>
+                        @endforeach
                     </select>
                     <br>
                         <br>

@@ -54,12 +54,14 @@
                     </a>
                       <div class="sidebar-submenu">
                         <ul>
+                          @if(auth()->user()->id==1)
                           <li>
                             <a href="{{route('adminuser')}}">Administrar Usuarios</a>
                           </li>
                           <li>
                             <a href="{{ route('register') }}">Registrar</a>
                           </li>
+                          @endif
                           <li>
                             <a href="{{ route('logout') }}"
                                 onclick="event.preventDefault();
