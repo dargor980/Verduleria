@@ -39,7 +39,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-money-bill-wave"></i></span>
                     </div>
-                    <input name='precio' type="number" placeholder="Precio venta" class="form-control"> 
+                    <input name='precio' type="number" min="0" placeholder="Precio venta" class="form-control"> 
                 </div>
 
                 @error('costo')
@@ -50,7 +50,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-money-bill-wave"></i></span>
                     </div>
-                    <input name='costo' type="number" placeholder="Precio costo" class="form-control"> 
+                    <input name='costo' type="number" min="0" placeholder="Precio costo" class="form-control"> 
                 </div>
 
                 @error('categoriaId')

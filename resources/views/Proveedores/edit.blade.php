@@ -53,7 +53,7 @@
                     @error('fono')
                          <div class="alert alert-danger"> El Teléfono es obligatorio </div>
                      @enderror
-                    <input name='fono' type="number" placeholder="Teléfono" class="form-control" value="{{$proveedor->fono}}"> 
+                    <input name='fono' type="number" min="0" placeholder="Teléfono" class="form-control" value="{{$proveedor->fono}}"> 
                 </div>
 
                 <div class="input-group form-group">

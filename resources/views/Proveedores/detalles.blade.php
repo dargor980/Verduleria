@@ -24,7 +24,7 @@
                             <h5 class="text-white">Empresa:</h5>
                         </div>
                         <div class="col-md-7">
-                            <h5 class="card card1 text-center">{{$proveedor->empresa}}</h5>
+                            <h5 class="card card1 text-center">&nbsp;{{$proveedor->empresa}}</h5>
                         </div>
                         <div class="col-md-1"></div>
                     </div>
@@ -35,7 +35,7 @@
                             <h5 class="text-white">Rut:</h5>
                         </div>
                         <div class="col-md-7">
-                            <h5 class="card card1 text-center">{{$proveedor->rut}}</h5>
+                            <h5 class="card card1 text-center">&nbsp;{{$proveedor->rut}}</h5>
                         </div>
                         <div class="col-md-1"></div>
                     </div>
@@ -46,7 +46,7 @@
                             <h5 class="text-white">Fono: </h5>
                         </div>
                         <div class="col-md-7">
-                            <h5 class="card card1 text-center">{{$proveedor->fono}}</h5>
+                            <h5 class="card card1 text-center">&nbsp;{{$proveedor->fono}}</h5>
                         </div>
                         <div class="col-md-1"></div>
                     </div>
@@ -57,7 +57,7 @@
                             <h5 class="text-white">Dirección: </h5>
                         </div>
                         <div class="col-md-7">
-                            <h5 class="card card1 text-center">{{$proveedor->direccion}}</h5>
+                            <h5 class="card card1 text-center">&nbsp;{{$proveedor->direccion}}</h5>
                         </div>
                         <div class="col-md-1"></div>
                     </div>
@@ -68,7 +68,7 @@
                             <h5 class="text-white">Descripción: </h5>
                         </div>
                         <div class="col-md-7">
-                            <h5 class="card card1 text-justify">{{$proveedor->descripcion}}</h5>
+                            <h5 class="card card1 text-justify">&nbsp;{{$proveedor->descripcion}}</h5>
                         </div>
                         <div class="col-md-1"></div>
                     </div>
