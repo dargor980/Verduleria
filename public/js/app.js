@@ -2733,7 +2733,7 @@ __webpack_require__.r(__webpack_exports__);
       });
       this.spin = true;
       setTimeout(function () {
-        window.location.href = "http://127.0.0.1:8000/pedido/detalle/".concat(idPedido.id);
+        window.location.href = "http://verduleria.santagemita.com/pedido/detalle/".concat(idPedido.id);
       }, 5000);
     }
   }
@@ -93794,8 +93794,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /opt/lampp/htdocs/verduleria/verduleria/Verduleria/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /opt/lampp/htdocs/verduleria/verduleria/Verduleria/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\xampp\htdocs\xampp\Proyectos\Verduleria\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\xampp\Proyectos\Verduleria\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

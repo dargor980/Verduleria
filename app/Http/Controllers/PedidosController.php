@@ -207,7 +207,7 @@ class PedidosController extends Controller
         
         $reporte= \PDF::loadView('Pedido.reporte', compact('productos','datosCliente','medidas','pedido'));
 
-        return $reporte->download('export.pdf');
+        return $reporte->download('pedido'.$id.'.pdf');
     }
 
     public function reporteClienteVista($id)

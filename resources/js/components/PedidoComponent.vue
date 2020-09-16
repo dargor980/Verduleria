@@ -467,7 +467,7 @@ export default {
                 });
             });
             this.spin=true;
-            setTimeout(function(){window.location.href =`http://127.0.0.1:8000/pedido/detalle/${idPedido.id}`;},5000);
+            setTimeout(function(){window.location.href =`http://verduleria.santagemita.com/pedido/detalle/${idPedido.id}`;},5000);
         }
     },
 
