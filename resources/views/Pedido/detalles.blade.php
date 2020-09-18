@@ -16,6 +16,9 @@
             <div class="float-right">
                 <div>N° Pedido: {{$pedido->id}}</div>
                 <div>Fecha: {{$pedido->created_at}}</div>
+                @if($pedido->metodopago=='1')<div>Método de pago:  Efectivo</div>@endif
+                @if($pedido->metodopago=='2')<div>Método de pago:  Transferencia</div>@endif
+                @if($pedido->metodopago=='3')<div>Método de pago:  Tarjeta</div>@endif
             </div>
              <h2 class="titulo textcolor">Verduleria Santa Gemita</h2>
              <div>Av. Suecia 3097, Ñuñoa</div>

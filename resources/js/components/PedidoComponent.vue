@@ -249,7 +249,19 @@
                     </button>
                 </div>
                 <div class="modal-body text-white">
-                    ¿Estas seguro que desea finalizar el pedido?
+                    <div class="row">
+                        <div class="col-md-4">
+                            Método de pago:
+                        </div>
+                        <div class="col-md-8">
+                            <select name='metodopago' class="custom-select" v-model="metodo_pago">
+                                <option selected value="0">Seleccione método de pago:</option>
+                                <option value="1">Efectivo</option>
+                                <option value="2">Transferencia</option>
+                                <option value="3">Tarjeta</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
@@ -285,6 +297,7 @@ export default {
             total:0,
             search:'',
             spin:false,
+            metodo_pago:'',
             
             
 
@@ -310,6 +323,7 @@ export default {
                 this.cantidadAdd[i]=this.cantidadSeleccionada[i];
             }
 
+            this.total= this.total- this.total%10;
 
             return this.total;
 
@@ -435,9 +449,10 @@ export default {
 
         createPedido(){
             /creación del registro de pedido/
-            var data= {clienteId:'', estado:0, total:parseInt(0)};
+            var data= {clienteId:'', estado:0, total:parseInt(0),metodopago:''};
             data.clienteId=this.clientePedidoData.id;
             data.total=parseInt(this.total);
+            data.metodopago= this.metodo_pago;
             var idPedido=[];
             
             

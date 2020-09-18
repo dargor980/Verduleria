@@ -2545,6 +2545,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2569,6 +2581,7 @@ __webpack_require__.r(__webpack_exports__);
       total: 0,
       search: '',
       spin: false,
+      metodo_pago: '',
 
       /*variables de control */
       checked: false,
@@ -2592,6 +2605,7 @@ __webpack_require__.r(__webpack_exports__);
         this.cantidadAdd[i] = this.cantidadSeleccionada[i];
       }
 
+      this.total = this.total - this.total % 10;
       return this.total;
     },
     calcularSubtotales: function calcularSubtotales() {
@@ -2701,10 +2715,12 @@ __webpack_require__.r(__webpack_exports__);
       var data = {
         clienteId: '',
         estado: 0,
-        total: parseInt(0)
+        total: parseInt(0),
+        metodopago: ''
       };
       data.clienteId = this.clientePedidoData.id;
       data.total = parseInt(this.total);
+      data.metodopago = this.metodo_pago;
       var idPedido = [];
       axios.post('/pedido/new/create', data).then(function (res) {
         idPedido = res.data;
@@ -81039,9 +81055,63 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "modal-body text-white" }, [
-              _vm._v(
-                "\n                ¿Estas seguro que desea finalizar el pedido?\n            "
-              )
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-md-4" }, [
+                  _vm._v(
+                    "\n                        Método de pago:\n                    "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-8" }, [
+                  _c(
+                    "select",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.metodo_pago,
+                          expression: "metodo_pago"
+                        }
+                      ],
+                      staticClass: "custom-select",
+                      attrs: { name: "metodopago" },
+                      on: {
+                        change: function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.metodo_pago = $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        }
+                      }
+                    },
+                    [
+                      _c("option", { attrs: { selected: "", value: "0" } }, [
+                        _vm._v("Seleccione método de pago:")
+                      ]),
+                      _vm._v(" "),
+                      _c("option", { attrs: { value: "1" } }, [
+                        _vm._v("Efectivo")
+                      ]),
+                      _vm._v(" "),
+                      _c("option", { attrs: { value: "2" } }, [
+                        _vm._v("Transferencia")
+                      ]),
+                      _vm._v(" "),
+                      _c("option", { attrs: { value: "3" } }, [
+                        _vm._v("Tarjeta")
+                      ])
+                    ]
+                  )
+                ])
+              ])
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "modal-footer" }, [

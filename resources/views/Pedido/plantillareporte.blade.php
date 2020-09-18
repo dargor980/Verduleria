@@ -13,11 +13,14 @@
         <div id="details3">
             <div>Pedido N°: {{$pedido->id}}</div>
             <div>Fecha: {{$pedido->created_at}}</div>
+            @if($pedido->metodopago=='1')<div>Método de pago:  Efectivo</div>@endif
+            @if($pedido->metodopago=='2')<div>Método de pago:  Transferencia</div>@endif
+            @if($pedido->metodopago=='3')<div>Método de pago:  Tarjeta</div>@endif
         </div>
         <div id="details2">
             <h2 class="titulo">Verduleria Santa Gemita</h2>
             <div>Av. Suecia 3097, Ñuñoa</div>
-            <div>22204 2965 - 22458 3513</div>
+            <div>22204 2965 - 22458 3513 - 22665 4830</div>
             <div>distribuidorasantagemita@gmail.com</div>
             <div>
                 <div id="logowsp"><img src="whatsapp.jpg"> </div> 
@@ -41,7 +44,7 @@
           </h4>
         </div>
         <div  id="contactofooter">
-          Verduleria Santa Gemita / 22204 2965 - 22458 3513 - + 569 3096 5828
+          Verduleria Santa Gemita / 22204 2965 - 22458 3513 - + 569 3096 5828 - 22665 4830
         </div>
     </footer>
   </body>

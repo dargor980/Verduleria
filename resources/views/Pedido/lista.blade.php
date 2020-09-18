@@ -21,6 +21,7 @@
           <tr class="boton text-white">
             <th scope="col">N°</th>
             <th scope="col">Estado</th>
+            <th scope="col">Pago</th>
             <th scope="col">Cliente</th>
             <th scope="col">Fecha</th>
             <th scope="col">Total</th>
@@ -32,6 +33,9 @@
           <tr>
             <td class="pl-2">{{$pedido->id}}</td>
             <td>@if($pedido->estado==0) Pendiente @else Pagado @endif</td>
+            @if($pedido->metodopago=='1')<td>Efectivo</td>@endif
+            @if($pedido->metodopago=='2')<td>Transferencia</td>@endif
+            @if($pedido->metodopago=='3')<td>Tarjeta</td>@endif
             <td><a href="{{route('detallepedido',$pedido->id)}}">@foreach($clientes as $cliente) @if($cliente->id==$pedido->clienteId){{$cliente->nombre}} @endif @endforeach</a></td>
             <td>{{$pedido->created_at}}</td>
             <td>${{$pedido->total}}</td>

@@ -28,7 +28,7 @@ class PedidosController extends Controller
     {
         $clientes= Cliente::all();
         $pedidos= DB::table('pedidos')
-                  ->select('pedidos.id','pedidos.clienteId',DB::raw('DATE_FORMAT(pedidos.created_at,"%d-%m-%Y") AS created_at'),'pedidos.total','pedidos.estado')
+                  ->select('pedidos.id','pedidos.clienteId',DB::raw('DATE_FORMAT(pedidos.created_at,"%d-%m-%Y") AS created_at'),'pedidos.total','pedidos.estado', 'pedidos.metodopago')
                   ->orderBy('created_at','DESC')
                   ->paginate(18);
         
@@ -71,6 +71,7 @@ class PedidosController extends Controller
         $pedido->clienteId= $request->clienteId;
         $pedido->estado= $request->estado;
         $pedido->total= $request->total;
+        $pedido->metodopago= $request->metodopago;
         $pedido->save();
         return $pedido;
     }
