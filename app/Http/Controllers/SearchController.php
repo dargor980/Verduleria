@@ -32,7 +32,14 @@ class SearchController extends Controller
     public function searchProductoPedido(Request $request)
     {
         $search= $request->search;
-        $producto= Producto::where('nombre','LIKE','%'.$request->search.'%')->orderBy('nombre','ASC')->get();
+
+        $producto= DB::table('productos')
+                   ->join('stocks','stockId','stocks.id')
+                   ->where('stocks.cantidad','>',0)
+                   ->where('productos.nombre','LIKE','%'.$request->search.'%')
+                   ->select('*')
+                   ->orderBy('productos.nombre','ASC')
+                   ->get();
         $medidas= Medida::all();
         $categorias= Categoria::all();
         return $producto;

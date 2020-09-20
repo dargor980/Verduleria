@@ -131,14 +131,14 @@
                     
                     <div class="col-md-1"></div>
                     <div class="col-md-10">
-                        <select  class="custom-select  mb-3"  v-model="clientePedidoId">
+                        <select  class="custom-select  mb-3"  v-model="clientePedidoId" :disabled="selectCliente">
                             <option selected :value="0">Seleccione un cliente:</option>
                             <option :value="item.id" v-for="(item,index) in clientes" :key="index">{{item.nombre}}</option>   
                         </select>
                     </div>
                     <div class="col-md-1"></div>
                     <div class="container text-center">
-                        <button class="btn btn-success mb-3 text-white" type="submit">Seleccionar</button>
+                        <button class="btn btn-success mb-3 text-white" type="submit" :disabled="selectCliente">Seleccionar</button>
                         <button class="btn btn-success mb-3 text-white" @click="back"><i class="fas fa-arrow-left text-white"></i> volver</button>
                     </div>
                     
@@ -210,12 +210,12 @@
                             <td>
                                 <div class="row">
                                     <div class="col">
-                                        <input type="number" min="0" class="form-control" placeholder="Cantidad" v-model="cantidadSeleccionada[index]">
+                                        <input type="number" min="0" :max="item.cantidad" class="form-control" placeholder="Cantidad" value=0 v-model="cantidadSeleccionada[index]">
                                     </div>
                                 </div>
                             </td>
                             <td v-for="(med, medidas) in medidas" :key="medidas" v-show="med.id===item.medidaId">{{med.nombre}}</td>
-                            <td v-for="(sub, subt) in subtotal" :key="subt" v-show="subt===index">{{sub=cantidadSeleccionada[index]*item.precio}}</td>
+                            <td v-for="(sub, subt) in subtotal" :key="subt" v-show="subt===index"><span v-if="cantidadSeleccionada[index]===undefined">{{sub=0}}</span> <span v-else>{{sub=cantidadSeleccionada[index]*item.precio}}</span></td>
                             </tr>
                         </tbody>
                         <tfoot>
@@ -307,6 +307,7 @@ export default {
             viewSeccionCliente: true,  //variable que muestra las opciones nuevo cliente o lista de clientes
             isClientePedidoExists: false,   //indica si ya se seleccionó el cliente que será asociado al pedido.
             pedidoFinal: false,  //variable que indica la visualizacion del pedidofinal.
+            selectCliente:false,
 
         }
     },
@@ -318,9 +319,18 @@ export default {
             this.total=0;
             for(var i=0; i<this.cantidadSeleccionada.length;i++)
             {
-                this.total=parseInt(this.total)+this.cantidadSeleccionada[i]*this.productosSeleccionados[i].precio;
-                this.total= parseInt(this.total);
-                this.cantidadAdd[i]=this.cantidadSeleccionada[i];
+                if(this.cantidadSeleccionada[i]===undefined)
+                {
+                    
+                }
+                else
+                {
+                    this.total=parseInt(this.total)+this.cantidadSeleccionada[i]*this.productosSeleccionados[i].precio;
+                    this.total= parseInt(this.total);
+                    this.cantidadAdd[i]=this.cantidadSeleccionada[i];
+
+                }
+                
             }
 
             this.total= this.total- this.total%10;
@@ -380,11 +390,13 @@ export default {
             this.viewSeccionCliente=false;
         },
         back(){
+            this.selectCliente=false;
             this.viewSeccionCliente=true;
             this.optionCliente='';
             this.isClientePedidoExists=false;
             this.pedidoFinal=false;
             this.productosSeleccionados=[];
+            this.cantidadSeleccionada=[];
         },
 
         addCliente(){
@@ -415,6 +427,7 @@ export default {
             }
             else
             {
+                this.selectCliente=true;
                 const params={id:this.clientePedidoId};
                 axios.post('/searchcliente',params).then(res =>{
                 this.clientePedidoData=res.data;
@@ -442,13 +455,35 @@ export default {
             this.cantidadAdd=this.cantidadSeleccionada;
             this.calcularSubtotales;
             //this.productosSeleccionados=[];
-            this.cantidadSeleccionada=[];
+            //this.cantidadSeleccionada=[];
             this.pedidoFinal=true;
            
         },
+        isCantidadNull()
+        {
+            for(var i=0; i<this.cantidadAdd.length; i++)
+            {
+                if(this.cantidadAdd[i]===undefined)
+                {
+                    
+                    return true;
+                }
+            }
+            return false;
+        },
 
         createPedido(){
+            if(this.isCantidadNull())
+            {
+                alert('ha dejado producto(s) sin cantidad especificada. Ingrese la cantidad y vuelva a intentarlo.');
+                return;
+            }
             /creación del registro de pedido/
+            if(this.metodo_pago.trim()==='' || this.metodo_pago==='0')
+            {
+                alert('seleccione un método de pago antes de continuar');
+                return;
+            }
             var data= {clienteId:'', estado:0, total:parseInt(0),metodopago:''};
             data.clienteId=this.clientePedidoData.id;
             data.total=parseInt(this.total);

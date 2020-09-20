@@ -82,6 +82,13 @@ class PedidosController extends Controller
         foreach($request->all() as $req)
         {
             $producto= Producto::find($req['productoId']);
+            if(isset($req['cantidad']))
+            {
+
+            }
+            else{
+                $req['cantidad']=0;
+            }
             Contenido::create([
                 'pedidoId' => $req['pedidoId'],
                 'productoId' =>$req['productoId'],

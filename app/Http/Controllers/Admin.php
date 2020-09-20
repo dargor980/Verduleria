@@ -30,4 +30,8 @@ class Admin extends Controller
         return back()->with('mensaje','Usuario eliminado');
 
     }
+    public function changePass()
+    {
+        return view('auth.passwords.reset');
+    }
 }
