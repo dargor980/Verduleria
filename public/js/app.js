@@ -2723,6 +2723,13 @@ __webpack_require__.r(__webpack_exports__);
 
       return false;
     },
+    isCantidadNegativa: function isCantidadNegativa() {
+      for (var i = 0; i < this.cantidadAdd.length; i++) {
+        if (this.cantidadAdd[i] < 0) {
+          alert('Advertencia: Ha ingresado un valor negativo.');
+        }
+      }
+    },
     createPedido: function createPedido() {
       var _this5 = this;
 
@@ -81037,7 +81044,21 @@ var render = function() {
                 ]
               ),
               _vm._v(" "),
-              _vm._m(12)
+              _c("div", { staticClass: "text-center mt-4" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-success mb-3 text-white",
+                    attrs: {
+                      type: "submit",
+                      "data-toggle": "modal",
+                      "data-target": "#seguro"
+                    },
+                    on: { click: _vm.isCantidadNegativa }
+                  },
+                  [_c("i", { staticClass: "text-white" }), _vm._v(" Finalizar")]
+                )
+              ])
             ]
           )
         ])
@@ -81175,7 +81196,7 @@ var render = function() {
                       staticClass: "btn btn-success",
                       attrs: { type: "button", disabled: "" }
                     },
-                    [_vm._m(13), _vm._v("  Registrando...")]
+                    [_vm._m(12), _vm._v("  Registrando...")]
                   )
             ])
           ])
@@ -81310,25 +81331,6 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Subtotal")])
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "text-center mt-4" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-success mb-3 text-white",
-          attrs: {
-            type: "submit",
-            "data-toggle": "modal",
-            "data-target": "#seguro"
-          }
-        },
-        [_c("i", { staticClass: "text-white" }), _vm._v(" Finalizar")]
-      )
     ])
   },
   function() {

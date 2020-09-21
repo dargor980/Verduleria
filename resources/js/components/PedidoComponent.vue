@@ -232,7 +232,7 @@
                     </div>
                 </div>
                 <div class="text-center mt-4">
-                    <button class="btn btn-success mb-3 text-white" type="submit" data-toggle="modal" data-target="#seguro"><i class="text-white"></i> Finalizar</button>
+                    <button class="btn btn-success mb-3 text-white" type="submit" data-toggle="modal" data-target="#seguro" @click="isCantidadNegativa"><i class="text-white"></i> Finalizar</button>
                 </div>
             </form>
         </div>
@@ -470,6 +470,17 @@ export default {
                 }
             }
             return false;
+        },
+
+        isCantidadNegativa()
+        {
+            for(var i=0; i<this.cantidadAdd.length; i++)
+            {
+                if(this.cantidadAdd[i]<0)
+                {
+                    alert('Advertencia: Ha ingresado un valor negativo.');
+                }
+            }
         },
 
         createPedido(){
