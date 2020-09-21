@@ -21,7 +21,7 @@
           <tr class="boton text-white">
             <th scope="col">N°</th>
             <th scope="col">Estado</th>
-            <th scope="col">Pago</th>
+            <th scope="col">Medio de pago</th>
             <th scope="col">Cliente</th>
             <th scope="col">Fecha</th>
             <th scope="col">Total</th>

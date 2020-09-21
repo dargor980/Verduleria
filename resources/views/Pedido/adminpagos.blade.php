@@ -20,6 +20,7 @@
         <thead>
           <tr class="boton text-white">
             <th scope="col pl-2">N°</th>
+            <th scope="col">Medio de pago</th>
             <th scope="col">Cliente</th>
             <th scope="col">Fecha</th>
             <th scope="col">Total</th>
@@ -30,6 +31,7 @@
           @foreach($pendientes as $item)
           <tr>
             <td class="pt-2 pl-2">{{$item->id}}</td> {{-- N° DE PEDIDO --}}
+            @if($item->metodopago==2)<td class="pt-2">Transferencia</td>@endif
             <td class="pt-2"><a href="{{route('detallepedido',$item->id)}}">{{$item->nombre}}</a></td>
             <td class="pt-2">{{$item->created_at}}</td>
             <td class="pt-2">${{$item->total}}</td>
