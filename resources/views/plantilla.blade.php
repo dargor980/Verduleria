@@ -144,9 +144,11 @@
                   </a>
                   <div class="sidebar-submenu">
                     <ul>
+                      @if(auth()->user()->id==1)
                       <li>
                         <a href="{{route('newstock')}}">Ingresar Stock</a>
                       </li>
+                      @endif
                       <li>
                         <a href="{{route('listav')}}">Stock Verduleria</a>
                       </li>

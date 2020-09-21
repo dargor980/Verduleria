@@ -74,14 +74,9 @@ Route::put('/clientes/editar/update/{id}','ClienteController@update')->name('upd
 
 Route::get('/clientes/delete/{id}','ClienteController@destroy')->name('deletecliente');
 
-Route::get('/inventario/new', 'InventarioController@show')->name('newstock');
-
-Route::post('/inventario/new/update','InventarioController@updateStock')->name('updatestock');
-
 Route::get('/inventario/listaverduleria', 'InventarioController@showverduleria')->name('listav');
 
 Route::get('/inventario/listacongelados', 'InventarioController@showcongelados')->name('listac');
-
 
 Route::post('/producto/categoria/add','CategoriasController@store')->name('addcategoria');
 
@@ -162,6 +157,10 @@ Route::group(['middleware' => 'admin'],function(){
     Route::get('/Admin/usuarios','Admin@index')->name('adminuser');
 
     Route::post('/Admin/usuarios/delete','Admin@destroy')->name('deleteuser');
+
+    Route::post('/inventario/new/update','InventarioController@updateStock')->name('updatestock');
+
+    Route::get('/inventario/new', 'InventarioController@show')->name('newstock');
 
 });
 
