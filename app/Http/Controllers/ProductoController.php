@@ -147,7 +147,7 @@ class ProductoController extends Controller
 
             $destroyProducto= Producto::find($id);
             $destroyProducto->delete();
-            return ProductoController::index()->with('mensaje','Producto eliminado');
+            return redirect()->route('listaprod')->with('mensaje','Producto eliminado.');
         }
         catch(\Illuminate\Database\QueryException $ex){
             return back()->with('error','no se puede eliminar el producto si está asociado a un pedido.');

@@ -123,30 +123,93 @@
         <!--/Datos Cliente-->
 
          <!--Cliente en lista-->
-        <div v-if="optionCliente==='existente'">
+        <div v-if="optionCliente==='existente' && isClientePedidoExists===false">
             <hr class="bg-light">
             <h3 class="text-white pl-4">Seleccione Cliente:</h3>
             <form @submit.prevent="selectClienteLista">
                 <div class="row mt-3">
-                    
+                    <div class="col-md-5"></div>
+                    <div class="col-md-5 input-group md-form form-sm form-2 pl-0 my-3">
+                        <input class="form-control my-0 py-1 line-border" type="text" placeholder="Buscar Cliente" name="searcha" v-model="searchCLIENTE">
+                        <div class="input-group-append">
+                            <span class="input-group-text lime lighten-2" id="basic-text1"><i class="fas fa-search text-grey"
+                                aria-hidden="true"></i></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-3">
                     <div class="col-md-1"></div>
                     <div class="col-md-10">
-                        <select  class="custom-select  mb-3"  v-model="clientePedidoId" :disabled="selectCliente">
-                            <option selected :value="0">Seleccione un cliente:</option>
-                            <option :value="item.id" v-for="(item,index) in clientes" :key="index">{{item.nombre}}</option>   
-                        </select>
+                        <div class="container productos">
+                            <ul class="list-inline ml-5 pl-5">
+                                <li class="list-inline-item col-md-5 my-1 p-0" v-for="(item,index) in clientes" :key="index">
+                                    <div class="container-fluid cardproducto">    
+                                        <h6 class="mt-2">
+                                            <input type="radio" v-model="clientePedidoData" :checked="checkcl" :value="item">
+                                            {{item.nombre}}
+                                        </h6>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                     <div class="col-md-1"></div>
                     <div class="container text-center">
                         <button class="btn btn-success mb-3 text-white" type="submit" :disabled="selectCliente">Seleccionar</button>
-                        <button class="btn btn-success mb-3 text-white" @click="back"><i class="fas fa-arrow-left text-white"></i> volver</button>
+                        <button class="btn btn-success mb-3 text-white" @click="back"><i class="fas fa-arrow-left text-white"></i> Volver</button>
                     </div>
-                    
                 </div>
-            </form>  
+            </form>
         </div>
         <!--/Cliente en lista-->
 
+        <div v-if="isClientePedidoExists">
+            <hr class="bg-light">
+            <h3 class="text-white text-center">Datos del cliente</h3>
+            <div class="row">
+                    <div class="col-md-7">
+                        <h5 class="text-white mt-2">Señor(a):&nbsp;</h5>
+                    </div>
+                    <div class="col-md-5">
+                        <h5 class="text-white mt-2">Teléfono:&nbsp;</h5>
+                    </div>
+                    <div class="col-md-7">
+                        
+                        <div>
+                            <input name='nombre' type="text" placeholder="Nombre del cliente" class="form-control" v-model="clientePedidoData.nombre" disabled>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        
+                        <div>
+                            <input name='fono' type="text" placeholder="Ingrese número" class="form-control" v-model="clientePedidoData.fono" disabled> 
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-7">
+                        <h5 class="text-white mt-2">Domicilio:&nbsp;</h5>
+                    </div>
+                    <div class="col-md-5">
+                        <h5 class="text-white mt-2">Depto:&nbsp;</h5>
+                    </div>
+                    <div class="col-md-7">
+                      
+                        <div>
+                            <input name='domicilio' type="text" placeholder="Ingrese dirección" class="form-control" v-model="clientePedidoData.domicilio" disabled>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div>
+                            <input name='depto' type="text" placeholder="Ingrese depto" class="form-control" v-model="clientePedidoData.depto" disabled> 
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center mt-3">
+                    <button class="btn btn-success mb-3 text-white" @click="back"><i class="fas fa-arrow-left text-white"></i> Volver</button>
+                </div>
+
+        </div>
 
          <!--Selecciona Productos-->
         <div v-if="isClientePedidoExists">
@@ -298,11 +361,13 @@ export default {
             search:'',
             spin:false,
             metodo_pago:'',
+            searchCLIENTE:'',
             
             
 
             /*variables de control */
             checked: false,
+            checkcl:false,
             optionCliente:'',  //variable para controlar visualizacion de nuevo cliente o lista de clientes
             viewSeccionCliente: true,  //variable que muestra las opciones nuevo cliente o lista de clientes
             isClientePedidoExists: false,   //indica si ya se seleccionó el cliente que será asociado al pedido.
@@ -359,7 +424,16 @@ export default {
                 this.productos=res.data;
             })
 
-        }
+        },
+
+        searchCLIENTE(nuevo,old){
+            var param= {search:nuevo};
+            axios.post('/pedido/cliente/search',param).then(res => {
+                this.clientes=res.data;
+            })
+
+        },
+
 
     },
 
@@ -397,6 +471,8 @@ export default {
             this.pedidoFinal=false;
             this.productosSeleccionados=[];
             this.cantidadSeleccionada=[];
+            this.searchCLIENTE='';
+            this.clientePedidoData=[];
         },
 
         addCliente(){
@@ -420,23 +496,14 @@ export default {
 
         selectClienteLista()
         {
-            if(this.clientePedidoId===0 || this.clientePedidoId==='')
-            {
-                alert("Debe seleccionar un cliente.");
-                return;
-            }
-            else
-            {
-                this.selectCliente=true;
-                const params={id:this.clientePedidoId};
-                axios.post('/searchcliente',params).then(res =>{
+            this.isClientePedidoExists=true;
+            
+            this.clientePedidoId=this.clientePedidoData[0].id;
+            const params={id:this.clientePedidoId};
+            axios.post('/searchcliente',params).then(res =>{
                 this.clientePedidoData=res.data;
-                this.isClientePedidoExists=true;
-                
-
+                this.selectCliente=true;
             });
-
-            }
             
         },
 

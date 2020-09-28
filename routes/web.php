@@ -166,6 +166,9 @@ Route::group(['middleware' => 'admin'],function(){
 
 Route::get('/pedido/administrarpagos/pagado/{id}','PedidosController@marcarPagado')->name('marcarpagado');
 
+Route::post('/pedido/cliente/search','SearchController@searchClientePedido');
+
+
 
 
 

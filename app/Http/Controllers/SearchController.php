@@ -111,4 +111,11 @@ class SearchController extends Controller
 
         return view('Cliente.buscar',compact('cliente','search'));       
     }
+
+    public function searchClientePedido(Request $request)
+    {
+        $search= $request->search;
+        $cliente= Cliente::where('nombre','LIKE','%'.$request->search.'%')->get();
+        return $cliente;
+    }
 }

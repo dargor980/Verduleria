@@ -113,6 +113,6 @@ class ProveedorController extends Controller
     {
         $destroyProveedor= Proveedor::find($id);
         $destroyProveedor->delete();
-        return ProveedorController::index()->with('mensaje','Proveedor eliminado');
+        return redirect()->route('listaprov')->with('mensaje','Proveedor eliminado.');
     }
 }

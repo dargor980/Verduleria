@@ -133,6 +133,7 @@ class ClienteController extends Controller
         }
         
         $destroyCliente->delete();  //Borra el cliente
-        return ClienteController::index()->with('mensaje','Datos de cliente eliminado');
+        return redirect()->route('listaclientes')->with('mensaje','cliente eliminado.');
     }
+
 }
