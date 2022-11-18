@@ -11,6 +11,8 @@ use App\Medida;
 use App\Stock;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use App\Http\Requests\NewClienteRequest;
+use App\Http\Requests\NewPedidoRequest;
 
 class PedidosController extends Controller
 {
@@ -31,7 +33,7 @@ class PedidosController extends Controller
                   ->select('pedidos.id','pedidos.clienteId',DB::raw('DATE_FORMAT(pedidos.created_at,"%d-%m-%Y") AS created_at'),'pedidos.total','pedidos.estado', 'pedidos.metodopago')
                   ->orderBy('pedidos.id','DESC')
                   ->paginate(18);
-        
+
         return view('Pedido.lista',compact('pedidos','clientes'));
     }
 
@@ -63,30 +65,23 @@ class PedidosController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     *
      */
-    public function store(Request $request)
+    public function store(NewPedidoRequest $request)
     {
-        $pedido= new Pedido();
-        $pedido->clienteId= $request->clienteId;
-        if($request->metodopago==1)
-        {
-            $pedido->estado=1;
-        }
-        else
-        {
-            if($request->metodopago==2)
-            {
-                $pedido->estado= 0;
-            }
-            else{
-                if($request->metodopago==3)
-                $pedido->estado= 1;
-            }
-        } 
-        $pedido->total= $request->total;
-        $pedido->metodopago= $request->metodopago;
-        $pedido->save();
+        $metodoPago = [
+            '1' => 1,
+            '2' => 0,
+            '3' => 1,
+        ];
+
+        $pedido = Pedido::create([
+            'clienteId' => $request->clienteId,
+            'total' => $request->total,
+            'estado' => $metodoPago[$request->metodopago],
+            'metodopago' => $request->metodopago,
+        ]);
+
         return $pedido;
     }
 
@@ -96,23 +91,16 @@ class PedidosController extends Controller
         foreach($request->all() as $req)
         {
             $producto= Producto::find($req['productoId']);
-            if(isset($req['cantidad']))
-            {
-
-            }
-            else{
+            if(!isset($req['cantidad'])) {
                 $req['cantidad']=0;
             }
+
             Contenido::create([
                 'pedidoId' => $req['pedidoId'],
                 'productoId' =>$req['productoId'],
                 'cantidad' => $req['cantidad'],
-                'subtotal' => $req['cantidad']*$producto->precio  ,   
+                'subtotal' => $req['cantidad']*$producto->precio,
             ]);
-            
-           
-            
-            
         }
 
         return;
@@ -191,22 +179,21 @@ class PedidosController extends Controller
 
     }
 
-    public function addCliente(Request $request)
+    public function addCliente(NewClienteRequest $request)
     {
-        $cliente= new Cliente();
-        $cliente->nombre= $request->nombre;
-        $cliente->fono= $request->fono;
-        $cliente->domicilio= $request->domicilio;
-        $cliente->depto= $request->depto;
-        $cliente->save();
-        return $cliente;
+        $cliente = Cliente::create([
+            'nombre' => $request->nombre,
+            'fono' => $request->fono,
+            'domicilio' => $request->domicilio,
+            'depto' => $request->depto,
+        ]);
 
+        return $cliente;
     }
 
     public function SearchClienteById(Request $request)
     {
-        $cliente= Cliente::find($request->id);
-        return $cliente;
+        return Cliente::find($request->id);
     }
 
     public function reporteClientePdf($id)
@@ -226,7 +213,7 @@ class PedidosController extends Controller
         $medidas= Medida::all();
 
         $pedido= Pedido::findOrFail($id);
-        
+
         $reporte= \PDF::loadView('Pedido.reporte', compact('productos','datosCliente','medidas','pedido'));
 
         return $reporte->download('pedido'.$id.'.pdf');
@@ -240,7 +227,7 @@ class PedidosController extends Controller
                     ->where('contenidos.pedidoId','=',$id)
                     ->select('productos.id','productos.nombre','productos.medidaId','productos.precio','contenidos.cantidad','contenidos.subtotal')
                     ->get();
-        
+
         $datosCliente= DB::table('pedidos')
         ->join('clientes','clienteId','clientes.id')
         ->where('pedidos.id','=',$id)
@@ -272,10 +259,9 @@ class PedidosController extends Controller
 
     public function marcarPagado($id)
     {
-        $pagado= Pedido::find($id);
-        $pagado->estado= 1;
-        $pagado->save();
-
+        Pedido::find($id)->update([
+            'estado' => 1
+        ]);
         return back()->with('mensaje','El pedido ya está pagado');
     }
 }

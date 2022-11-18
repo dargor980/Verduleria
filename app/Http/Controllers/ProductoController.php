@@ -8,34 +8,47 @@ use App\Stock;
 use App\Categoria;
 use App\Medida;
 use App\Http\Requests\ProductoRequest;
+use App\Http\Requests\UpdateProductoRequest;
+use Exception;
 
 
 
 class ProductoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
 
 
     public function __construct()
     {
         $this->middleware('auth', ['except' =>['index']]);
     }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     */
     public function index()
     {
-        $productos= Producto::orderBy('nombre')->paginate(18);
-        $categorias= Categoria::all();
-        $medidas= Medida::all();
-        return view('Producto.lista',compact('productos','categorias','medidas'));
+        try{
+            $productos= Producto::orderBy('nombre')->paginate(18);
+            $categorias= Categoria::all();
+            $medidas= Medida::all();
+
+            return view('Producto.lista',compact('productos','categorias','medidas'));
+        }catch(Exception $e){
+            Log::error('Error al obtener productos.');
+            Log::error($e->getMessage());
+            Log::error($e->getTraceAsString());
+
+            return back()->with('error', 'Hubo un error al obtener el listrado de productos. Intente nuevamente');
+        }
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
      */
     public function create()
     {
@@ -47,8 +60,8 @@ class ProductoController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param ProductoRequest $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(ProductoRequest $request)
     {
@@ -101,11 +114,11 @@ class ProductoController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param UpdateProductoRequest $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(ProductoRequest $request, $id)
+    public function update(UpdateProductoRequest $request, $id)
     {
         $updateProducto= Producto::find($id)->update([
             'nombre' => $request->nombre,
@@ -123,7 +136,7 @@ class ProductoController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy($id)
     {

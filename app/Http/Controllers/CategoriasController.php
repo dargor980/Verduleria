@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Categoria;
 use App\Sucursal;
+use App\Http\Requests\NewCategoriaRequest;
+use App\Http\Requests\DeleteCategoriaRequest;
+use Illuminate\Support\Facades\Log;
 
 class CategoriasController extends Controller
 {
@@ -37,19 +40,14 @@ class CategoriasController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(NewCategoriaRequest $request)
     {
-        $request->validate([
-            'tipo' => 'required',
-            'sucursalId' => 'required'
+        Categoria::create([
+            'tipo' => $request->tipo,
+            'sucursalId' => $request->sucursalId,
         ]);
-        $categoria= new Categoria();
-        $categoria->tipo= $request->tipo;
-        $categoria->sucursalId= $request->sucursalId;
-        $categoria->save();
 
         return back()->with('mensaje','Categoría añadida');
-
     }
 
     /**
@@ -95,16 +93,15 @@ class CategoriasController extends Controller
     public function destroy(Request $request)
     {
         try{
-
-            $request->validate([
-                'categoriaId' => 'required|not_in:0'
-            ]);
             $destroyCategoria= Categoria::find($request->categoriaId);
             $destroyCategoria->delete();
-    
+
             return back()->with('mensaje2','Categoría eliminada');
         }
         catch(\Illuminate\Database\QueryException $ex){
+            Log::error('Error al eliminar categoría');
+            Log::error($ex->getMessage());
+            Log::error($ex->getTraceAsString());
             return back()->with('error','esta categoría posee productos. Si desea eliminarla, primero elimine los productos asociados a ella.');
 
         }

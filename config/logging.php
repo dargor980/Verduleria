@@ -99,6 +99,31 @@ return [
         'emergency' => [
             'path' => storage_path('logs/laravel.log'),
         ],
+
+        'pedidos' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/pedidos.log'),
+        ],
+
+        'proveedores' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/proveedores.log'),
+        ],
+
+        'inventario' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/inventario.log'),
+        ],
+
+        'estadisticas' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/estadisticas.log'),
+        ],
+
+        'clientes' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/clientes'),
+        ],
     ],
 
 ];

@@ -32,5 +32,5 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Proveedor extends Model
 {
-    //
+    protected $fillable = ['rut', 'nombre', 'empresa', 'fono', 'direccion', 'descripcion'];
 }
