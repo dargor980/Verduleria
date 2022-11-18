@@ -7,6 +7,7 @@ use App\Producto;
 use App\Stock;
 use App\Categoria;
 use App\Medida;
+use App\Http\Requests\ProductoRequest;
 
 
 
@@ -49,31 +50,22 @@ class ProductoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProductoRequest $request)
     {
-        $request->validate([                  //Validación de los campos del formulario
-            'nombre' => 'required',
-            'precio' => 'required',
-            'medidaId' => 'required|not_in:0',
-            'categoriaId' => 'required|not_in:0',
-            'cantidad' => 'required',
-            'costo'    =>  'required'
+        $stock = Stock::create([
+            'cantidad' => $request->cantidad,
         ]);
-        
-        $stock= new Stock();
-        $stock->cantidad = $request->cantidad;
-        $stock->save();
 
-        $producto= new Producto();
-        $producto->nombre= $request->nombre;
-        $producto->precio= $request->precio;
-        $producto->medidaId= $request->medidaId;
-        $producto->categoriaId= $request->categoriaId;
-        $producto->stockId= $stock->id;
-        $producto->costo= $request->costo;
-        $producto->ganancia= $request->precio - $request->costo;
+        Producto::create([
+            'nombre' => $request->nombre,
+            'precio' => $request->precio,
+            'medidaId' => $request->medidaId,
+            'categoriaId' => $request->categoriaId,
+            'stockId' => $stock->id,
+            'costo' => $request->costo,
+            'ganancia' => $request->precio - $request->costo
+        ]);
 
-        $producto->save();
         return back()->with('mensaje','Producto agregado.');
     }
 
@@ -113,24 +105,16 @@ class ProductoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ProductoRequest $request, $id)
     {
-        $request->validate([
-            'nombre' => 'required',
-            'precio' => 'required',
-            'medidaId' => 'required|not_in:0',
-            'costo'    => 'required',
-            'categoriaId' => 'required|not_in:0'
-            
+        $updateProducto= Producto::find($id)->update([
+            'nombre' => $request->nombre,
+            'precio' => $request->precio,
+            'medidaId' => $request->medidaId,
+            'categoriaId' => $request->categoriaId,
+            'costo' => $request->costo,
+            'ganancia' => $request->precio - $request->costo,
         ]);
-        $updateProducto= Producto::find($id);
-        $updateProducto->nombre= $request->nombre;
-        $updateProducto->precio= $request->precio;
-        $updateProducto->medidaId= $request->medidaId;
-        $updateProducto->categoriaId= $request->categoriaId;
-        $updateProducto->costo= $request->costo;
-        $updateProducto->ganancia= $request->precio- $request->costo;
-        $updateProducto->save();
 
         return back()->with('mensaje','Producto actualizado. ');
     }
@@ -145,7 +129,7 @@ class ProductoController extends Controller
     {
         try{
 
-            $destroyProducto= Producto::find($id);
+            $destroyProducto = Producto::find($id);
             $destroyProducto->delete();
             return redirect()->route('listaprod')->with('mensaje','Producto eliminado.');
         }

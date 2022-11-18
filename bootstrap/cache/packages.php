@@ -1,4 +1,15 @@
 <?php return array (
+  'barryvdh/laravel-debugbar' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Barryvdh\\Debugbar\\ServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'Debugbar' => 'Barryvdh\\Debugbar\\Facades\\Debugbar',
+    ),
+  ),
   'barryvdh/laravel-dompdf' => 
   array (
     'providers' => 
@@ -8,6 +19,20 @@
     'aliases' => 
     array (
       'PDF' => 'Barryvdh\\DomPDF\\Facade',
+    ),
+  ),
+  'barryvdh/laravel-ide-helper' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Barryvdh\\LaravelIdeHelper\\IdeHelperServiceProvider',
+    ),
+  ),
+  'beyondcode/laravel-query-detector' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'BeyondCode\\QueryDetector\\QueryDetectorServiceProvider',
     ),
   ),
   'facade/ignition' => 
