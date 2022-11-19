@@ -17,9 +17,6 @@ use Illuminate\Support\Facades\Log;
 
 class ProductoController extends Controller
 {
-
-
-
     public function __construct()
     {
         $this->middleware('auth', ['except' =>['index']]);
@@ -98,10 +95,9 @@ class ProductoController extends Controller
      */
     public function show($id)
     {
-        $producto= Producto::find($id);
-        $stock= Stock::where('id','=',$producto->stockId);
-        $medida= Medida::where('id','=',$producto->medidaId)->get();
-        return view('Producto.detalles',compact('producto','stock','medida'));
+        $producto = Producto::with('medida')->find($id);
+
+        return view('Producto.detalles', ['producto' => $producto]);
     }
 
     /**
@@ -149,7 +145,6 @@ class ProductoController extends Controller
     public function destroy($id)
     {
         try{
-
             $destroyProducto = Producto::find($id);
             $destroyProducto->delete();
             return redirect()->route('listaprod')->with('mensaje','Producto eliminado.');
