@@ -22,5 +22,9 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Sucursal extends Model
 {
-    protected $fillable = [];
+    protected $fillable = ['sucursal'];
+
+    public function categoria(){
+        return $this->belongsTo(Categoria::class, 'sucursalId');
+    }
 }

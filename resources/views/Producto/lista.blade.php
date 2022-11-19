@@ -26,14 +26,14 @@
                 <div class="alert alert-success">
                     <span><i class="fas fa-check"></i></span>{{session('mensaje')}}
                 </div>
-            </div>           
+            </div>
       @endif
       @if (session('error'))
         <div class="container my-3">
             <div class="alert alert-success">
                 <span><i class="fas fa-exclamation-triangle text-danger"></i></span>&nbsp;{{session('error')}}
             </div>
-        </div>           
+        </div>
       @endif
       <table class="table table-sm table-hover">
         <thead>
@@ -52,8 +52,8 @@
             <td class="pl-3">{{$item->id}}</td>
             <td><a href="{{route('detalleprod', $item->id)}}">{{$item->nombre}} </a></td>
             <td>${{$item->precio}}</td>
-            <td>@foreach($medidas as $aux)@if($aux->id==$item->medidaId){{$aux->nombre}}@endif @endforeach</td>
-            <td>@foreach($categorias as $aux)@if($aux->id == $item->categoriaId){{$aux->tipo}}@endif @endforeach</td>
+            <td>@foreach($item->medida as $medida) {{$medida->nombre}} @endforeach</td>
+            <td>@foreach($item->categoria as $categoria) {{$categoria->tipo}} @endforeach</td>
             <td>
               <span><a href="{{route('editprod', $item->id)}}" ><i class="fas fa-edit text-success">&nbsp;</a></i></span>
                 <span><a href="{{route('deleteprod', $item->id)}}" ><i class="fas fa-trash-alt text-danger"></a></i></span>
@@ -62,7 +62,7 @@
           @endforeach
         </tbody>
       </table>
-      {{$productos->links()}}  
+      {{$productos->links()}}
     </div>
   </div>
 </div>

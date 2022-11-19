@@ -35,4 +35,20 @@ use Illuminate\Database\Eloquent\Model;
 class Producto extends Model
 {
     protected $fillable = ['nombre', 'precio', 'medidaId', 'categoriaId', 'stockId', 'costo', 'ganancia'];
+
+    public function categoria(){
+        return $this->hasMany(Categoria::class, 'id', 'categoriaId');
+    }
+
+    public function medida(){
+        return $this->hasMany(Medida::class, 'id', 'medidaId');
+    }
+
+    public function stock(){
+        return $this->hasMany(Stock::class, 'id', 'stockId');
+    }
+
+    public function  contenido(){
+        return $this->belongsTo(Contenido::class, 'productoId');
+    }
 }

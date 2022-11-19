@@ -29,4 +29,8 @@ use Illuminate\Database\Eloquent\Model;
 class Cliente extends Model
 {
     protected $fillable = ['nombre', 'fono', 'domicilio', 'depto'];
+
+    public function pedido(){
+        return $this->belongsTo(Pedido::class, 'clienteId');
+    }
 }

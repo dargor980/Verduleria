@@ -25,4 +25,13 @@ use Illuminate\Database\Eloquent\Model;
 class Categoria extends Model
 {
     protected $fillable = ['tipo', 'sucursalId'];
+
+    public function sucursal(){
+        return $this->hasMany(Sucursal::class, 'id', 'sucursalId');
+    }
+
+    public function producto(){
+        return $this->belongsTo(Producto::class, 'categoriaId');
+    }
+
 }

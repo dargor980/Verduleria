@@ -22,5 +22,9 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Medida extends Model
 {
-    protected $fillable = []
+    protected $fillable = ['nombre'];
+
+    public function producto(){
+        return $this->belongsTo(Producto::class, 'medidaId');
+    }
 }

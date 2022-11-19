@@ -10,6 +10,8 @@ use App\Medida;
 use App\Http\Requests\ProductoRequest;
 use App\Http\Requests\UpdateProductoRequest;
 use Exception;
+use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\Log;
 
 
 
@@ -30,12 +32,11 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        try{
-            $productos= Producto::orderBy('nombre')->paginate(18);
-            $categorias= Categoria::all();
-            $medidas= Medida::all();
 
-            return view('Producto.lista',compact('productos','categorias','medidas'));
+        try{
+            $productos = Producto::with(['categoria', 'medida'])->paginate(18);
+
+            return view('Producto.lista', ['productos' => $productos]);
         }catch(Exception $e){
             Log::error('Error al obtener productos.');
             Log::error($e->getMessage());
@@ -43,6 +44,13 @@ class ProductoController extends Controller
 
             return back()->with('error', 'Hubo un error al obtener el listrado de productos. Intente nuevamente');
         }
+    }
+
+    public function getProducts(){
+        $productos = Producto::with(['productoCategoria', 'medidaProducto'])->get();
+        dd($productos);
+
+        return DataTables::of($productos)->make(true);
     }
 
     /**
