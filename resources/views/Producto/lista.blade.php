@@ -72,7 +72,7 @@
                     url: "https://cdn.datatables.net/plug-ins/1.12.1/i18n/es-ES.json",
                 },
                 pagingType: "full_numbers",
-                responsive: true,
+
                 serverSide: true,
                 ajax: '{!! route('getProducts') !!}',
                 columnDefs: [
@@ -96,7 +96,18 @@
                         }
 
                     }
-                ]
+                ],
+                responsive:{
+                    details: {
+                        display: $.fn.dataTable.Responsive.display.modal( {
+                            header: function ( row ) {
+                                var data = row.data();
+                                return 'Details for '+data[0]+' '+data[1];
+                            }
+                        } ),
+                        renderer: $.fn.dataTable.Responsive.renderer.tableAll()
+                    }
+                }
             })
         })
 

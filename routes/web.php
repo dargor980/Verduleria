@@ -66,6 +66,8 @@ Route::get('/clientes/new', 'ClienteController@create')->name('newcliente');
 
 Route::get('/clientes/lista', 'ClienteController@index')->name('listaclientes');
 
+Route::get('/clientes/getClientes', 'ClienteController@getClientes')->name('getCientes');
+
 Route::get('/clientes/detalles/{id}', 'ClienteController@show')->name('detallec');
 
 Route::post('/clientes/new/add','ClienteController@store')->name('addcliente');

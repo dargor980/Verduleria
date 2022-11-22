@@ -13,6 +13,7 @@ use App\Http\Requests\NewClienteRequest;
 use App\Http\Requests\DeleteClienteRequest;
 use App\Http\Requests\UpdateClienteRequest;
 use Illuminate\Support\Facades\DB;
+use Yajra\DataTables\DataTables;
 
 class ClienteController extends Controller
 {
@@ -28,8 +29,13 @@ class ClienteController extends Controller
     }
     public function index()
     {
-        $clientes= Cliente::orderBy('nombre')->paginate(15);
-        return view('Cliente.lista',compact('clientes'));
+        return view('Cliente.lista');
+    }
+
+    public function getClientes(){
+        $clientes = Cliente::select('*');
+
+        return DataTables::of($clientes)->make(true);
     }
 
 
