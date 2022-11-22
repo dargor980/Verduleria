@@ -21,7 +21,7 @@
       </div>
     </form>
     <div class="container table-responsive">
-      <table class="table table-sm table-hover">
+      <table class="table table-sm table-hover" id="productos">
         <thead>
             <tr class="boton text-white">
               <th scope="col">Cod.</th>
@@ -33,16 +33,7 @@
             </tr>
         </thead>
         <tbody>
-          @foreach($productos as $item)
-          <tr>
-            <td class="pl-3">{{$item->id}}</td>
-            <td><a href="{{route('detalleprod',$item->id)}}">{{$item->nombre}}</a></td>
-            <td>{{$item->precio}}</td>
-            <td>@foreach($stocks as $stock) @if($stock->id==$item->stockId) {{$stock->cantidad}} @endif @endforeach</td>
-            <td>@foreach($medidas as $medida) @if($medida->id==$item->medidaId) {{$medida->nombre}} @endif @endforeach</td>
-            <td>@foreach($categorias as $categoria) @if($categoria->id==$item->categoriaId) {{$categoria->tipo}} @endif @endforeach</td>
-          </tr>
-          @endforeach
+
         </tbody>
       </table>
       {{$productos->links()}}
@@ -50,3 +41,24 @@
   </div>
 </div>
 @endsection
+
+<script>
+    $(document).ready(function(){
+        $("#productos").DataTable({
+            language: {
+                url: "cdn.datatables.net/plug-ins/1.12.1/i18n/es-ES.json",
+            },
+            pagingType: "full_numbers",
+            processing: true,
+            responsive: true,
+            serverSide: true,
+            ajax: '{!! route('getProducts') !!}',
+            columns: [
+                {data: 'id', name: 'id'}
+                {data: 'nombre', name: 'nombre'},
+                {data: 'precio', name: 'precio'}
+            ]
+        })
+
+    })
+</script>

@@ -1,10 +1,17 @@
 <html>
+  <meta charset="utf-8"/>
+  <meta http-equiv=”Content-Language” content=”es”/>
   <head>
     <link rel="stylesheet" href="{{asset('css/sidebar.css')}}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js">
     <link rel="stylesheet" href="{{asset('css/icon/all.css')}}">
     <script src="{{ asset('js/app.js') }}" defer></script>
+
+
+      <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
+      <script  type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
+      <script type="text/javascript" src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js" defer></script>
     <title> @yield('titulo') | Santa Gemita </title>
     <link rel="icon" href="{!! asset('logo.ico') !!}"/>
   </head>
@@ -14,7 +21,7 @@
       <!--OPCIONES NAVBAR-->
       <div class="collapse navbar-collapse justify-content-end">
         <ul class="navbar-nav ml-md-auto d-none d-md-flex">
-          <li class="nav-item active container-fluid"> 
+          <li class="nav-item active container-fluid">
             <div id="clockdate">
               <div class="clockdate-wrapper row">
                 <div id="clock" class="text-white"></div>&nbsp;&nbsp;
@@ -41,9 +48,9 @@
               <div id="close-sidebar">
                 <i class="fas fa-times"></i>
               </div>
-            </div>          
-            
-        
+            </div>
+
+
             <div class="sidebar-menu">
               <ul>
                 @guest
@@ -69,7 +76,7 @@
                                 document.getElementById('logout-form').submit();">
                                 {{ __('Cerrar Sesión') }}
                             </a>
-    
+
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                 @csrf
                             </form>
@@ -78,7 +85,7 @@
                       </div>
                     </li>
                 @endguest
-                
+
                 <li class="sidebar-dropdown">
                   <a href="#">
                     <i class="fa fa-tachometer-alt"></i>
@@ -98,8 +105,8 @@
                     </ul>
                   </div>
                 </li>
-                 
-                 
+
+
                 <li class="sidebar-dropdown">
                   <a href="#">
                     <i class="fas fa-shopping-cart"></i>
@@ -119,7 +126,7 @@
                     </ul>
                   </div>
                 </li>
-                
+
                 <li class="sidebar-dropdown">
                   <a href="#">
                     <i class="fa fa-truck"></i>
@@ -202,25 +209,21 @@
             <!-- sidebar-menu  -->
           </div>
           <!-- sidebar-content  -->
-         
+
         </nav>
-      
-      
-      
+
+
+
         <main class="page-content">
           @yield('contenido')
-          
+
         </main>
         <!-- page-content" -->
-        
+
     </div>
-    
-    <script src="{{asset('bootstrap/jquery.min.css')}}"></script>
-    <script src="{{asset('bootstrap/popper1.min.js')}}" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-    crossorigin="anonymous"></script>
-    <script src="{{asset('bootstrap/popper2.min.js')}}"></script>
-    <script src="{{asset('bootstrap/popper3.min.js')}}" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="{{asset('bootstrap/bootstrap2.min.js')}}" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+
+
     <script>
         jQuery(function ($) {
             $(".sidebar-dropdown > a").click(function() {
@@ -269,7 +272,7 @@
         min = checkTime(min);
         sec = checkTime(sec);
         document.getElementById("clock").innerHTML = `<i class="far fa-clock text-white"></i> &nbsp;` + hr + ":" + min + ":" + sec + " " + ap;
-        
+
         var months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
         var days = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
         var curWeekDay = days[today.getDay()];
@@ -278,7 +281,7 @@
         var curYear = today.getFullYear();
         var date = curWeekDay+", "+curDay+" "+curMonth+" "+curYear;
         document.getElementById("date").innerHTML = date;
-        
+
         var time = setTimeout(function(){ startTime() }, 500);
     }
     function checkTime(i) {
@@ -289,6 +292,9 @@
     }
     </script>
   {{--Script del reloj digital--}}
-  
+
   </body>
+
+@yield('scripts')
+
 </html>

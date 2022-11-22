@@ -29,23 +29,14 @@ class ProductoController extends Controller
      */
     public function index()
     {
-
-        try{
-            $productos = Producto::with(['categoria', 'medida'])->paginate(18);
-
-            return view('Producto.lista', ['productos' => $productos]);
-        }catch(Exception $e){
-            Log::error('Error al obtener productos.');
-            Log::error($e->getMessage());
-            Log::error($e->getTraceAsString());
-
-            return back()->with('error', 'Hubo un error al obtener el listrado de productos. Intente nuevamente');
-        }
+            return view('Producto.lista');
     }
 
+    /**
+     * @throws Exception
+     */
     public function getProducts(){
-        $productos = Producto::with(['productoCategoria', 'medidaProducto'])->get();
-        dd($productos);
+        $productos = Producto::with(['categoria', 'medida'])->select(['*']);
 
         return DataTables::of($productos)->make(true);
     }

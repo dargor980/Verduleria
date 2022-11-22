@@ -31,6 +31,8 @@ Route::get('/producto/new', 'ProductoController@create')->name('newprod');
 
 Route::get('/producto/lista', 'ProductoController@index')->name('listaprod');
 
+Route::get('/producto/get', 'ProductoController@getProducts')->name('getProducts');
+
 Route::get('/producto/detalles/{id}', 'ProductoController@show')->name('detalleprod');
 
 Route::get('/producto/categorianew', 'CategoriasController@create')->name('newcategoria');
@@ -153,7 +155,7 @@ Route::get('/estadisticas/masvendidos/verduleria','EstadisticasController@masVen
 
 
 Route::group(['middleware' => 'admin'],function(){
-    
+
     Route::get('/Admin/usuarios','Admin@index')->name('adminuser');
 
     Route::post('/Admin/usuarios/delete','Admin@destroy')->name('deleteuser');

@@ -36,19 +36,28 @@ class Producto extends Model
 {
     protected $fillable = ['nombre', 'precio', 'medidaId', 'categoriaId', 'stockId', 'costo', 'ganancia'];
 
-    public function categoria(){
+    public function categoria(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
         return $this->hasMany(Categoria::class, 'id', 'categoriaId');
     }
 
-    public function medida(){
+    public function medida(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
         return $this->hasMany(Medida::class, 'id', 'medidaId');
     }
 
-    public function stock(){
+    public function stock(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
         return $this->hasMany(Stock::class, 'id', 'stockId');
     }
 
-    public function  contenido(){
+    public function  contenido(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
         return $this->belongsTo(Contenido::class, 'productoId');
+    }
+
+    public function sucursal(): \Illuminate\Database\Eloquent\Relations\HasManyThrough
+    {
+        return $this->hasManyThrough(Sucursal::class, Categoria::class, 'sucursalId', 'id', 'id', 'id');
     }
 }
