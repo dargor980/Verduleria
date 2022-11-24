@@ -3,59 +3,84 @@
 @section('titulo', 'Proveedores')
 
 @section('contenido')
+    <style>
+        input{
+            background-color: white !important;
+
+        }
+
+        label{
+            color: white;
+        }
+
+        select{
+            background-color: white !important;
+        }
+
+        .dataTables_info{
+            color: white !important;
+        }
+    </style>
 <br>
 <div class="container">
   <div class="card card5">
       <h1 class="text-center text-white my-4">Lista de Proveedores</h1>
-      <form action="{{route('searchproveedorlista')}}">
-        @method('POST')
-        @csrf
-        <div class="row">
-          <h3 class="text-white pl-4 ml-2 my-3">Buscar proveedor:</h3>
-          <div class="input-group md-form form-sm form-2 pl-2 my-3" style="width: 400px;">
-            <input class="form-control my-0 py-1 lime-border" type="text" placeholder="Buscar"  name="search">
-            <div class="input-group-append">
-              <button class="btn input-group-text lime lighten-2" id="basic-text1" type="submit"><i class="fas fa-search text-grey"aria-hidden="true"></i></button>
-            </div>
-          </div>
-        </div>
-      </form>
-      <div class="container table-responsive">
+      <div class="container table-responsive my-3">
         @if (session('mensaje'))
           <div class="container my-3">
               <div class="alert alert-success">
                   <span><i class="fas fa-check"></i></span>{{session('mensaje')}}
               </div>
-          </div>           
+          </div>
       @endif
-      <table class="table table-sm table-hover">
+      <table class="table table-sm table-hover" id="proveedores">
           <thead>
             <tr class="boton text-white">
               <th scope="col">Nombre</th>
               <th scope="col">Empresa</th>
               <th scope="col">Rut</th>
-              <th scope="col">Fono</th>
               <th scope="col">Opción</th>
             </tr>
           </thead>
           <tbody>
-            @foreach($proveedores as $item)
-            <tr>
-              <td class="pl-3"><a href="{{route('detalleprov',$item->id)}}"> {{$item->nombre}} </a></td>
-              <td>{{$item->empresa}}</td>
-              <td>{{$item->rut}}</td>
-              <td>{{$item->fono}}</td>
-              <td>
-                  <span><a href="{{route('editprov',$item->id)}}" ><i class="fas fa-edit text-success">&nbsp;</a></i></span>
-                  <span><a href="{{route('deleteprov',$item->id)}}" ><i class="fas fa-trash-alt text-danger"></a></i></span>
-              </td>
-            </tr>
 
-            @endforeach
           </tbody>
         </table>
-        {{$proveedores->links()}}
       </div>
   </div>
 </div>
+@endsection
+
+@section('scripts')
+    <script>
+
+        $(document).ready(function(){
+            $("#proveedores").DataTable({
+                language: {
+                    url: "https://cdn.datatables.net/plug-ins/1.12.1/i18n/es-ES.json",
+                },
+                pagingType: "full_numbers",
+
+                serverSide: true,
+                ajax: '{!! route('getProveedores') !!}',
+                columns: [
+                    {data: 'nombre', name: 'nombre'},
+                    {data: 'empresa', name: 'empresa'},
+                    {data: 'rut', name: 'rut'},
+                    {
+                        data: 'id',
+                        render: function(data){
+                            return `<span><a href="/proveedores/editar/${data}"><i class="fas fa-edit text-success"></i>&nbsp;</a></span>
+                                <span><a href="/proveedores/eliminar/${data}"><i class="fas fa-trash-alt text-danger"></i></a></span>
+                            `
+                        }
+                    },
+
+                ],
+            })
+        })
+
+
+
+    </script>
 @endsection

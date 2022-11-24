@@ -54,6 +54,8 @@ Route::post('/proveedores/new/add','ProveedorController@store')->name('addprov')
 
 Route::get('/proveedores/lista', 'ProveedorController@index')->name('listaprov');
 
+Route::get('/proveedores/getproveedores', 'ProveedorController@getProveedores')->name('getProveedores');
+
 Route::get('/proveedores/detalles/{id}', 'ProveedorController@show')->name('detalleprov');
 
 Route::get('/proveedores/editar/{id}', 'ProveedorController@edit')->name('editprov');
@@ -80,7 +82,11 @@ Route::get('/clientes/delete/{id}','ClienteController@destroy')->name('deletecli
 
 Route::get('/inventario/listaverduleria', 'InventarioController@showverduleria')->name('listav');
 
+Route::get('/inventario/getproductosverduleria', 'InventarioController@getProductosVerduleria')->name('getProductosVerduleria');
+
 Route::get('/inventario/listacongelados', 'InventarioController@showcongelados')->name('listac');
+
+Route::get('/inventario/getproductoscongelados', 'InventarioController@getProductosCongelados')->name('getProductosCongelados');
 
 Route::post('/producto/categoria/add','CategoriasController@store')->name('addcategoria');
 
@@ -99,6 +105,8 @@ Route::post('/addclientepedido','PedidosController@addCliente');
 Route::post('/searchcliente','PedidosController@SearchClienteById');
 
 Route::get('/pedido/lista', 'PedidosController@index')->name('listaped');
+
+Route::get('/pedido/getlista', 'PedidosController@indexPedidos')->name('getPedidos');
 
 Route::get('/pedido/detalle/{id}', 'PedidosController@reporteClienteVista')->name('detallepedido');
 
@@ -141,6 +149,8 @@ Route::get('/inventario/lista/search/congelados','SearchController@searchProduct
 Route::get('/clientes/lista/search','SearchController@searchCliente')->name('searchcliente');
 
 Route::get('/pedido/administrarpagos','PedidosController@administrarPagos')->name('adminpagos');
+
+Route::get('/pedido/getpagos', 'PedidosController@getPagos')->name('getPagos');
 
 
 Route::get('/estadisticas/clientesfrecuentes/mayormonto','EstadisticasController@topMayorMonto');

@@ -31,12 +31,12 @@
     <h3 class="text-center">Detalle de pedido</h3>
     <div class="Cliente">
         <div>Señor/a:</div>
-        <h4 class="textcolor">@foreach($datosCliente as $dato){{$dato->nombre}}</h4>
-        <div>{{$dato->domicilio}} Depto: {{$dato->depto}}</div>
-        <div>+569 {{$dato->fono}}</div>
-        @endforeach()
+        <h4 class="textcolor">{{$pedido->cliente[0]->nombre}}</h4>
+        <div>{{$pedido->cliente[0]->domicilio}} Depto: {{$pedido->cliente[0]->depto}}</div>
+        <div>+569 {{$pedido->cliente[0]->fono}}</div>
+
     </div>
-    
+
     <div>
         <hr class="bg-light">
         <h3 class="text-white pl-4 text-center">Pedido final</h3>
@@ -56,9 +56,9 @@
                     <tbody>
                         @foreach ($productos as $item)
                             <tr>
-                            <td class="text-center">{{$item->id}}</td>
-                            <td>{{$item->nombre}}</td>
-                            <td>{{$item->precio}}</td>
+                            <td class="text-center">{{$item->producto[0]->id}}</td>
+                            <td>{{$item->producto[0]->nombre}}</td>
+                            <td>{{$item->producto[0]->precio}}</td>
                             <td>{{$item->cantidad}}</td>
                             <td>@foreach($medidas as $medida) @if($medida->id==$item->medidaId) {{$medida->nombre}} @endif @endforeach</td>
                             <td>{{$item->subtotal}}</td>

@@ -32,7 +32,7 @@ class Contenido extends Model
         'pedidoId', 'productoId','created_at', 'updated_at','cantidad','subtotal'
     ];
 
-    public function contenido(){
+    public function pedido(){
         return $this->hasMany(Pedido::class, 'id', 'pedidoId');
     }
 

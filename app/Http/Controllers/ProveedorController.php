@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateProveedorRequest;
 use App\Http\Requests\DeleteProveedorRequest;
 use Exception;
 use Illuminate\Support\Facades\Log;
+use Yajra\DataTables\DataTables;
 
 class ProveedorController extends Controller
 {
@@ -24,8 +25,17 @@ class ProveedorController extends Controller
     }
     public function index()
     {
-        $proveedores= Proveedor::paginate(10);
-        return view('Proveedores.lista',compact('proveedores'));
+        return view('Proveedores.lista');
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function getProveedores(){
+        $proveedores = Proveedor::select('*');
+
+        return DataTables::of($proveedores)
+            ->make(true);
     }
 
     /**

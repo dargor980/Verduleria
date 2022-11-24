@@ -56,8 +56,4 @@ class Producto extends Model
         return $this->belongsTo(Contenido::class, 'productoId');
     }
 
-    public function sucursal(): \Illuminate\Database\Eloquent\Relations\HasManyThrough
-    {
-        return $this->hasManyThrough(Sucursal::class, Categoria::class, 'sucursalId', 'id', 'id', 'id');
-    }
 }

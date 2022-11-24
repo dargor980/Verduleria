@@ -3,20 +3,38 @@
 @section('titulo', 'Pedidos')
 
 @section('contenido')
+    <style>
+        input{
+            background-color: white !important;
+
+        }
+
+        label{
+            color: white;
+        }
+
+        select{
+            background-color: white !important;
+        }
+
+        .dataTables_info{
+            color: white !important;
+        }
+    </style>
 <br>
 <div class="container">
 
 <div class="card card5">
     <h1 class="text-center text-white my-4">Lista de Pedidos</h1>
-    <div class="container table-responsive">
+    <div class="container table-responsive my-3">
       @if (session('mensaje'))
         <div class="container my-3">
             <div class="alert alert-success">
                 {{session('mensaje')}}
             </div>
-        </div>           
+        </div>
       @endif
-    <table class="table table-sm table-hover">
+    <table class="table table-sm table-hover" id="pedidos">
         <thead>
           <tr class="boton text-white">
             <th scope="col">N°</th>
@@ -29,24 +47,87 @@
           </tr>
         </thead>
         <tbody>
-          @foreach($pedidos as $pedido)
-          <tr>
-            <td class="pl-2">{{$pedido->id}}</td>
-            <td>@if($pedido->estado==0) Pendiente @else Pagado @endif</td>
-            @if($pedido->metodopago=='1')<td>Efectivo</td>@endif
-            @if($pedido->metodopago=='2')<td>Transferencia</td>@endif
-            @if($pedido->metodopago=='3')<td>Tarjeta</td>@endif
-            <td><a href="{{route('detallepedido',$pedido->id)}}">@foreach($clientes as $cliente) @if($cliente->id==$pedido->clienteId){{$cliente->nombre}} @endif @endforeach</a></td>
-            <td>{{$pedido->created_at}}</td>
-            <td>${{$pedido->total}}</td>
-            <td>
-                <span><a href="{{route('deletepedido',$pedido->id)}}" ><i class="fas fa-trash-alt text-danger"></a></i></span>
-            </td>
-          </tr>
-          @endforeach
+
         </tbody>
       </table>
-      {{$pedidos->links()}}
+
     </div>
 </div>
+@endsection
+
+@section('scripts')
+        <script>
+
+            $(document).ready(function(){
+                $("#pedidos").DataTable({
+                    language: {
+                        url: "https://cdn.datatables.net/plug-ins/1.12.1/i18n/es-ES.json",
+                    },
+                    pagingType: "full_numbers",
+                    processing: true,
+                    serverSide: true,
+                    columnDefs: [
+                        {
+                            searchable: false,
+                            targets: [1,2,3,6],
+                        }
+                    ],
+
+                    ajax: '{!! route('getPedidos') !!}',
+                    columns: [
+                        {data: 'id', name: 'id'},
+                        {
+                            data: 'estado',
+                            render: function(data){
+                                if(data == '0'){
+                                    return 'Pendiente'
+                                }else{
+                                    return 'Pagado'
+                                }
+                            }
+
+                        },
+                        {
+                            data: 'metodopago',
+                            render: function(data){
+                                if(data == '1'){
+                                    return 'Efectivo';
+                                }
+                                if(data == '2'){
+                                    return 'Transferencia';
+                                }
+                                if(data == '3'){
+                                    return 'Tarjeta';
+                                }
+                            }
+                        },
+                        {data: 'link', name: 'link'},
+                        {data: 'created_at', name: 'created_at'},
+                        {data: 'total', name: 'total'},
+                        {
+                            data: 'id',
+                            render: function(data){
+                                return `<span><a href="/pedido/lista/delete/${data}"><i class="fas fa-trash-alt text-danger"></i></a></span>`
+                            }
+
+                        }
+
+                    ],
+                    responsive:{
+                        details: {
+                            display: $.fn.dataTable.Responsive.display.modal( {
+                                header: function ( row ) {
+                                    var data = row.data();
+                                    return 'Details for '+data[0]+' '+data[1];
+                                }
+                            } ),
+                            renderer: $.fn.dataTable.Responsive.renderer.tableAll()
+                        }
+                    }
+                })
+            })
+
+
+
+        </script>
 @endsection

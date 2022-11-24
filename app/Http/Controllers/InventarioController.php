@@ -8,6 +8,8 @@ use App\Categoria;
 use App\Sucursal;
 use App\Stock;
 use App\Medida;
+use Symfony\Component\VarDumper\Cloner\Data;
+use Yajra\DataTables\DataTables;
 
 class InventarioController extends Controller
 {
@@ -27,33 +29,51 @@ class InventarioController extends Controller
 
     public function showverduleria()
     {
-        $productos = Producto::with(
-            [
-                'categoria',
-                'medida',
-                'stock',
-                'sucursal' => function ($query){
-                    $query->where('nombre', '=', 'Verduleria');
-                }
-            ])
-            ->paginate(15);
+        return view('Inventario.listaverduleria');
+    }
 
-        return view('Inventario.listaverduleria',['productos' => $productos]);
+    /**
+     * @throws \Exception
+     */
+    public function getProductosVerduleria(){
+        $productos = Producto::with([
+            'categoria',
+            'medida',
+            'stock'
+        ])
+        ->whereHas('categoria', function($query){
+            $query->where('sucursalId', '=', 1);
+        })
+        ->select('*');
+
+        return DataTables::of($productos)
+            ->make(true);
     }
 
     public function showcongelados()
     {
-        $productos= DB::table('productos')
-                    ->join('categorias','categoriaId','=','categorias.id')
-                    ->join('sucursals','sucursalId','=','sucursals.id')
-                    ->where('sucursals.nombre','=','Congelados')
-                    ->select('productos.id','productos.nombre','productos.medidaId','productos.precio','productos.categoriaId','productos.stockId')
-                    ->paginate(15);
+        return view('Inventario.listacongelados');
+    }
 
-        $categorias=Categoria::all();
-        $stocks= Stock::all();
-        $medidas= Medida::all();
-        return view('Inventario.listacongelados',compact('productos','stocks','medidas','categorias'));
+    public function getProductosCongelados()
+    {
+        $productos = Producto::with([
+            'categoria',
+            'medida',
+            'stock',
+        ])
+        ->whereHas('categoria', function($query){
+            $query->where('sucursalId', '=', 2);
+        })
+        ->select('*');
+
+
+
+
+
+        return DataTables::of($productos)
+            ->make(true);
+
     }
 
     public function updateStock(Request $request)
