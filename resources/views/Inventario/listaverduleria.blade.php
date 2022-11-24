@@ -3,25 +3,27 @@
 @section('titulo', 'Stock')
 
 @section('contenido')
+    <style>
+        input{
+            background-color: white !important;
+
+        }
+
+        label{
+            color: white;
+        }
+
+        select{
+            background-color: white !important;
+        }
+
+    </style>
 <br>
 <div class="container">
   <div class="card card5">
     <h1 class="text-center text-white my-4">Stock de Productos: Verduleria</h1>
-    <form action="{{route('searchinventariolista')}}">
-      @method('POST')
-      @csrf
-      <div class="row">
-        <h3 class="text-white pl-4 ml-2 my-3">Buscar producto:</h3>
-        <div class="input-group md-form form-sm form-2 pl-2 my-3" style="width: 400px;">
-          <input class="form-control my-0 py-1 lime-border" type="text" placeholder="Buscar" name="search">
-          <div class="input-group-append">
-            <button class="btn input-group-text lime lighten-2" id="basic-text1" type="submit"><i class="fas fa-search text-grey"aria-hidden="true"></i></button>
-          </div>
-        </div>
-      </div>
-    </form>
-    <div class="container table-responsive">
-      <table class="table table-sm table-hover">
+    <div class="container table-responsive my-3">
+      <table class="table table-sm table-hover" id="productos">
         <thead>
             <tr class="boton text-white">
               <th scope="col">Cod.</th>
@@ -33,20 +35,50 @@
             </tr>
         </thead>
         <tbody>
-          @foreach($productos as $item)
-          <tr>
-            <td class="pl-3">{{$item->id}}</td>
-            <td><a href="{{route('detalleprod',$item->id)}}">{{$item->nombre}}</a></td>
-            <td>{{$item->precio}}</td>
-            <td>@foreach($stocks as $stock) @if($stock->id==$item->stockId) {{$stock->cantidad}} @endif @endforeach</td>
-            <td>@foreach($medidas as $medida) @if($medida->id==$item->medidaId) {{$medida->nombre}} @endif @endforeach</td>
-            <td>@foreach($categorias as $categoria) @if($categoria->id==$item->categoriaId) {{$categoria->tipo}} @endif @endforeach</td>
-          </tr>
-          @endforeach
+
         </tbody>
       </table>
-      {{$productos->links()}}
     </div>
   </div>
 </div>
+@endsection
+
+@section('scripts')
+<script>
+    $(document).ready(function(){
+        $("#productos").DataTable({
+            language: {
+                url: "https://cdn.datatables.net/plug-ins/1.12.1/i18n/es-ES.json",
+            },
+            pagingType: "full_numbers",
+            processing: true,
+            responsive: true,
+            serverSide: true,
+            columnDefs: [
+                {
+                    searchable: false,
+                    targets: [3,4,5],
+                }
+            ],
+            ajax: '{!! route('getProductosVerduleria') !!}',
+            columns: [
+                {data: 'id', name: 'id'},
+                {data: 'nombre', name: 'nombre'},
+                {data: 'precio', name: 'precio'},
+                {data: 'stock[0].cantidad', name: 'stock[0].cantidad'},
+                {data: 'medida[0].nombre', name: 'medida[0].nombre'},
+                {data: 'categoria[0].tipo', name: 'categoria[0].tipo'},
+
+            ],
+            drawCallback: function( settings ) {
+                $('a').addClass("pagination");
+                $('a').removeClass('paginate_button');
+                $('a').addClass('paginate_button');
+
+
+            }
+        })
+
+    })
+</script>
 @endsection

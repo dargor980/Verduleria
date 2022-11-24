@@ -7,34 +7,44 @@ use App\Producto;
 use App\Stock;
 use App\Categoria;
 use App\Medida;
+use App\Http\Requests\ProductoRequest;
+use App\Http\Requests\UpdateProductoRequest;
+use Exception;
+use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\Log;
 
 
 
 class ProductoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-
-
     public function __construct()
     {
         $this->middleware('auth', ['except' =>['index']]);
     }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     */
     public function index()
     {
-        $productos= Producto::orderBy('nombre')->paginate(18);
-        $categorias= Categoria::all();
-        $medidas= Medida::all();
-        return view('Producto.lista',compact('productos','categorias','medidas'));
+            return view('Producto.lista');
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function getProducts(){
+        $productos = Producto::with(['categoria', 'medida'])->select(['*']);
+
+        return DataTables::of($productos)->make(true);
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
      */
     public function create()
     {
@@ -46,34 +56,25 @@ class ProductoController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param ProductoRequest $request
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(ProductoRequest $request)
     {
-        $request->validate([                  //Validación de los campos del formulario
-            'nombre' => 'required',
-            'precio' => 'required',
-            'medidaId' => 'required|not_in:0',
-            'categoriaId' => 'required|not_in:0',
-            'cantidad' => 'required',
-            'costo'    =>  'required'
+        $stock = Stock::create([
+            'cantidad' => $request->cantidad,
         ]);
-        
-        $stock= new Stock();
-        $stock->cantidad = $request->cantidad;
-        $stock->save();
 
-        $producto= new Producto();
-        $producto->nombre= $request->nombre;
-        $producto->precio= $request->precio;
-        $producto->medidaId= $request->medidaId;
-        $producto->categoriaId= $request->categoriaId;
-        $producto->stockId= $stock->id;
-        $producto->costo= $request->costo;
-        $producto->ganancia= $request->precio - $request->costo;
+        Producto::create([
+            'nombre' => $request->nombre,
+            'precio' => $request->precio,
+            'medidaId' => $request->medidaId,
+            'categoriaId' => $request->categoriaId,
+            'stockId' => $stock->id,
+            'costo' => $request->costo,
+            'ganancia' => $request->precio - $request->costo
+        ]);
 
-        $producto->save();
         return back()->with('mensaje','Producto agregado.');
     }
 
@@ -85,10 +86,9 @@ class ProductoController extends Controller
      */
     public function show($id)
     {
-        $producto= Producto::find($id);
-        $stock= Stock::where('id','=',$producto->stockId);
-        $medida= Medida::where('id','=',$producto->medidaId)->get();
-        return view('Producto.detalles',compact('producto','stock','medida'));
+        $producto = Producto::with('medida')->find($id);
+
+        return view('Producto.detalles', ['producto' => $producto]);
     }
 
     /**
@@ -109,28 +109,20 @@ class ProductoController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param UpdateProductoRequest $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(UpdateProductoRequest $request, $id)
     {
-        $request->validate([
-            'nombre' => 'required',
-            'precio' => 'required',
-            'medidaId' => 'required|not_in:0',
-            'costo'    => 'required',
-            'categoriaId' => 'required|not_in:0'
-            
+        $updateProducto= Producto::find($id)->update([
+            'nombre' => $request->nombre,
+            'precio' => $request->precio,
+            'medidaId' => $request->medidaId,
+            'categoriaId' => $request->categoriaId,
+            'costo' => $request->costo,
+            'ganancia' => $request->precio - $request->costo,
         ]);
-        $updateProducto= Producto::find($id);
-        $updateProducto->nombre= $request->nombre;
-        $updateProducto->precio= $request->precio;
-        $updateProducto->medidaId= $request->medidaId;
-        $updateProducto->categoriaId= $request->categoriaId;
-        $updateProducto->costo= $request->costo;
-        $updateProducto->ganancia= $request->precio- $request->costo;
-        $updateProducto->save();
 
         return back()->with('mensaje','Producto actualizado. ');
     }
@@ -139,13 +131,12 @@ class ProductoController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy($id)
     {
         try{
-
-            $destroyProducto= Producto::find($id);
+            $destroyProducto = Producto::find($id);
             $destroyProducto->delete();
             return redirect()->route('listaprod')->with('mensaje','Producto eliminado.');
         }

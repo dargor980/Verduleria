@@ -8,6 +8,8 @@ use App\Categoria;
 use App\Sucursal;
 use App\Stock;
 use App\Medida;
+use Symfony\Component\VarDumper\Cloner\Data;
+use Yajra\DataTables\DataTables;
 
 class InventarioController extends Controller
 {
@@ -27,32 +29,51 @@ class InventarioController extends Controller
 
     public function showverduleria()
     {
-        $productos= DB::table('productos')
-                    ->join('categorias','categoriaId','=','categorias.id')
-                    ->join('sucursals','sucursalId','=','sucursals.id')
-                    ->where('sucursals.nombre','=','Verduleria')
-                    ->select('productos.id','productos.nombre','productos.medidaId','productos.precio','productos.categoriaId','productos.stockId')
-                    ->paginate(15);
-        
-        $categorias= Categoria::all();
-        $stocks= Stock::all();
-        $medidas= Medida::all();
-        return view('Inventario.listaverduleria',compact('productos','categorias','stocks','medidas'));
+        return view('Inventario.listaverduleria');
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function getProductosVerduleria(){
+        $productos = Producto::with([
+            'categoria',
+            'medida',
+            'stock'
+        ])
+        ->whereHas('categoria', function($query){
+            $query->where('sucursalId', '=', 1);
+        })
+        ->select('*');
+
+        return DataTables::of($productos)
+            ->make(true);
     }
 
     public function showcongelados()
     {
-        $productos= DB::table('productos')
-                    ->join('categorias','categoriaId','=','categorias.id')
-                    ->join('sucursals','sucursalId','=','sucursals.id')
-                    ->where('sucursals.nombre','=','Congelados')
-                    ->select('productos.id','productos.nombre','productos.medidaId','productos.precio','productos.categoriaId','productos.stockId')
-                    ->paginate(15);
+        return view('Inventario.listacongelados');
+    }
 
-        $categorias=Categoria::all();
-        $stocks= Stock::all();
-        $medidas= Medida::all();                    
-        return view('Inventario.listacongelados',compact('productos','stocks','medidas','categorias'));
+    public function getProductosCongelados()
+    {
+        $productos = Producto::with([
+            'categoria',
+            'medida',
+            'stock',
+        ])
+        ->whereHas('categoria', function($query){
+            $query->where('sucursalId', '=', 2);
+        })
+        ->select('*');
+
+
+
+
+
+        return DataTables::of($productos)
+            ->make(true);
+
     }
 
     public function updateStock(Request $request)
@@ -66,6 +87,6 @@ class InventarioController extends Controller
         $stock->save();
 
         return back()->with('mensaje','Stock del producto actualizado');
-        
+
     }
 }

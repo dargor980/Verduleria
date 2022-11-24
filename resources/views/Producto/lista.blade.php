@@ -3,39 +3,45 @@
 @section('titulo', 'Productos')
 
 @section('contenido')
+    <style>
+        input{
+            background-color: white !important;
+
+        }
+
+        label{
+            color: white;
+        }
+
+        select{
+            background-color: white !important;
+        }
+
+        .dataTables_info{
+            color: white !important;
+        }
+    </style>
 <br>
 <div class="container">
   <div class="card card5">
       <h1 class="text-center text-white mt-4">Lista de Productos</h1>
-      <form action="{{route('searchproductolista')}}">
-          @method('POST')
-          @csrf
-          <div class="row">
-            <h3 class="text-white pl-4 ml-2 my-3">Buscar producto:</h3>
-            <div class="input-group md-form form-sm form-2 pl-2 my-3" style="width: 400px;">
-              <input class="form-control my-0 py-1 lime-border" type="text" placeholder="Buscar" name="search">
-              <div class="input-group-append">
-                <button class="btn input-group-text lime lighten-2" id="basic-text1" type="submit"><i class="fas fa-search text-grey"aria-hidden="true"></i></button>
-              </div>
-            </div>
-          </div>
-      </form>
-    <div class="container table-responsive">
+
+    <div class="container table-responsive my-3">
       @if (session('mensaje'))
             <div class="container my-3">
                 <div class="alert alert-success">
                     <span><i class="fas fa-check"></i></span>{{session('mensaje')}}
                 </div>
-            </div>           
+            </div>
       @endif
       @if (session('error'))
         <div class="container my-3">
             <div class="alert alert-success">
                 <span><i class="fas fa-exclamation-triangle text-danger"></i></span>&nbsp;{{session('error')}}
             </div>
-        </div>           
+        </div>
       @endif
-      <table class="table table-sm table-hover">
+      <table class="table table-sm table-hover" id="productos">
         <thead>
           <tr class="boton text-white">
             <th scope="col">Cod.</th>
@@ -47,23 +53,66 @@
           </tr>
         </thead>
         <tbody>
-          @foreach($productos as $item)
-          <tr>
-            <td class="pl-3">{{$item->id}}</td>
-            <td><a href="{{route('detalleprod', $item->id)}}">{{$item->nombre}} </a></td>
-            <td>${{$item->precio}}</td>
-            <td>@foreach($medidas as $aux)@if($aux->id==$item->medidaId){{$aux->nombre}}@endif @endforeach</td>
-            <td>@foreach($categorias as $aux)@if($aux->id == $item->categoriaId){{$aux->tipo}}@endif @endforeach</td>
-            <td>
-              <span><a href="{{route('editprod', $item->id)}}" ><i class="fas fa-edit text-success">&nbsp;</a></i></span>
-                <span><a href="{{route('deleteprod', $item->id)}}" ><i class="fas fa-trash-alt text-danger"></a></i></span>
-            </td>
-          </tr>
-          @endforeach
+
         </tbody>
       </table>
-      {{$productos->links()}}  
     </div>
   </div>
 </div>
+@endsection
+
+@section('scripts')
+
+
+<script>
+
+        $(document).ready(function(){
+            $("#productos").DataTable({
+                language: {
+                    url: "https://cdn.datatables.net/plug-ins/1.12.1/i18n/es-ES.json",
+                },
+                pagingType: "full_numbers",
+
+                serverSide: true,
+                ajax: '{!! route('getProducts') !!}',
+                columnDefs: [
+                    {
+                        searchable: false,
+                        targets: [3,4,5],
+                    }
+                ],
+                columns: [
+                    {data: 'id', name: 'id'},
+                    {data: 'nombre', name: 'nombre'},
+                    {data: 'precio', name: 'precio'},
+                    {data: 'medida[0].nombre', name: 'medida[0].nombre'},
+                    {data: 'categoria[0].tipo', name: 'categoria[0].tipo'},
+                    {
+                        data: 'id',
+                        render: function(data){
+                            return `<span><a href="/producto/detalles/edit/${data}"><i class="fas fa-edit text-success">&nbsp;</i></a></span>
+                                    <span><a href="/producto/delete/${data}"><i class="fas fa-trash-alt text-danger"></i></a></span>
+                                     `
+                        }
+
+                    }
+                ],
+                responsive:{
+                    details: {
+                        display: $.fn.dataTable.Responsive.display.modal( {
+                            header: function ( row ) {
+                                var data = row.data();
+                                return 'Details for '+data[0]+' '+data[1];
+                            }
+                        } ),
+                        renderer: $.fn.dataTable.Responsive.renderer.tableAll()
+                    }
+                }
+            })
+        })
+
+
+
+</script>
+
 @endsection

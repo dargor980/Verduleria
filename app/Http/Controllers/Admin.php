@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\User;
+use App\Http\Requests\DeleteUserRequest;
 
 class Admin extends Controller
 {
@@ -15,20 +16,18 @@ class Admin extends Controller
                     ->where('users.name','<>',Auth::user()->name)
                     ->select('users.id','users.name')
                     ->orderBy('users.name','ASC')
-                    ->get(); 
+                    ->get();
         return view('Admin.admin',compact('usuarios'));
     }
 
-    public function destroy(Request $request)
+    /**
+     * @throws \Exception
+     */
+    public function destroy(DeleteUserRequest $request)
     {
-        $request->validate([
-            'userId' => 'required|not_in:0'
-        ]);
-        $destroyUser= User::find($request->userId);
-        $destroyUser->delete();
+        User::find($request->userId)->delete();
 
         return back()->with('mensaje','Usuario eliminado');
-
     }
     public function changePass()
     {

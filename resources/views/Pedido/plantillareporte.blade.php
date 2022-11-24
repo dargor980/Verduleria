@@ -23,7 +23,7 @@
             <div>22204 2965 - 22458 3513 - 22665 4830</div>
             <div>distribuidorasantagemita@gmail.com</div>
             <div>
-                <div id="logowsp"><img src="whatsapp.jpg"> </div> 
+                <div id="logowsp"><img src="whatsapp.jpg"> </div>
                 +569 3096 5828
             </div>
         </div>

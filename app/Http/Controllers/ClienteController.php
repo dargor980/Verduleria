@@ -7,6 +7,13 @@ use App\Cliente;
 use App\Contenido;
 use App\Producto;
 use App\Pedido;
+use Exception;
+use Illuminate\Support\Facades\Log;
+use App\Http\Requests\NewClienteRequest;
+use App\Http\Requests\DeleteClienteRequest;
+use App\Http\Requests\UpdateClienteRequest;
+use Illuminate\Support\Facades\DB;
+use Yajra\DataTables\DataTables;
 
 class ClienteController extends Controller
 {
@@ -22,15 +29,20 @@ class ClienteController extends Controller
     }
     public function index()
     {
-        $clientes= Cliente::orderBy('nombre')->paginate(15);
-        return view('Cliente.lista',compact('clientes'));
+        return view('Cliente.lista');
+    }
+
+    public function getClientes(){
+        $clientes = Cliente::select('*');
+
+        return DataTables::of($clientes)->make(true);
     }
 
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
      */
     public function create()
     {
@@ -41,31 +53,34 @@ class ClienteController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(NewClienteRequest $request)
     {
-        $request->validate([            //Validación de los campos del formulario
-            'nombre' => 'required',
-            'fono' => 'required',
-            'domicilio' => 'required'
-        ]);
+        try{
 
-        $cliente= new Cliente();
-        $cliente->nombre= $request->nombre;
-        $cliente->fono= $request->fono;
-        $cliente->domicilio= $request->domicilio;
-        $cliente->depto= $request->depto;
+            Cliente::create([
+                'nombre' => $request->nombre,
+                'fono' => $request->fono,
+                'domicilio' => $request->domicilio,
+                'depto' => $request->depto,
+            ]);
 
-        $cliente->save();
-        return back()->with('mensaje','Cliente añadido');
+            return back()->with('mensaje','Cliente añadido');
+        }catch(Exception $e){
+            Log::error('Error al guardar cliente');
+            Log::error($e->getMessage());
+            Log::error($e->getTraceAsString());
+
+            return back()->with('error', 'Hubo un error al registrar cliente. Intente nuevamente.');
+        }
     }
 
     /**
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
      */
     public function show($id)
     {
@@ -90,50 +105,68 @@ class ClienteController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(UpdateClienteRequest $request, $id)
     {
-        $request->validate([
-            'nombre' => 'required',
-            'fono'   => 'required',
-            'domicilio' => 'required'
-        ]);
-        $updateCliente= Cliente::find($id);
-        $updateCliente->nombre= $request->nombre;
-        $updateCliente->fono= $request->fono;
-        $updateCliente->domicilio= $request->domicilio;
-        $updateCliente->depto= $request->depto;
+        try{
+            Cliente::find($id)->update([
+                'nombre' => $request->nombre,
+                'fono' => $request->fono,
+                'domicilio' => $request->domicilio,
+                'depto' => $request->depto,
+            ]);
 
-        $updateCliente->save();
-        return back()->with('mensaje','Datos de cliente actualizado.');
+            return back()->with('mensaje','Datos de cliente actualizado.');
+        }catch(Exception $e){
+            Log::error('Error al actualizar datos de cliente');
+            Log::error($e->getMessage());
+            Log::error($e->getTraceAsString());
+
+            return back()->with('error', 'Ocurrio un error al actualizar datos del cliente. Intente nuevamente');
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy($id)   //elimina todo lo asociado al cliente (datos de cliente, pedidos y su respectivo contenido).
     {
-        $destroyCliente= Cliente::find($id);
-        $pedidos= Pedido::where('clienteId','=',$id)->get();
-        foreach($pedidos as $pedido)
-        {
-            $contenidos= Contenido::where('pedidoId','=',$pedido->id)->get();
-            foreach($contenidos as $contenido)
+        try{
+            DB::beginTransaction();
+
+            $destroyCliente= Cliente::find($id);
+            $pedidos= Pedido::where('clienteId','=',$id)->get();
+            foreach($pedidos as $pedido)
             {
-                $contenido->delete();  //Borra el contenido de los pedidos
+                $contenidos= Contenido::where('pedidoId','=',$pedido->id)->get();
+                foreach($contenidos as $contenido)
+                {
+                    $contenido->delete();  //Borra el contenido de los pedidos
+                }
             }
+            foreach($pedidos as $pedido)
+            {
+                $pedido->delete();   //Borra los pedidos
+            }
+
+            $destroyCliente->delete();  //Borra el cliente
+
+            DB::commit();
+
+            return redirect()->route('listaclientes')->with('mensaje','cliente eliminado.');
+        }catch(Exception $e){
+            DB::rollBack();
+
+            Log::error('Ocurrio un error al eliminar el cliente y sus registros.');
+            Log::error($e->getMessage());
+            Log::error($e->getTraceAsString());
+
+            return back()->with('error', 'Ocurrió un error al eliminar el cliente y sus registros. Intente nuevamente.');
         }
-        foreach($pedidos as $pedido)
-        {
-            $pedido->delete();   //Borra los pedidos
-        }
-        
-        $destroyCliente->delete();  //Borra el cliente
-        return redirect()->route('listaclientes')->with('mensaje','cliente eliminado.');
     }
 
 }

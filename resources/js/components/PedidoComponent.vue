@@ -31,15 +31,15 @@
                         <h5 class="text-white mt-2">Teléfono:&nbsp;</h5>
                     </div>
                     <div class="col-md-7">
-                        
+
                         <div>
                             <input name='nombre' type="text" placeholder="Nombre del cliente" class="form-control" v-model="clienteNew.nombre">
                         </div>
                     </div>
                     <div class="col-md-5">
-                        
+
                         <div>
-                            <input name='fono' type="text" placeholder="Ingrese número" class="form-control" v-model="clienteNew.fono"> 
+                            <input name='fono' type="text" placeholder="Ingrese número" class="form-control" v-model="clienteNew.fono">
                         </div>
                     </div>
                 </div>
@@ -51,14 +51,14 @@
                         <h5 class="text-white mt-2">Depto:&nbsp;</h5>
                     </div>
                     <div class="col-md-7">
-                      
+
                         <div>
                             <input name='domicilio' type="text" placeholder="Ingrese dirección" class="form-control" v-model="clienteNew.domicilio">
                         </div>
                     </div>
                     <div class="col-md-5">
                         <div>
-                            <input name='depto' type="text" placeholder="Ingrese depto" class="form-control" v-model="clienteNew.depto"> 
+                            <input name='depto' type="text" placeholder="Ingrese depto" class="form-control" v-model="clienteNew.depto">
                         </div>
                     </div>
                 </div>
@@ -71,7 +71,7 @@
         </div>
         <!--/Nuevo cliente-->
 
-       
+
 
         <!--Datos Cliente-->
 
@@ -86,15 +86,15 @@
                         <h5 class="text-white mt-2">Teléfono:&nbsp;</h5>
                     </div>
                     <div class="col-md-7">
-                        
+
                         <div>
                             <input name='nombre' type="text" placeholder="Nombre del cliente" class="form-control" v-model="clienteNew.nombre" disabled>
                         </div>
                     </div>
                     <div class="col-md-5">
-                        
+
                         <div>
-                            <input name='fono' type="text" placeholder="Ingrese número" class="form-control" v-model="clienteNew.fono" disabled> 
+                            <input name='fono' type="text" placeholder="Ingrese número" class="form-control" v-model="clienteNew.fono" disabled>
                         </div>
                     </div>
                 </div>
@@ -106,14 +106,14 @@
                         <h5 class="text-white mt-2">Depto:&nbsp;</h5>
                     </div>
                     <div class="col-md-7">
-                      
+
                         <div>
                             <input name='domicilio' type="text" placeholder="Ingrese dirección" class="form-control" v-model="clienteNew.domicilio" disabled>
                         </div>
                     </div>
                     <div class="col-md-5">
                         <div>
-                            <input name='depto' type="text" placeholder="Ingrese depto" class="form-control" v-model="clienteNew.depto" disabled> 
+                            <input name='depto' type="text" placeholder="Ingrese depto" class="form-control" v-model="clienteNew.depto" disabled>
                         </div>
                     </div>
                 </div>
@@ -143,7 +143,7 @@
                         <div class="container productos">
                             <ul class="list-inline ml-5 pl-5">
                                 <li class="list-inline-item col-md-5 my-1 p-0" v-for="(item,index) in clientes" :key="index">
-                                    <div class="container-fluid cardproducto">    
+                                    <div class="container-fluid cardproducto">
                                         <h6 class="mt-2">
                                             <input type="radio" v-model="clientePedidoData" :checked="checkcl" :value="item">
                                             {{item.nombre}}
@@ -174,15 +174,15 @@
                         <h5 class="text-white mt-2">Teléfono:&nbsp;</h5>
                     </div>
                     <div class="col-md-7">
-                        
+
                         <div>
                             <input name='nombre' type="text" placeholder="Nombre del cliente" class="form-control" v-model="clientePedidoData.nombre" disabled>
                         </div>
                     </div>
                     <div class="col-md-5">
-                        
+
                         <div>
-                            <input name='fono' type="text" placeholder="Ingrese número" class="form-control" v-model="clientePedidoData.fono" disabled> 
+                            <input name='fono' type="text" placeholder="Ingrese número" class="form-control" v-model="clientePedidoData.fono" disabled>
                         </div>
                     </div>
                 </div>
@@ -194,14 +194,14 @@
                         <h5 class="text-white mt-2">Depto:&nbsp;</h5>
                     </div>
                     <div class="col-md-7">
-                      
+
                         <div>
                             <input name='domicilio' type="text" placeholder="Ingrese dirección" class="form-control" v-model="clientePedidoData.domicilio" disabled>
                         </div>
                     </div>
                     <div class="col-md-5">
                         <div>
-                            <input name='depto' type="text" placeholder="Ingrese depto" class="form-control" v-model="clientePedidoData.depto" disabled> 
+                            <input name='depto' type="text" placeholder="Ingrese depto" class="form-control" v-model="clientePedidoData.depto" disabled>
                         </div>
                     </div>
                 </div>
@@ -230,7 +230,7 @@
                 <div class="container productos">
                 <ul class="list-inline ml-5 pl-5">
                     <li class="list-inline-item col-md-5 my-1 p-0" v-for="(item,index) in productos" :key="index">
-                        <div class="container-fluid cardproducto">    
+                        <div class="container-fluid cardproducto">
                             <h6 class="mt-2">
                                 <input type="checkbox" v-model="productosSeleccionados" :checked="checked" :value="item">
                                 {{item.nombre}}
@@ -245,7 +245,7 @@
             </form>
         </div>
         <!--/Selecciona Productos-->
-        
+
 
         <!--/Tabla de productos agregados-->
         <div v-if="pedidoFinal">
@@ -348,7 +348,7 @@ export default {
             clientes:[],
             clienteNew:{nombre:'',fono:'',domicilio:'',depto:''},
             clientePedidoId:'',
-            clientePedidoData:[],    //Datos del cliente que se asociará al pedido.
+            clientePedidoData:[],
             productos:[],
             productosSeleccionados:[],
             productosadd:[],
@@ -362,16 +362,16 @@ export default {
             spin:false,
             metodo_pago:'',
             searchCLIENTE:'',
-            
-            
+
+
 
             /*variables de control */
             checked: false,
             checkcl:false,
-            optionCliente:'',  //variable para controlar visualizacion de nuevo cliente o lista de clientes
-            viewSeccionCliente: true,  //variable que muestra las opciones nuevo cliente o lista de clientes
-            isClientePedidoExists: false,   //indica si ya se seleccionó el cliente que será asociado al pedido.
-            pedidoFinal: false,  //variable que indica la visualizacion del pedidofinal.
+            optionCliente:'',
+            viewSeccionCliente: true,
+            isClientePedidoExists: false,
+            pedidoFinal: false,
             selectCliente:false,
 
         }
@@ -386,7 +386,7 @@ export default {
             {
                 if(this.cantidadSeleccionada[i]===undefined)
                 {
-                    
+
                 }
                 else
                 {
@@ -395,7 +395,7 @@ export default {
                     this.cantidadAdd[i]=this.cantidadSeleccionada[i];
 
                 }
-                
+
             }
 
             this.total= this.total- this.total%10;
@@ -409,11 +409,11 @@ export default {
             {
                 this.subtotal[i]=this.productosadd[i].precio*this.cantidadAdd[i];
             }
-           
+
 
         },
 
-        
+
 
     },
 
@@ -450,7 +450,7 @@ export default {
             this.medidas= res.data;
         })
 
-        
+
     },
 
     methods:{
@@ -482,7 +482,7 @@ export default {
                 return;
             }
             const params={nombre: this.clienteNew.nombre, fono: this.clienteNew.fono, domicilio: this.clienteNew.domicilio, depto: this.clienteNew.depto};
-            //this.clienteNew={nombre:'',fono:'',domicilio:'',depto:''};
+
             axios.post('/addclientepedido',params).then(res =>{
                 this.clientes.push(res.data);
                 this.clientePedidoData=res.data;
@@ -497,17 +497,17 @@ export default {
         selectClienteLista()
         {
             this.isClientePedidoExists=true;
-            
+
             this.clientePedidoId=this.clientePedidoData[0].id;
             const params={id:this.clientePedidoId};
             axios.post('/searchcliente',params).then(res =>{
                 this.clientePedidoData=res.data;
                 this.selectCliente=true;
             });
-            
+
         },
 
-        
+
 
         spliceProductoSeleccionado(index)
         {
@@ -521,10 +521,8 @@ export default {
             this.productosadd=this.productosSeleccionados;
             this.cantidadAdd=this.cantidadSeleccionada;
             this.calcularSubtotales;
-            //this.productosSeleccionados=[];
-            //this.cantidadSeleccionada=[];
             this.pedidoFinal=true;
-           
+
         },
         isCantidadNull()
         {
@@ -532,7 +530,7 @@ export default {
             {
                 if(this.cantidadAdd[i]===undefined)
                 {
-                    
+
                     return true;
                 }
             }
@@ -567,8 +565,8 @@ export default {
             data.total=parseInt(this.total);
             data.metodopago= this.metodo_pago;
             var idPedido=[];
-            
-            
+
+
             axios.post('/pedido/new/create',data).then(res =>{
                 idPedido=res.data;
                  var dataContenido= {pedidoId:'', productoId:'', cantidad:0};
@@ -589,7 +587,7 @@ export default {
                 axios.post('/pedido/new/create/addproducto',pedidofinal).then(res =>{
 
                 })
-                
+
                 axios.put('/pedido/new/stock/update',pedidofinal).then(res =>{
 
                 });
