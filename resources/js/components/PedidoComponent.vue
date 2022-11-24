@@ -348,7 +348,7 @@ export default {
             clientes:[],
             clienteNew:{nombre:'',fono:'',domicilio:'',depto:''},
             clientePedidoId:'',
-            clientePedidoData:[],    //Datos del cliente que se asociará al pedido.
+            clientePedidoData:[],
             productos:[],
             productosSeleccionados:[],
             productosadd:[],
@@ -368,10 +368,10 @@ export default {
             /*variables de control */
             checked: false,
             checkcl:false,
-            optionCliente:'',  //variable para controlar visualizacion de nuevo cliente o lista de clientes
-            viewSeccionCliente: true,  //variable que muestra las opciones nuevo cliente o lista de clientes
-            isClientePedidoExists: false,   //indica si ya se seleccionó el cliente que será asociado al pedido.
-            pedidoFinal: false,  //variable que indica la visualizacion del pedidofinal.
+            optionCliente:'',
+            viewSeccionCliente: true,
+            isClientePedidoExists: false,
+            pedidoFinal: false,
             selectCliente:false,
 
         }
