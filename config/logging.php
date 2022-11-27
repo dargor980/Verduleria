@@ -122,8 +122,23 @@ return [
 
         'clientes' => [
             'driver' => 'single',
-            'path' => storage_path('logs/clientes'),
+            'path' => storage_path('logs/clientes.log'),
         ],
+
+        'productos' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/productos.log')
+        ],
+
+        'categorias' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/categorias.log')
+        ],
+
+        'admin' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/admin.log'),
+        ]
     ],
 
 ];

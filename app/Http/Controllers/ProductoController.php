@@ -12,6 +12,7 @@ use App\Http\Requests\UpdateProductoRequest;
 use Exception;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
 
 
 
@@ -61,21 +62,36 @@ class ProductoController extends Controller
      */
     public function store(ProductoRequest $request)
     {
-        $stock = Stock::create([
-            'cantidad' => $request->cantidad,
-        ]);
+        DB::beginTransaction();
 
-        Producto::create([
-            'nombre' => $request->nombre,
-            'precio' => $request->precio,
-            'medidaId' => $request->medidaId,
-            'categoriaId' => $request->categoriaId,
-            'stockId' => $stock->id,
-            'costo' => $request->costo,
-            'ganancia' => $request->precio - $request->costo
-        ]);
+        try{
+            $stock = Stock::create([
+                'cantidad' => $request->cantidad,
+            ]);
 
-        return back()->with('mensaje','Producto agregado.');
+            Producto::create([
+                'nombre' => $request->nombre,
+                'precio' => $request->precio,
+                'medidaId' => $request->medidaId,
+                'categoriaId' => $request->categoriaId,
+                'stockId' => $stock->id,
+                'costo' => $request->costo,
+                'ganancia' => $request->precio - $request->costo
+            ]);
+
+            DB::commit();
+
+            return back()->with('mensaje','Producto agregado.');
+        }catch(Exception $e){
+            DB::rollBack();
+
+            Log::channel('productos')->error('Error al crear producto: ');
+            Log::channel('productos')->error($e->getMessage());
+            Log::channel('productos')->error($e->getTraceAsString());
+
+            return back()->with('error', 'Hubo un error al crear el producto. Intente nuevamente.');
+        }
+
     }
 
     /**
@@ -115,16 +131,26 @@ class ProductoController extends Controller
      */
     public function update(UpdateProductoRequest $request, $id)
     {
-        $updateProducto= Producto::find($id)->update([
-            'nombre' => $request->nombre,
-            'precio' => $request->precio,
-            'medidaId' => $request->medidaId,
-            'categoriaId' => $request->categoriaId,
-            'costo' => $request->costo,
-            'ganancia' => $request->precio - $request->costo,
-        ]);
+        try{
+            $updateProducto= Producto::find($id)->update([
+                'nombre' => $request->nombre,
+                'precio' => $request->precio,
+                'medidaId' => $request->medidaId,
+                'categoriaId' => $request->categoriaId,
+                'costo' => $request->costo,
+                'ganancia' => $request->precio - $request->costo,
+            ]);
 
-        return back()->with('mensaje','Producto actualizado. ');
+            return back()->with('mensaje','Producto actualizado. ');
+
+        }catch(Exception $e){
+            Log::channel('productos')->error('Error al actualizar el producto');
+            Log::channel('productos')->error($e->getMessage());
+            Log::channel('productos')->error($e->getTraceAsString());
+
+            return back()->with('error', 'Hubo un error al actualizar el producto. Intente nuevamente.');
+        }
+
     }
 
     /**
@@ -141,6 +167,10 @@ class ProductoController extends Controller
             return redirect()->route('listaprod')->with('mensaje','Producto eliminado.');
         }
         catch(\Illuminate\Database\QueryException $ex){
+            Log::channel('productos')->error('Error al eliminar producto: ');
+            Log::channel('productos')->error($ex->getMessage());
+            Log::channel('productos')->error($ex->getTraceAsString());
+
             return back()->with('error','no se puede eliminar el producto si está asociado a un pedido.');
         }
     }

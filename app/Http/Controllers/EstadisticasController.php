@@ -13,6 +13,7 @@ use App\Stock;
 use App\Medida;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Exception;
 
 
 class EstadisticasController extends Controller
@@ -24,77 +25,101 @@ class EstadisticasController extends Controller
 
     public function graficoGanancias()
     {
-        $subquery="DATE_FORMAT(pedidos.created_at,'%d-%m-%Y') AS created_at";  //string que le cambia el formato a la fecha pedida en el query.
-        $now= Carbon::now();                                                   //toma la fecha del día actual
-        $old= Carbon::now()->add('-30','day');                                 // toma la fecha de 30 días atrás
+        try{
+            $subquery="DATE_FORMAT(pedidos.created_at,'%d-%m-%Y') AS created_at";  //string que le cambia el formato a la fecha pedida en el query.
+            $now= Carbon::now();                                                   //toma la fecha del día actual
+            $old= Carbon::now()->add('-30','day');                                 // toma la fecha de 30 días atrás
 
-        /* Consulta de la cual se obtiene las ganancias obtenidas de los productos vendidos de los últimos 30 días */
-        $query= DB::table('contenidos')                           
-                    ->join('productos','productos.id','contenidos.productoId')
-                    ->join('pedidos','pedidos.id','contenidos.pedidoId')
-                    ->whereBetween('pedidos.created_at',[$old,$now])
-                    ->select(DB::raw('SUM(productos.ganancia*contenidos.cantidad) AS ganancia'), DB::raw($subquery))
-                    ->groupBy('created_at')
-                    ->get();
-        
-        /*formateo de la colección de datos obtenida en la consulta anterior para ser utilizado por chart.js */
+            /* Consulta de la cual se obtiene las ganancias obtenidas de los productos vendidos de los últimos 30 días */
+            $query= DB::table('contenidos')
+                ->join('productos','productos.id','contenidos.productoId')
+                ->join('pedidos','pedidos.id','contenidos.pedidoId')
+                ->whereBetween('pedidos.created_at',[$old,$now])
+                ->select(DB::raw('SUM(productos.ganancia*contenidos.cantidad) AS ganancia'), DB::raw($subquery))
+                ->groupBy('created_at')
+                ->get();
 
-        $ganancias=array();
-        
-        foreach($query as $row)
-        {
-            $ganancia=array(
-                'fecha' => $row->created_at,
-                'ganancia'   => $row->ganancia,
-            );
-            array_push($ganancias,$ganancia);
+            /*formateo de la colección de datos obtenida en la consulta anterior para ser utilizado por chart.js */
 
+            $ganancias=array();
+
+            foreach($query as $row)
+            {
+                $ganancia=array(
+                    'fecha' => $row->created_at,
+                    'ganancia'   => $row->ganancia,
+                );
+                array_push($ganancias,$ganancia);
+
+            }
+
+            return $ganancias;
+
+        }catch(Exception $e){
+            Log::channel('estadisticas')->error('Error al obtener datos de grafico ganancias: ');
+            Log::channel('estadisticas')->error($e->getMessage());
+            Log::channel('estadisticas')->error($e->getTraceAsString());
         }
 
-        return $ganancias;
     }
 
     public function gananciasMesActual()
     {
-        $total=0;
-        $subquery="DATE_FORMAT(pedidos.created_at,'%d-%m-%Y') AS created_at";  //string que le cambia el formato a la fecha pedida en el query.
-        $now= Carbon::now();                                                   //toma la fecha del día actual
-        $old= Carbon::now()->add('-30','day');    
-        /* Consulta de la cual se obtiene las ganancias obtenidas de los productos vendidos de los últimos 30 días */
-        $query= DB::table('contenidos')                           
-                    ->join('productos','productos.id','contenidos.productoId')
-                    ->join('pedidos','pedidos.id','contenidos.pedidoId')
-                    ->whereBetween('pedidos.created_at',[$old,$now])
-                    ->select(DB::raw('SUM(productos.ganancia*contenidos.cantidad) AS ganancia'), DB::raw($subquery))
-                    ->groupBy('created_at')
-                    ->get();   
-        /*suma de las ganancias */
-        foreach($query as $row)
-        {
-            $total+=$row->ganancia;
-        }  
-        return [$total,$now->format('d-m-Y'),$old->format('d-m-Y')];
+        try{
+            $total=0;
+            $subquery="DATE_FORMAT(pedidos.created_at,'%d-%m-%Y') AS created_at";  //string que le cambia el formato a la fecha pedida en el query.
+            $now= Carbon::now();                                                   //toma la fecha del día actual
+            $old= Carbon::now()->add('-30','day');
+            /* Consulta de la cual se obtiene las ganancias obtenidas de los productos vendidos de los últimos 30 días */
+            $query= DB::table('contenidos')
+                ->join('productos','productos.id','contenidos.productoId')
+                ->join('pedidos','pedidos.id','contenidos.pedidoId')
+                ->whereBetween('pedidos.created_at',[$old,$now])
+                ->select(DB::raw('SUM(productos.ganancia*contenidos.cantidad) AS ganancia'), DB::raw($subquery))
+                ->groupBy('created_at')
+                ->get();
+            /*suma de las ganancias */
+            foreach($query as $row)
+            {
+                $total+=$row->ganancia;
+            }
+            return [$total,$now->format('d-m-Y'),$old->format('d-m-Y')];
+
+        }catch(Exception $e){
+            Log::channel('estadisticas')->error('Error al obtener ganancias del mes actual');
+            Log::channel('estadisticas')->error($e->getMessage());
+            Log::channel('estadisticas')->error($e->getTraceAsString());
+        }
+
     }
 
     public function gananciasMesAnterior()
     {
-        $total=0;
-        $subquery="DATE_FORMAT(pedidos.created_at,'%d-%m-%Y') AS created_at";  //string que le cambia el formato a la fecha pedida en el query.
-        $now= Carbon::now()->add('-30','day');                                                   //toma la fecha del día actual
-        $old= Carbon::now()->add('-60','day');    
-        /* Consulta de la cual se obtiene las ganancias obtenidas de los productos vendidos de los últimos 30 días */
-        $query= DB::table('contenidos')                           
-                    ->join('productos','productos.id','contenidos.productoId')
-                    ->join('pedidos','pedidos.id','contenidos.pedidoId')
-                    ->whereBetween('pedidos.created_at',[$old,$now])
-                    ->select(DB::raw('SUM(productos.ganancia*contenidos.cantidad) AS ganancia'), DB::raw($subquery))
-                    ->groupBy('created_at')
-                    ->get();   
-        foreach($query as $row)
-        {
-            $total+=$row->ganancia;
-        }  
-        return [$total,$now->format('d-m-Y'),$old->format('d-m-Y')];
+        try{
+            $total=0;
+            $subquery="DATE_FORMAT(pedidos.created_at,'%d-%m-%Y') AS created_at";  //string que le cambia el formato a la fecha pedida en el query.
+            $now= Carbon::now()->add('-30','day');                                                   //toma la fecha del día actual
+            $old= Carbon::now()->add('-60','day');
+            /* Consulta de la cual se obtiene las ganancias obtenidas de los productos vendidos de los últimos 30 días */
+            $query= DB::table('contenidos')
+                ->join('productos','productos.id','contenidos.productoId')
+                ->join('pedidos','pedidos.id','contenidos.pedidoId')
+                ->whereBetween('pedidos.created_at',[$old,$now])
+                ->select(DB::raw('SUM(productos.ganancia*contenidos.cantidad) AS ganancia'), DB::raw($subquery))
+                ->groupBy('created_at')
+                ->get();
+            foreach($query as $row)
+            {
+                $total+=$row->ganancia;
+            }
+            return [$total,$now->format('d-m-Y'),$old->format('d-m-Y')];
+
+        }catch(Exception $e){
+            Log::channel('estadisticas')->error('Error al obtener ganancias del mes anterior');
+            Log::channel('estadisticas')->error($e->getMessage());
+            Log::channel('estadisticas')->error($e->getTraceAsString());
+        }
+
     }
 
     public function masVendidos()
@@ -102,20 +127,21 @@ class EstadisticasController extends Controller
         return view('Estadisticas.masVendidos');
     }
 
-    
+
     public function clientesFrecuentes()
-    { 
-       
+    {
+
         return view('Estadisticas.clientesFrecuentes');
-                
-    }  
+
+    }
 
 
     public function topVerduleria()
     {
-        $old= Carbon::now()->add('-30','day');
-        $now= Carbon::now();
-        $query= DB::table('contenidos')
+        try{
+            $old= Carbon::now()->add('-30','day');
+            $now= Carbon::now();
+            $query= DB::table('contenidos')
                 ->join('productos','productos.id','contenidos.productoId')
                 ->join('categorias','categorias.id','productos.categoriaId')
                 ->join('sucursals','sucursals.id','categorias.sucursalId')
@@ -126,26 +152,34 @@ class EstadisticasController extends Controller
                 ->limit(5)
                 ->orderBy('cantidad','DESC')
                 ->get();
-        $top=array();
-        foreach($query as $row)
-        {
-            $aux=array(
-                'id' => $row->id,
-                'nombre' => $row->nombre,
-                'cantidad' => $row->cantidad,
-            );
+            $top=array();
+            foreach($query as $row)
+            {
+                $aux=array(
+                    'id' => $row->id,
+                    'nombre' => $row->nombre,
+                    'cantidad' => $row->cantidad,
+                );
 
-            array_push($top,$aux);
+                array_push($top,$aux);
+            }
+
+            return $top;
+
+        }catch(Exception $e){
+            Log::channel('estadisticas')->error('Error al obtener el top 5 de productos verduleria');
+            Log::channel('estadisticas')->error($e->getMessage());
+            Log::channel('estadisticas')->error($e->getTraceAsString());
         }
 
-        return $top;
     }
 
     public function topCongelados()
     {
-        $old= Carbon::now()->add('-30','day');
-        $now= Carbon::now();
-        $query= DB::table('contenidos')
+        try{
+            $old= Carbon::now()->add('-30','day');
+            $now= Carbon::now();
+            $query= DB::table('contenidos')
                 ->join('productos','productos.id','contenidos.productoId')
                 ->join('categorias','categorias.id','productos.categoriaId')
                 ->join('sucursals','sucursals.id','categorias.sucursalId')
@@ -156,83 +190,102 @@ class EstadisticasController extends Controller
                 ->limit(5)
                 ->orderBy('cantidad','DESC')
                 ->get();
-        $top=array();
-        foreach($query as $row)
-        {
-            $aux=array(
-                'id' => $row->id,
-                'nombre' => $row->nombre,
-                'cantidad' => $row->cantidad,
-            );
+            $top=array();
+            foreach($query as $row)
+            {
+                $aux=array(
+                    'id' => $row->id,
+                    'nombre' => $row->nombre,
+                    'cantidad' => $row->cantidad,
+                );
 
-            array_push($top,$aux);
+                array_push($top,$aux);
+            }
+
+            return $top;
+
+        }catch(Exception $e){
+            Log::channel('estadisticas')->error('Error al obtener el top 5 de productos congelados');
+            Log::channel('estadisticas')->error($e->getMessage());
+            Log::channel('estadisticas')->error($e->getTraceAsString());
         }
 
-        return $top;
 
     }
     public function historialVentas()
     {
-        
-
         return view('Estadisticas.historial');
-        
     }
 /*Estadísticas para vista clientes frecuentes-------------------------------*/
     public function topMayorMonto()
     {
-        $old= Carbon::now()->add('-30','day');
-        $now= Carbon::now();
+        try{
+            $old= Carbon::now()->add('-30','day');
+            $now= Carbon::now();
 
-        $query= DB::table('clientes')
-                     ->join('pedidos','pedidos.clienteId','clientes.id')
-                     ->whereBetween('pedidos.created_at',[$old,$now])
-                     ->select('clientes.nombre', DB::raw('SUM(pedidos.total) AS monto'))
-                     ->groupBy('clientes.nombre')
-                     ->limit(5)
-                     ->orderBy('monto','DESC')
-                     ->get();
+            $query= DB::table('clientes')
+                ->join('pedidos','pedidos.clienteId','clientes.id')
+                ->whereBetween('pedidos.created_at',[$old,$now])
+                ->select('clientes.nombre', DB::raw('SUM(pedidos.total) AS monto'))
+                ->groupBy('clientes.nombre')
+                ->limit(5)
+                ->orderBy('monto','DESC')
+                ->get();
 
-        $mayorMonto=array();
-        
-        foreach($query as $row)
-        {
-            $aux= array(
-                'nombre' => $row->nombre,
-                'monto' => $row->monto,
-            );
+            $mayorMonto=array();
 
-            array_push($mayorMonto,$aux);
+            foreach($query as $row)
+            {
+                $aux= array(
+                    'nombre' => $row->nombre,
+                    'monto' => $row->monto,
+                );
+
+                array_push($mayorMonto,$aux);
+            }
+
+            return $mayorMonto;
+        }catch(Exception $e){
+            Log::channel('estadisticas')->error('Error al obtener datos de clientes frecuentes');
+            Log::channel('estadisticas')->error($e->getMessage());
+            Log::channel('estadisticas')->error($e->getTraceAsString());
         }
 
-        return $mayorMonto;
     }
 
     public function topCantPedidos()
     {
-        $old= Carbon::now()->add('-30','day');
-        $now= Carbon::now();
-        $query= DB::table('clientes')
-                      ->join('pedidos','pedidos.clienteId','clientes.id')
-                      ->whereBetween('pedidos.created_at',[$old,$now])
-                      ->select('clientes.nombre',DB::raw('COUNT(*) AS cantidad'))
-                      ->groupBy('clientes.nombre')
-                      ->limit(5)
-                      ->orderBy('cantidad','DESC')
-                      ->get();
+        try{
+            $old= Carbon::now()->add('-30','day');
+            $now= Carbon::now();
+            $query= DB::table('clientes')
+                ->join('pedidos','pedidos.clienteId','clientes.id')
+                ->whereBetween('pedidos.created_at',[$old,$now])
+                ->select('clientes.nombre',DB::raw('COUNT(*) AS cantidad'))
+                ->groupBy('clientes.nombre')
+                ->limit(5)
+                ->orderBy('cantidad','DESC')
+                ->get();
 
-        $cantPedidos=array();
-        foreach($query as $row)
-        {
-            $aux= array(
-                'nombre' => $row->nombre,
-                'cantidad' => $row->cantidad,
-            );
+            $cantPedidos=array();
+            foreach($query as $row)
+            {
+                $aux= array(
+                    'nombre' => $row->nombre,
+                    'cantidad' => $row->cantidad,
+                );
 
-            array_push($cantPedidos,$aux);
+                array_push($cantPedidos,$aux);
+            }
+
+            return $cantPedidos;
+
+        }catch(Exception $e){
+            Log::channel('estadisticas')->error('Error al obtener topcantpedidos');
+            Log::channel('estadisticas')->error($e->getMessage());
+            Log::channel('estadisticas')->error($e->getTraceAsString());
         }
-        
-        return $cantPedidos;
+
 
     }
 /*/Estadísticas para vista clientes frecuentes-------------------------------*/
@@ -242,9 +295,10 @@ class EstadisticasController extends Controller
 
 public function prodMasVendidos()
 {
-    $old=Carbon::now()->add('-30','day');
-    $now=Carbon::now();
-    $query= DB::table('productos')
+    try{
+        $old=Carbon::now()->add('-30','day');
+        $now=Carbon::now();
+        $query= DB::table('productos')
             ->join('contenidos','contenidos.productoId','productos.id')
             ->join('categorias','productos.categoriaId','categorias.id')
             ->join('medidas','productos.medidaId','medidas.id')
@@ -255,28 +309,36 @@ public function prodMasVendidos()
             ->orderBy('cantidad','DESC')
             ->get();
 
-    $masVendidos=array();
-    foreach($query as $row)
-    {
-        $aux=array(
-            'nombre' => $row->nombre,
-            'categoria' => $row->tipo,
-            'cantidad' => $row->cantidad,
-            'medida' => $row->medida,        
-        );
+        $masVendidos=array();
+        foreach($query as $row)
+        {
+            $aux=array(
+                'nombre' => $row->nombre,
+                'categoria' => $row->tipo,
+                'cantidad' => $row->cantidad,
+                'medida' => $row->medida,
+            );
 
-        array_push($masVendidos,$aux);
+            array_push($masVendidos,$aux);
+        }
+
+        return $masVendidos;
+
+    }catch(Exception $e){
+        Log::channel('estadisticas')->error('Error al obtener mas vendidos');
+        Log::channel('estadisticas')->error($e->getMessage());
+        Log::channel('estadisticas')->error($e->getTraceAsString());
     }
 
-    return $masVendidos;
 
 }
 
 public function masVendidosCongelados()
 {
-    $old=Carbon::now()->add('-30','day');
-    $now=Carbon::now();
-    $query= $productos= DB::table('productos')
+    try{
+        $old=Carbon::now()->add('-30','day');
+        $now=Carbon::now();
+        $query= $productos= DB::table('productos')
             ->join('contenidos','contenidos.productoId','productos.id')
             ->join('categorias','categoriaId','=','categorias.id')
             ->join('sucursals','sucursalId','=','sucursals.id')
@@ -289,27 +351,35 @@ public function masVendidosCongelados()
             ->orderBy('cantidad','DESC')
             ->get();
 
-    $congelados=array();
-    foreach($query as $row)
-    {
-        $aux=array(
-            'nombre' => $row->nombre,
-            'categoria' => $row->tipo,
-            'cantidad' => $row->cantidad,
-            'medida' => $row->medida,        
-        );
+        $congelados=array();
+        foreach($query as $row)
+        {
+            $aux=array(
+                'nombre' => $row->nombre,
+                'categoria' => $row->tipo,
+                'cantidad' => $row->cantidad,
+                'medida' => $row->medida,
+            );
 
-        array_push($congelados,$aux);
+            array_push($congelados,$aux);
+        }
+
+        return $congelados;
+
+    }catch(Exception $e){
+        Log::channel('estadisticas')->error('Error al obtener mas vendidos cogelados');
+        Log::channel('estadisticas')->error($e->getMessage());
+        Log::channel('estadisticas')->error($e->getTraceAsString());
     }
 
-    return $congelados;
 }
 
 public function masVendidosVerduleria()
 {
-    $old=Carbon::now()->add('-30','day');
-    $now=Carbon::now();
-    $query= $productos= DB::table('productos')
+    try{
+        $old=Carbon::now()->add('-30','day');
+        $now=Carbon::now();
+        $query= $productos= DB::table('productos')
             ->join('contenidos','contenidos.productoId','productos.id')
             ->join('categorias','categoriaId','=','categorias.id')
             ->join('sucursals','sucursalId','=','sucursals.id')
@@ -322,20 +392,27 @@ public function masVendidosVerduleria()
             ->orderBy('cantidad','DESC')
             ->get();
 
-    $verduleria=array();
-    foreach($query as $row)
-    {
-        $aux=array(
-            'nombre' => $row->nombre,
-            'categoria' => $row->tipo,
-            'cantidad' => $row->cantidad,
-            'medida' => $row->medida,        
-        );
+        $verduleria=array();
+        foreach($query as $row)
+        {
+            $aux=array(
+                'nombre' => $row->nombre,
+                'categoria' => $row->tipo,
+                'cantidad' => $row->cantidad,
+                'medida' => $row->medida,
+            );
 
-        array_push($verduleria,$aux);
+            array_push($verduleria,$aux);
+        }
+
+        return $verduleria;
+
+    }catch(Exception $e){
+        Log::channel('estadisticas')->error('Error al obtener mas vendidos verduleria');
+        Log::channel('estadisticas')->error($e->getMessage());
+        Log::channel('estadisticas')->error($e->getTraceAsString());
     }
 
-    return $verduleria;
 }
 
 

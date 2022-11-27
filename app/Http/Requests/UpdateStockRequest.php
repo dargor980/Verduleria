@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class DeleteClienteRequest extends FormRequest
+class UpdateStockRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class DeleteClienteRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return \Auth::check();
     }
 
     /**
@@ -24,7 +24,8 @@ class DeleteClienteRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'cantidad' => 'required',
+            'stockId' => 'required|not_in:0'
         ];
     }
 }

@@ -2,15 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Cliente;
 use App\Contenido;
-use App\Producto;
 use App\Pedido;
 use Exception;
 use Illuminate\Support\Facades\Log;
 use App\Http\Requests\NewClienteRequest;
-use App\Http\Requests\DeleteClienteRequest;
 use App\Http\Requests\UpdateClienteRequest;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
@@ -68,9 +65,9 @@ class ClienteController extends Controller
 
             return back()->with('mensaje','Cliente añadido');
         }catch(Exception $e){
-            Log::error('Error al guardar cliente');
-            Log::error($e->getMessage());
-            Log::error($e->getTraceAsString());
+            Log::channel('clientes')->error('Error al guardar cliente');
+            Log::channel('clientes')->error($e->getMessage());
+            Log::channel('clientes')->error($e->getTraceAsString());
 
             return back()->with('error', 'Hubo un error al registrar cliente. Intente nuevamente.');
         }
@@ -119,9 +116,9 @@ class ClienteController extends Controller
 
             return back()->with('mensaje','Datos de cliente actualizado.');
         }catch(Exception $e){
-            Log::error('Error al actualizar datos de cliente');
-            Log::error($e->getMessage());
-            Log::error($e->getTraceAsString());
+            Log::channel('clientes')->error('Error al actualizar datos de cliente');
+            Log::channel('clientes')->error($e->getMessage());
+            Log::channel('clientes')->error($e->getTraceAsString());
 
             return back()->with('error', 'Ocurrio un error al actualizar datos del cliente. Intente nuevamente');
         }
@@ -135,9 +132,8 @@ class ClienteController extends Controller
      */
     public function destroy($id)   //elimina todo lo asociado al cliente (datos de cliente, pedidos y su respectivo contenido).
     {
+        DB::beginTransaction();
         try{
-            DB::beginTransaction();
-
             $destroyCliente= Cliente::find($id);
             $pedidos= Pedido::where('clienteId','=',$id)->get();
             foreach($pedidos as $pedido)
@@ -145,15 +141,15 @@ class ClienteController extends Controller
                 $contenidos= Contenido::where('pedidoId','=',$pedido->id)->get();
                 foreach($contenidos as $contenido)
                 {
-                    $contenido->delete();  //Borra el contenido de los pedidos
+                    $contenido->delete();
                 }
             }
             foreach($pedidos as $pedido)
             {
-                $pedido->delete();   //Borra los pedidos
+                $pedido->delete();
             }
 
-            $destroyCliente->delete();  //Borra el cliente
+            $destroyCliente->delete();
 
             DB::commit();
 
@@ -161,9 +157,9 @@ class ClienteController extends Controller
         }catch(Exception $e){
             DB::rollBack();
 
-            Log::error('Ocurrio un error al eliminar el cliente y sus registros.');
-            Log::error($e->getMessage());
-            Log::error($e->getTraceAsString());
+            Log::channel('clientes')->error('Ocurrio un error al eliminar el cliente y sus registros.');
+            Log::channel('clientes')->error($e->getMessage());
+            Log::channel('clientes')->error($e->getTraceAsString());
 
             return back()->with('error', 'Ocurrió un error al eliminar el cliente y sus registros. Intente nuevamente.');
         }

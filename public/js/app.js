@@ -2632,7 +2632,6 @@ __webpack_require__.r(__webpack_exports__);
       },
       clientePedidoId: '',
       clientePedidoData: [],
-      //Datos del cliente que se asociará al pedido.
       productos: [],
       productosSeleccionados: [],
       productosadd: [],
@@ -2651,13 +2650,9 @@ __webpack_require__.r(__webpack_exports__);
       checked: false,
       checkcl: false,
       optionCliente: '',
-      //variable para controlar visualizacion de nuevo cliente o lista de clientes
       viewSeccionCliente: true,
-      //variable que muestra las opciones nuevo cliente o lista de clientes
       isClientePedidoExists: false,
-      //indica si ya se seleccionó el cliente que será asociado al pedido.
       pedidoFinal: false,
-      //variable que indica la visualizacion del pedidofinal.
       selectCliente: false
     };
   },
@@ -2750,8 +2745,7 @@ __webpack_require__.r(__webpack_exports__);
         fono: this.clienteNew.fono,
         domicilio: this.clienteNew.domicilio,
         depto: this.clienteNew.depto
-      }; //this.clienteNew={nombre:'',fono:'',domicilio:'',depto:''};
-
+      };
       axios.post('/addclientepedido', params).then(function (res) {
         _this4.clientes.push(res.data);
 
@@ -2782,9 +2776,7 @@ __webpack_require__.r(__webpack_exports__);
     addProducto: function addProducto() {
       this.productosadd = this.productosSeleccionados;
       this.cantidadAdd = this.cantidadSeleccionada;
-      this.calcularSubtotales; //this.productosSeleccionados=[];
-      //this.cantidadSeleccionada=[];
-
+      this.calcularSubtotales;
       this.pedidoFinal = true;
     },
     isCantidadNull: function isCantidadNull() {
@@ -94252,8 +94244,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /opt/lampp/htdocs/verduleria/verduleria/Verduleria/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /opt/lampp/htdocs/verduleria/verduleria/Verduleria/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /var/www/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /var/www/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

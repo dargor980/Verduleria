@@ -8,8 +8,10 @@ use App\Categoria;
 use App\Sucursal;
 use App\Stock;
 use App\Medida;
-use Symfony\Component\VarDumper\Cloner\Data;
 use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\Log;
+use Exception;
+use App\Http\Requests\UpdateStockRequest;
 
 class InventarioController extends Controller
 {
@@ -67,26 +69,27 @@ class InventarioController extends Controller
         })
         ->select('*');
 
-
-
-
-
         return DataTables::of($productos)
             ->make(true);
 
     }
 
-    public function updateStock(Request $request)
+    public function updateStock(UpdateStockRequest $request)
     {
-        $request->validate([
-            'cantidad' => 'required',
-            'stockId' => 'required|not_in:0'
-        ]);
-        $stock= Stock::find($request->stockId);
-        $stock->cantidad= $request->cantidad;
-        $stock->save();
+        try{
+            Stock::find($request->stockId)
+                ->update([
+                    'cantidad' => $request->cantidad
+                ]);
 
-        return back()->with('mensaje','Stock del producto actualizado');
+            return back()->with('mensaje','Stock del producto actualizado');
 
+        }catch(Exception $e){
+            Log::channel('inventario')->error('Error al actualizar stock');
+            Log::channel('inventario')->error($e->getMessage());
+            Log::channel('inventario')->error($e->getTraceAsString());
+
+            return back()->with('error', 'Hubo un error al actualizar stock. Intente nuevamente.');
+        }
     }
 }
