@@ -18,6 +18,8 @@ use App\Http\Requests\NewClienteRequest;
 use App\Http\Requests\NewPedidoRequest;
 use Illuminate\View\View;
 use Yajra\DataTables\DataTables;
+use Exception;
+use Illuminate\Support\Facades\Log;
 
 class PedidosController extends Controller
 {
@@ -92,20 +94,27 @@ class PedidosController extends Controller
      */
     public function store(NewPedidoRequest $request)
     {
-        $metodoPago = [
-            '1' => 1,
-            '2' => 0,
-            '3' => 1,
-        ];
+        try{
+            $metodoPago = [
+                '1' => 1,
+                '2' => 0,
+                '3' => 1,
+            ];
 
-        $pedido = Pedido::create([
-            'clienteId' => $request->clienteId,
-            'total' => $request->total,
-            'estado' => $metodoPago[$request->metodopago],
-            'metodopago' => $request->metodopago,
-        ]);
+            $pedido = Pedido::create([
+                'clienteId' => $request->clienteId,
+                'total' => $request->total,
+                'estado' => $metodoPago[$request->metodopago],
+                'metodopago' => $request->metodopago,
+            ]);
 
-        return $pedido;
+            return $pedido;
+        }catch(Exception $e){
+            Log::channel('pedidos')->error('Error al guardar pedido: ');
+            Log::channel('pedidos')->error($e->getMessage());
+            Log::channel('pedidos')->error($e->getTraceAsString());
+        }
+
     }
 
     /**
@@ -114,23 +123,32 @@ class PedidosController extends Controller
      */
     public function addProductoToPedido(Request $request)
     {
+        try{
+            foreach($request->all() as $req)
+            {
+                $producto= Producto::find($req['productoId']);
+                if(!isset($req['cantidad'])) {
+                    $req['cantidad']=0;
+                }
 
-        foreach($request->all() as $req)
-        {
-            $producto= Producto::find($req['productoId']);
-            if(!isset($req['cantidad'])) {
-                $req['cantidad']=0;
+                Contenido::create([
+                    'pedidoId' => $req['pedidoId'],
+                    'productoId' =>$req['productoId'],
+                    'cantidad' => $req['cantidad'],
+                    'subtotal' => $req['cantidad']*$producto->precio,
+                ]);
             }
 
-            Contenido::create([
-                'pedidoId' => $req['pedidoId'],
-                'productoId' =>$req['productoId'],
-                'cantidad' => $req['cantidad'],
-                'subtotal' => $req['cantidad']*$producto->precio,
-            ]);
+            return;
+        }catch(Exception $e){
+            Log::channel('pedidos')->error('Error al agregar producto al pedido: ');
+            Log::channel('pedidos')->error($e->getMessage());
+            Log::channel('pedidos')->error($e->getTraceAsString());
+
+            return;
         }
 
-        return;
+
     }
 
     /**
@@ -139,18 +157,27 @@ class PedidosController extends Controller
      */
     public function updateStock(Request $request)
     {
-        foreach($request->all() as $req)
-        {
-            $producto=Producto::find($req['productoId']);
-            $id=$producto->stockId;
-            $stock= Stock::where('id','=',$id)->get();
-            foreach($stock as $val)
+        try{
+            foreach($request->all() as $req)
             {
-                $val->cantidad= $val->cantidad - $req['cantidad'];
-                $val->update();
+                $producto=Producto::find($req['productoId']);
+                $id=$producto->stockId;
+                $stock= Stock::where('id','=',$id)->get();
+                foreach($stock as $val)
+                {
+                    $val->cantidad= $val->cantidad - $req['cantidad'];
+                    $val->update();
+                }
             }
+            return;
+        }catch(Exception $e){
+            Log::channel('pedidos')->error('Error al actualizar stock: ');
+            Log::channel('pedidos')->error($e->getMessage());
+            Log::channel('pedidos')->error($e->getTraceAsString());
+
+            return;
         }
-        return;
+
     }
 
     /**
@@ -195,16 +222,32 @@ class PedidosController extends Controller
      */
     public function destroy($id)
     {
-        $contenido= Contenido::where('pedidoId','=',$id)->get();
+        DB::beginTransaction();
+        try{
+            $contenido= Contenido::where('pedidoId','=',$id)->get();
 
-        foreach($contenido as $item)
-        {
-            $item->delete();
+            foreach($contenido as $item)
+            {
+                $item->delete();
+            }
+
+            $pedido= Pedido::find($id);
+            $pedido->delete();
+
+            DB::commit();
+
+            return back()->with('mensaje','Pedido eliminado');
+
+        }catch(Exception $e){
+            DB::rollBack();
+
+            Log::channel('pedidos')->error('Error al eliminar pedido: ');
+            Log::channel('pedidos')->error($e->getMessage());
+            Log::channel('pedidos')->error($e->getTraceAsString());
+
+            return back()->with('error', 'Ocurrió un error al eliminar el pedido. Intente nuevamente.');
         }
 
-        $pedido= Pedido::find($id);
-        $pedido->delete();
-        return back()->with('mensaje','Pedido eliminado');
     }
 
     /**
@@ -213,14 +256,23 @@ class PedidosController extends Controller
      */
     public function addCliente(NewClienteRequest $request)
     {
-        $cliente = Cliente::create([
-            'nombre' => $request->nombre,
-            'fono' => $request->fono,
-            'domicilio' => $request->domicilio,
-            'depto' => $request->depto,
-        ]);
+        try{
+            $cliente = Cliente::create([
+                'nombre' => $request->nombre,
+                'fono' => $request->fono,
+                'domicilio' => $request->domicilio,
+                'depto' => $request->depto,
+            ]);
 
-        return $cliente;
+            return $cliente;
+        }catch(Exception $e){
+            Log::channel('pedidos')->error('Error al crear cliente: ');
+            Log::channel('pedidos')->error($e->getMessage());
+            Log::channel('pedidos')->error($e->getTraceAsString());
+
+            return;
+        }
+
     }
 
     /**
@@ -238,19 +290,29 @@ class PedidosController extends Controller
      */
     public function reporteClientePdf($id)
     {
-        $productos = Contenido::with(['producto', 'pedido'])
-            ->where('pedidoId', '=', $id)
-            ->get();
+        try{
+            $productos = Contenido::with(['producto', 'pedido'])
+                ->where('pedidoId', '=', $id)
+                ->get();
 
-        $pedido = Pedido::with('cliente')
-            ->where('id', '=', $id)
-            ->first();
+            $pedido = Pedido::with('cliente')
+                ->where('id', '=', $id)
+                ->first();
 
-        $medidas= Medida::all();
+            $medidas= Medida::all();
 
-        $reporte= \PDF::loadView('Pedido.reporte', compact('productos','pedido','medidas'));
+            $reporte= \PDF::loadView('Pedido.reporte', compact('productos','pedido','medidas'));
 
-        return $reporte->download('pedido'.$id.'.pdf');
+            return $reporte->download('pedido'.$id.'.pdf');
+
+        }catch(Exception $e){
+            Log::channel('pedidos')->error('Error al generar pdf de pedido: ');
+            Log::channel('pedidos')->error($e->getMessage());
+            Log::channel('pedidos')->error($e->getTraceAsString());
+
+            return back()->with('error', 'Ocurrió un error al descargar el pdf. Intente nuevamente.');
+        }
+
     }
 
     /**
@@ -259,17 +321,27 @@ class PedidosController extends Controller
      */
     public function reporteClienteVista($id)
     {
-        $productos = Contenido::with(['producto', 'pedido'])
-            ->where('pedidoId', '=', $id)
-            ->get();
+        try{
+            $productos = Contenido::with(['producto', 'pedido'])
+                ->where('pedidoId', '=', $id)
+                ->get();
 
-        $pedido = Pedido::with('cliente')
-            ->where('id', '=', $id)
-            ->first();
+            $pedido = Pedido::with('cliente')
+                ->where('id', '=', $id)
+                ->first();
 
-        $medidas= Medida::all();
+            $medidas= Medida::all();
 
-        return view('Pedido.detalles', compact('productos','pedido','medidas'));
+            return view('Pedido.detalles', compact('productos','pedido','medidas'));
+
+        }catch(Exception $e){
+            Log::channel('pedidos')->error('Error al obtener datos de pedido: ');
+            Log::channel('pedidos')->error($e->getMessage());
+            Log::channel('pedidos')->error($e->getTraceAsString());
+
+            return back()->with('error', 'Hubo un error al mostrar el pedido. Intente nuevamente.');
+        }
+
     }
 
     /**
@@ -292,22 +364,30 @@ class PedidosController extends Controller
      * @throws \Exception
      */
     public function getPagos(){
-        $pendientes = Pedido::with('cliente')
-            ->select('*')
-            ->where('estado', '=', 0)
-            ->where('metodopago', '=', 2)
-            ->orderBy('id', 'DESC');
+        try{
+            $pendientes = Pedido::with('cliente')
+                ->select('*')
+                ->where('estado', '=', 0)
+                ->where('metodopago', '=', 2)
+                ->orderBy('id', 'DESC');
 
-        return DataTables::of($pendientes)
-            ->addColumn('link', function($pedido){
+            return DataTables::of($pendientes)
+                ->addColumn('link', function($pedido){
 
-                return '<a href="/pedido/detalle/'. $pedido->id . '">'.$pedido->cliente[0]->nombre.'</a>';
-            })
-            ->editColumn('created_at', function ($pedido){
-                return $pedido->created_at->format('Y-m-d');
-            })
-            ->rawColumns(['link'])
-            ->make(true);
+                    return '<a href="/pedido/detalle/'. $pedido->id . '">'.$pedido->cliente[0]->nombre.'</a>';
+                })
+                ->editColumn('created_at', function ($pedido){
+                    return $pedido->created_at->format('Y-m-d');
+                })
+                ->rawColumns(['link'])
+                ->make(true);
+
+        }catch(Exception $e){
+            Log::channel('pedidos')->error('Datatables: Error al obtener pagos');
+            Log::channel('pedidos')->error($e->getMessage());
+            Log::channel('pedidos')->error($e->getTraceAsString());
+        }
+
     }
 
     /**
@@ -316,9 +396,19 @@ class PedidosController extends Controller
      */
     public function marcarPagado($id)
     {
-        Pedido::find($id)->update([
-            'estado' => 1
-        ]);
-        return back()->with('mensaje','El pedido ya está pagado');
+        try{
+            Pedido::find($id)->update([
+                'estado' => 1
+            ]);
+            return back()->with('mensaje','El pedido ya está pagado');
+
+        }catch(Exception $e){
+            Log::channel('pedidos')->error('Error al marcar pedido como pagado: ');
+            Log::channel('pedidos')->error($e->getMessage());
+            Log::channel('pedidos')->error($e->getTraceAsString());
+
+            return back()->with('error', 'Hubo un error al marcar el pedido como pagado. Intente nuevamente.');
+        }
+
     }
 }

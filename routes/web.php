@@ -138,15 +138,7 @@ Route::get('/estadisticas/historialventas/top/verduleria','EstadisticasControlle
 
 Route::get('/estadisticas/historialventas/top5/congelados','EstadisticasController@topCongelados');
 
-Route::get('/producto/lista/search','SearchController@searchProducto')->name('searchproductolista');
-
-Route::get('/proveedor/lista/search','SearchController@searchProveedor')->name('searchproveedorlista');
-
-Route::get('/inventario/lista/search','SearchController@searchProductoVerduleria')->name('searchinventariolista');
-
 Route::get('/inventario/lista/search/congelados','SearchController@searchProductoCongelados')->name('searchcongelado');
-
-Route::get('/clientes/lista/search','SearchController@searchCliente')->name('searchcliente');
 
 Route::get('/pedido/administrarpagos','PedidosController@administrarPagos')->name('adminpagos');
 

@@ -6,8 +6,8 @@ use Illuminate\Http\Request;
 use App\Categoria;
 use App\Sucursal;
 use App\Http\Requests\NewCategoriaRequest;
-use App\Http\Requests\DeleteCategoriaRequest;
 use Illuminate\Support\Facades\Log;
+use Exception;
 
 class CategoriasController extends Controller
 {
@@ -42,12 +42,22 @@ class CategoriasController extends Controller
      */
     public function store(NewCategoriaRequest $request)
     {
-        Categoria::create([
-            'tipo' => $request->tipo,
-            'sucursalId' => $request->sucursalId,
-        ]);
+        try{
+            Categoria::create([
+                'tipo' => $request->tipo,
+                'sucursalId' => $request->sucursalId,
+            ]);
 
-        return back()->with('mensaje','Categoría añadida');
+            return back()->with('mensaje','Categoría añadida');
+
+        }catch (Exception $e){
+            Log::channel('categorias')->error('Error al crear categoria');
+            Log::channel('categorias')->error($e->getMessage());
+            Log::channel('categorias')->error($e->getTraceAsString());
+
+            return back()->with('error', 'Hubo un error al crear la categoria. Intente nuevamente.');
+        }
+
     }
 
     /**
@@ -99,9 +109,9 @@ class CategoriasController extends Controller
             return back()->with('mensaje2','Categoría eliminada');
         }
         catch(\Illuminate\Database\QueryException $ex){
-            Log::error('Error al eliminar categoría');
-            Log::error($ex->getMessage());
-            Log::error($ex->getTraceAsString());
+            Log::channel('categorias')->error('Error al eliminar categoría');
+            Log::channel('categorias')->error($ex->getMessage());
+            Log::channel('categorias')->error($ex->getTraceAsString());
             return back()->with('error','esta categoría posee productos. Si desea eliminarla, primero elimine los productos asociados a ella.');
 
         }

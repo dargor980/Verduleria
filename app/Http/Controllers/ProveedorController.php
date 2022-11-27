@@ -69,9 +69,9 @@ class ProveedorController extends Controller
             return back()->with('mensaje','Proveedor añadido');
 
         }catch(Exception $e){
-            Log::error('Error al agregar proveedor');
-            Log::error($e->getMessage());
-            Log::error($e->getTraceAsString());
+            Log::channel('proveedores')->error('Error al agregar proveedor');
+            Log::channel('proveedores')-error($e->getMessage());
+            Log::channel('proveedores')-error($e->getTraceAsString());
             return back()->with('error','Error al agregar proveedor. Intente nuevamente');
         }
 
@@ -122,9 +122,9 @@ class ProveedorController extends Controller
 
             return back()->with('mensaje','Proveedor actualizado');
         }catch(Exception $e){
-            Log::error('Error al actualizar proveedor');
-            Log::error($e->getMessage());
-            Log::error($e->getTraceAsString());
+            Log::channel('proveedores')-error('Error al actualizar proveedor');
+            Log::channel('proveedores')-error($e->getMessage());
+            Log::channel('proveedores')-error($e->getTraceAsString());
 
             return back()->with('error', 'Error al actualizar proveedor. Intente nuevamente');
         }
@@ -138,8 +138,15 @@ class ProveedorController extends Controller
      */
     public function destroy($id)
     {
-        $destroyProveedor= Proveedor::find($id);
-        $destroyProveedor->delete();
-        return redirect()->route('listaprov')->with('mensaje','Proveedor eliminado.');
+        try{
+            $destroyProveedor= Proveedor::find($id);
+            $destroyProveedor->delete();
+            return redirect()->route('listaprov')->with('mensaje','Proveedor eliminado.');
+        }catch(Exception $e){
+            Log::channel('proveedores')->error('Error al eliminar proveedor: ');
+            Log::channel('proveedores')->error($e->getMessage());
+            Log::channel('proveedores')->error($e->getTraceAsString());
+        }
+
     }
 }
