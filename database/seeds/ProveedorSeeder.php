@@ -6,7 +6,7 @@ use App\Proveedor;
 class ProveedorSeeder extends Seeder
 {
     protected $proveedores = [
-        ['id' => 1, 'rut' => '12345678-9', 'empresa' => 'Empresa ejemplo', 'fono' => '56952211100', 'direccion' => 'direccion 123', 'descripcion' => 'proveedor de ejemplo'],
+        ['id' => 1, 'rut' => '12345678-9','nombre' => 'Germán Contreras Améstica', 'empresa' => 'Empresa ejemplo', 'fono' => '56952211100', 'direccion' => 'direccion 123', 'descripcion' => 'proveedor de ejemplo'],
     ];
     /**
      * Run the database seeds.
@@ -20,6 +20,7 @@ class ProveedorSeeder extends Seeder
                 Proveedor::create([
                     'id' => $proveedor['id'],
                     'rut' => $proveedor['rut'],
+                    'nombre' => $proveedor['nombre'],
                     'empresa' => $proveedor['empresa'],
                     'fono' => $proveedor['fono'],
                     'direccion' => $proveedor['direccion'],

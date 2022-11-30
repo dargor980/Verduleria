@@ -21,8 +21,9 @@ services:
     env_file:
       - ./.env
     environment:
-      MYSQL_DATABASE: $DB_DATABASE
-      MYSQL_ROOT_PASSWORD: $DB_PASSWORD
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_USER: ${DB_USERNAME}
       MYSQL_ALLOW_EMPTY_PASSWORD: 1
     networks:
       - app-network
@@ -30,6 +31,11 @@ services:
       - dbdata:/var/lib/mysql
 
   app:
+    container_name: verduleria_app
+    links:
+      - db
+    depends_on:
+      - db
     build: .
     restart: unless-stopped
     networks:
