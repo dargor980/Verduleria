@@ -2104,15 +2104,14 @@ __webpack_require__.r(__webpack_exports__);
     /*obtiene la ganancia del mes actual*/
 
     axios.get('/estadisticas/historialventas/ganancias/actual').then(function (res) {
-      _this.totalMesActual = res.data[0];
+      _this.totalMesActual = parseInt(res.data[0]);
       _this.actualNow = res.data[1];
       _this.actualOld = res.data[2];
     });
     /*obtiene la ganancia del mes anterior*/
 
     axios.get('/estadisticas/historialventas/ganancias/anterior').then(function (res) {
-      console.log(res.data);
-      _this.totalMesAnterior = res.data[0];
+      _this.totalMesAnterior = parseInt(res.data[0]);
       _this.anteriorNow = res.data[1];
       _this.anteriorOld = res.data[2];
     });
@@ -79979,7 +79978,7 @@ var render = function() {
                 _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(item.nombre))]),
                 _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(item.cantidad))])
+                _c("td", [_vm._v(_vm._s(parseInt(item.cantidad)))])
               ])
             }),
             0
@@ -80005,7 +80004,7 @@ var render = function() {
                 _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(item.nombre))]),
                 _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(item.cantidad))])
+                _c("td", [_vm._v(_vm._s(parseInt(item.cantidad)))])
               ])
             }),
             0
@@ -94244,8 +94243,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /var/www/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /var/www/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\braul\Desktop\Proyectos\Verduleria\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\braul\Desktop\Proyectos\Verduleria\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

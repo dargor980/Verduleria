@@ -61,7 +61,7 @@ php artisan migrate
 Es necesario que realizada las migraciones importen la tabla usuario ubicada en la carpeta DB del repositorio para poder ingresar a la aplicación web.
 Credenciales de administrador ubicado en la tabla usuario:
 _Usuario: websantagemita@gmail.com
-Contraseña: admin2020_
+Contraseña: admin2020_ph
 
 Si desea realizar cambios en las vistas, es necesario ejecutar el siguiente comando de npm:
 ```

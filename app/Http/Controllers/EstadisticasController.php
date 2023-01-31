@@ -26,9 +26,9 @@ class EstadisticasController extends Controller
     public function graficoGanancias()
     {
         try{
-            $subquery="DATE_FORMAT(pedidos.created_at,'%d-%m-%Y') AS created_at";  //string que le cambia el formato a la fecha pedida en el query.
-            $now= Carbon::now();                                                   //toma la fecha del día actual
-            $old= Carbon::now()->add('-30','day');                                 // toma la fecha de 30 días atrás
+            $subquery="pedidos.created_at AS created_at";  //string que le cambia el formato a la fecha pedida en el query.
+            $now= Carbon::now()->add('28','day');                                                   //toma la fecha del día actual
+            $old= Carbon::now()->startOfMonth();                                 // toma la fecha de 30 días atrás
 
             /* Consulta de la cual se obtiene las ganancias obtenidas de los productos vendidos de los últimos 30 días */
             $query= DB::table('contenidos')
@@ -37,6 +37,7 @@ class EstadisticasController extends Controller
                 ->whereBetween('pedidos.created_at',[$old,$now])
                 ->select(DB::raw('SUM(productos.ganancia*contenidos.cantidad) AS ganancia'), DB::raw($subquery))
                 ->groupBy('created_at')
+                ->orderBy('created_at', 'desc')
                 ->get();
 
             /*formateo de la colección de datos obtenida en la consulta anterior para ser utilizado por chart.js */
@@ -69,7 +70,7 @@ class EstadisticasController extends Controller
             $total=0;
             $subquery="DATE_FORMAT(pedidos.created_at,'%d-%m-%Y') AS created_at";  //string que le cambia el formato a la fecha pedida en el query.
             $now= Carbon::now();                                                   //toma la fecha del día actual
-            $old= Carbon::now()->add('-30','day');
+            $old= Carbon::now()->startOfMonth();
             /* Consulta de la cual se obtiene las ganancias obtenidas de los productos vendidos de los últimos 30 días */
             $query= DB::table('contenidos')
                 ->join('productos','productos.id','contenidos.productoId')
@@ -98,8 +99,8 @@ class EstadisticasController extends Controller
         try{
             $total=0;
             $subquery="DATE_FORMAT(pedidos.created_at,'%d-%m-%Y') AS created_at";  //string que le cambia el formato a la fecha pedida en el query.
-            $now= Carbon::now()->add('-30','day');                                                   //toma la fecha del día actual
-            $old= Carbon::now()->add('-60','day');
+            $now= Carbon::now()->endOfMonth()->subMonth();                         //toma la fecha del día actual
+            $old= Carbon::now()->startOfMonth()->subMonth();
             /* Consulta de la cual se obtiene las ganancias obtenidas de los productos vendidos de los últimos 30 días */
             $query= DB::table('contenidos')
                 ->join('productos','productos.id','contenidos.productoId')

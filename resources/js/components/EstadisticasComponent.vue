@@ -49,7 +49,7 @@
                         <tr v-for="(item,index) in topVerduleria" :key="index">
                             <td>{{item.id}}</td>
                             <td>{{item.nombre}}</td>
-                            <td>{{item.cantidad}}</td>
+                            <td>{{parseInt(item.cantidad)}}</td>
                         </tr>                       
                     </tbody>
                 </table>
@@ -69,7 +69,7 @@
                         <tr v-for="(item,index) in topCongelados" :key="index">
                             <td>{{item.id}}</td>
                             <td>{{item.nombre}}</td>
-                            <td>{{item.cantidad}}</td>
+                            <td>{{parseInt(item.cantidad)}}</td>
                         </tr>     
                     </tbody>
                 </table>
@@ -119,7 +119,7 @@ export default {
         /*obtiene la ganancia del mes actual*/
         
         axios.get('/estadisticas/historialventas/ganancias/actual').then(res =>{
-            this.totalMesActual=res.data[0];
+            this.totalMesActual=parseInt(res.data[0]);
             this.actualNow=res.data[1];
             this.actualOld=res.data[2];
         })
@@ -127,8 +127,7 @@ export default {
          /*obtiene la ganancia del mes anterior*/
 
         axios.get('/estadisticas/historialventas/ganancias/anterior').then(res=>{
-            console.log(res.data)
-            this.totalMesAnterior=res.data[0];
+            this.totalMesAnterior=parseInt(res.data[0]);
             this.anteriorNow=res.data[1];
             this.anteriorOld=res.data[2];
         })
